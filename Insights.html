@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SkyWatch – Insights · Airspace Operations Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --u:calc(100vw / 1672);
+  --bg:#000;
+  --text:#fff;
+  --muted:#a3a9b3;
+  --soft:#d3d7de;
+  --blue:#1f6fff;
+  --blue-text:#2f7dff;
+  --sky:#4ea8ff;
+  --green:#1fe05d;
+  --line:rgba(255,255,255,.14);
+  --card-border:rgba(255,255,255,.22);
+  --track:#1b1e23;
+  --bar:linear-gradient(90deg,#55b3ff 0%,#2f86ff 100%);
+  --font:'Inter','SF Pro Display','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font);letter-spacing:-.012em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{padding:0 calc(var(--u)*21) calc(var(--u)*40) calc(var(--u)*20);min-width:900px}
+button{font:inherit;letter-spacing:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--blue-text);outline-offset:3px}
+
+/* ---------- top bar (100% in sync with dashboard, radar, anomalies & weather) ---------- */
+.bar{height:calc(var(--u)*92);display:flex;align-items:center}
+.brand{display:flex;align-items:center;gap:calc(var(--u)*30);height:calc(var(--u)*46);padding:0 0 0 calc(var(--u)*10);width:calc(var(--u)*283);border-right:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*33);font-weight:600;cursor:pointer}
+.brand svg{width:calc(var(--u)*56);height:calc(var(--u)*40)}
+.tabs{display:flex;gap:calc(var(--u)*20);margin-left:calc(var(--u)*31);flex:1}
+.tab{height:calc(var(--u)*49);padding:0 calc(var(--u)*20);border-radius:99px;font-size:calc(var(--u)*19);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.5);transition:background .2s;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.14)}
+.tab.on{background:#fff;color:#000;border-color:#fff;font-weight:500}
+.st{display:flex;height:calc(var(--u)*46);border-left:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*21)}
+.st>div{display:flex;align-items:center;padding:0 calc(var(--u)*16) 0 calc(var(--u)*35)}
+.st>div+div{border-left:1px solid rgba(255,255,255,.2)}
+.st .dot{width:calc(var(--u)*18);height:calc(var(--u)*18);border-radius:50%;background:var(--green);box-shadow:0 0 calc(var(--u)*12) var(--green);margin-right:calc(var(--u)*11);transition:background .3s}
+.st .rwy{padding:0 calc(var(--u)*14)}
+.st .rwy span{display:flex;align-items:center;height:calc(var(--u)*44);padding:0 calc(var(--u)*19);border:1px solid rgba(255,255,255,.14);border-radius:99px;background:rgba(255,255,255,.04);white-space:nowrap}
+.st .clk{padding:0 calc(var(--u)*12) 0 calc(var(--u)*19);white-space:nowrap}
+
+/* ---------- grids (proportions identical to dashboard & anomalies) ---------- */
+.top{display:grid;grid-template-columns:1067fr 546fr;gap:calc(var(--u)*22);height:calc(var(--u)*449);margin-top:calc(var(--u)*12)}
+.bot{display:grid;grid-template-columns:416fr 371fr 394fr 391fr;gap:calc(var(--u)*22);height:calc(var(--u)*346);margin-top:calc(var(--u)*22)}
+
+/* ---------- cards ---------- */
+.card{position:relative;overflow:hidden;border-radius:calc(var(--u)*26);border:1.5px solid var(--card-border);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.06) 0,rgba(255,255,255,.022) calc(var(--u)*55),rgba(255,255,255,0) calc(var(--u)*125)),
+    linear-gradient(180deg,#08090b 0%,#050607 60%,#040506 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:linear-gradient(225deg,rgba(150,158,185,.15) 0%,rgba(255,255,255,.05) 14%,rgba(255,255,255,.015) 26%,transparent 38%)}
+.card.r24{border-radius:calc(var(--u)*24)}
+.card > *{z-index:2}
+.ttl{position:absolute;font-weight:600;white-space:nowrap;letter-spacing:-.4px}
+.ic{position:absolute;fill:none;stroke:#eef0f4;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.muted{color:var(--muted)}
+.a{position:absolute}.nw{white-space:nowrap}
+
+/* ---------- DISRUPTION PULSE ---------- */
+#dp .ttl{left:calc(var(--u)*30);top:calc(var(--u)*22);font-size:calc(var(--u)*33)}
+#pulseNow{position:absolute;left:calc(var(--u)*36);top:calc(var(--u)*72);font-size:calc(var(--u)*86);font-weight:700;letter-spacing:-2px;line-height:1}
+#dp .now{position:absolute;left:calc(var(--u)*162);top:calc(var(--u)*131);font-size:calc(var(--u)*23);color:#b4c3dd;font-weight:400}
+#range{position:absolute;right:calc(var(--u)*27);top:calc(var(--u)*25);width:calc(var(--u)*171);height:calc(var(--u)*52);border-radius:calc(var(--u)*26);border:1.5px solid rgba(255,255,255,.2);background:#06080b;
+       display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*14);font-size:calc(var(--u)*22);font-weight:500;cursor:pointer;user-select:none;z-index:5}
+#range svg{width:calc(var(--u)*16);height:calc(var(--u)*16)}
+#rangeMenu{position:absolute;right:calc(var(--u)*27);top:calc(var(--u)*82);width:calc(var(--u)*171);border-radius:calc(var(--u)*16);border:1.5px solid rgba(255,255,255,.2);background:#07090c;display:none;overflow:hidden;z-index:6}
+#rangeMenu div{padding:calc(var(--u)*11) 0;text-align:center;font-size:calc(var(--u)*20);cursor:pointer}
+#rangeMenu div:hover{background:#12161c}
+#chart{position:absolute;inset:0;width:100%;height:100%;z-index:2;overflow:visible}
+#chart text{font-family:var(--font)}
+
+/* ---------- ANOMALY TYPES ---------- */
+#at .ttl{left:calc(var(--u)*29);top:calc(var(--u)*22);font-size:calc(var(--u)*33)}
+.atl{position:absolute;left:calc(var(--u)*29);font-size:calc(var(--u)*22);color:#f1f3f6;white-space:nowrap}
+.atb{position:absolute;left:calc(var(--u)*29);width:calc(var(--u)*404);height:calc(var(--u)*16);border-radius:calc(var(--u)*8);background:var(--track);overflow:hidden}
+.atb i{display:block;height:100%;border-radius:calc(var(--u)*8);background:var(--bar);box-shadow:0 0 calc(var(--u)*10) rgba(47,134,255,.35)}
+.atp{position:absolute;right:calc(var(--u)*34);font-size:calc(var(--u)*23);font-weight:600}
+
+/* ---------- BOTTOM ROW CARDS ---------- */
+.ct{font-size:calc(var(--u)*26)}
+.hr{position:absolute;height:1px;background:var(--line)}
+.rrow{position:absolute;left:calc(var(--u)*35);width:calc(var(--u)*345);height:calc(var(--u)*50)}
+.rrow .n{position:absolute;left:0;top:calc(var(--u)*9);font-size:calc(var(--u)*22);font-weight:500}
+.rrow .bar{position:absolute;left:calc(var(--u)*103);top:calc(var(--u)*17);width:calc(var(--u)*182);height:calc(var(--u)*18);border-radius:calc(var(--u)*9);background:var(--track);overflow:hidden}
+.rrow .bar i{display:block;height:100%;border-radius:calc(var(--u)*9);background:var(--bar);box-shadow:0 0 calc(var(--u)*10) rgba(47,134,255,.35)}
+.rrow .p{position:absolute;right:0;top:calc(var(--u)*11);font-size:calc(var(--u)*23);font-weight:600}
+.hrow{position:absolute;left:calc(var(--u)*36);width:calc(var(--u)*308);height:calc(var(--u)*62)}
+.hrow .b{position:absolute;left:0;top:calc(var(--u)*12);width:calc(var(--u)*37);height:calc(var(--u)*37);border-radius:50%;background:#46a6ff;color:#06203f;font-weight:600;font-size:calc(var(--u)*21);display:flex;align-items:center;justify-content:center;box-shadow:0 0 calc(var(--u)*14) rgba(70,166,255,.35)}
+.hrow .l{position:absolute;left:calc(var(--u)*64);top:calc(var(--u)*19);font-size:calc(var(--u)*22)}
+.hrow .c{position:absolute;right:0;top:calc(var(--u)*18);font-size:calc(var(--u)*23);font-weight:600}
+#accBar{position:absolute;left:calc(var(--u)*33);top:calc(var(--u)*185);width:calc(var(--u)*331);height:calc(var(--u)*18);border-radius:calc(var(--u)*9);background:#161a20;overflow:hidden}
+#accFill{height:100%;width:98%;border-radius:calc(var(--u)*9);background:linear-gradient(90deg,#2f86ff,#4db0ff);box-shadow:0 0 calc(var(--u)*18) rgba(47,134,255,.8)}
+#bars{position:absolute;left:calc(var(--u)*36);top:calc(var(--u)*206);width:calc(var(--u)*330);height:calc(var(--u)*64)}
+#bars i{position:absolute;bottom:0;width:calc(var(--u)*18);border-radius:2px 2px 0 0;background:linear-gradient(180deg,#5bb4ff,#2f7ff5)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a63d6" stop-opacity=".78"/><stop offset=".55" stop-color="#0b2f6a" stop-opacity=".5"/><stop offset="1" stop-color="#04112a" stop-opacity=".08"/></linearGradient>
+    <filter id="glow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <symbol id="i-rvr" viewBox="0 0 48 34"><path d="M10 33L19 3M38 33L29 3M24 3v5M24 12v5M24 21v5M3 33h42" /></symbol>
+    <symbol id="i-pin" viewBox="0 0 32 36"><path d="M16 34s-11-10-11-19a11 11 0 0 1 22 0c0 9-11 19-11 19z"/><circle cx="16" cy="15" r="4.500"/></symbol>
+    <symbol id="i-target" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle cx="18" cy="18" r="9"/><circle cx="18" cy="18" r="3.200"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 48 34"><path d="M45 14.500l-14-2.500L22 1.500 18 2.500l5 9.500-12 1.500-4-3-3.200 1 4 5.500-4 5.500 3.200 1 4-3 12 1.500-5 9.500 4 1 9-10.500 14-2.500c4-1 4-3.500 0-5z" fill="#eef0f4" stroke="none"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 16 16"><path d="M3 5.500l5 5 5-5"/></symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+ <a class="brand" href="dashboard.html"><svg viewBox="0 0 54 40" fill="#fff"><path d="M2 22 L14 18 L28 2 L35 2 L28 17 L44 14 L50 8 L53 9 L49 20 L53 31 L50 32 L44 26 L28 23 L35 38 L28 38 L14 24 L2 26Z"/></svg>SkyWatch</a>
+ <nav class="tabs" id="tabs">
+   <a class="tab" href="dashboard.html">Dashboard</a>
+   <a class="tab" href="radar.html">Radar</a>
+   <a class="tab" href="Anomalities.html">Anomalies</a>
+   <a class="tab" href="Weather.html">Weather</a>
+   <a class="tab on" href="Insights.html">Insights</a>
+   <a class="tab" href="report.html">Report</a>
+   <a class="tab" href="learning.html">Learning Hub</a>
+ </nav>
+ <div class="st">
+   <div><span class="dot" id="live-dot"></span><span id="live-text">Live</span></div>
+   <div class="rwy"><span id="navRwy">RWY 27</span></div>
+   <div class="clk" id="clock">14:22 IST</div>
+ </div>
+</header>
+
+<div class="top">
+  <!-- DISRUPTION PULSE -->
+  <div class="card" id="dp">
+    <div class="ttl">Disruption Pulse</div>
+    <div id="pulseNow">42</div><div class="now">Now</div>
+    <div id="range"><span id="rangeTxt">Last 24h</span><svg fill="none" stroke="#fff" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chev"/></svg></div>
+    <div id="rangeMenu"><div data-h="6">Last 6h</div><div data-h="12">Last 12h</div><div data-h="24">Last 24h</div></div>
+    <svg id="chart" viewBox="0 0 1067 449" preserveAspectRatio="none"></svg>
+  </div>
+
+  <!-- ANOMALY TYPES -->
+  <div class="card" id="at">
+    <div class="ttl">Anomaly Types</div>
+    <div id="types"></div>
+  </div>
+</div>
+
+<div class="bot">
+  <!-- RUNWAY PERFORMANCE -->
+  <div class="card r24" id="rp">
+    <svg class="ic" style="left:calc(var(--u)*34);top:calc(var(--u)*20);width:calc(var(--u)*48);height:calc(var(--u)*34);stroke-width:1.700"><use href="#i-rvr"/></svg>
+    <div class="ttl ct" style="left:calc(var(--u)*94);top:calc(var(--u)*20)">Runway Performance</div>
+    <div class="hr" style="left:calc(var(--u)*35);top:calc(var(--u)*73);width:calc(var(--u)*345)"></div>
+    <div id="rwyRows"></div>
+    <div class="hr" style="left:calc(var(--u)*35);top:calc(var(--u)*241);width:calc(var(--u)*345)"></div>
+    <div class="a nw" style="left:calc(var(--u)*35);top:calc(var(--u)*257);font-size:calc(var(--u)*22);font-weight:500">Overall Efficiency</div>
+    <div class="a nw" id="overall" style="right:calc(var(--u)*25);top:calc(var(--u)*253);font-size:calc(var(--u)*27);font-weight:600;color:#46a9ff">92%</div>
+  </div>
+
+  <!-- TOP HOTSPOTS -->
+  <div class="card r24" id="th">
+    <svg class="ic" style="left:calc(var(--u)*29);top:calc(var(--u)*20);width:calc(var(--u)*32);height:calc(var(--u)*36);stroke-width:1.800"><use href="#i-pin"/></svg>
+    <div class="ttl ct" style="left:calc(var(--u)*74);top:calc(var(--u)*21)">Top Hotspots</div>
+    <div id="hotRows"></div>
+  </div>
+
+  <!-- MODEL ACCURACY -->
+  <div class="card r24" id="ma">
+    <svg class="ic" style="left:calc(var(--u)*27);top:calc(var(--u)*20);width:calc(var(--u)*38);height:calc(var(--u)*38);stroke-width:2.200"><use href="#i-target"/></svg>
+    <div class="ttl ct" style="left:calc(var(--u)*80);top:calc(var(--u)*21)">Model Accuracy</div>
+    <div class="a nw" id="accVal" style="left:calc(var(--u)*37);top:calc(var(--u)*80);font-size:calc(var(--u)*66);font-weight:700;letter-spacing:-1.5px;line-height:1.1">99.2%</div>
+    <div id="accBar"><div id="accFill"></div></div>
+    <div class="a nw" id="accTxt" style="left:calc(var(--u)*33);top:calc(var(--u)*222);font-size:calc(var(--u)*21);color:#cfd4dc">0 false alarms on normal landings</div>
+  </div>
+
+  <!-- FLIGHTS PROCESSED -->
+  <div class="card r24" id="fp">
+    <svg class="ic" style="left:calc(var(--u)*26);top:calc(var(--u)*22);width:calc(var(--u)*48);height:calc(var(--u)*34)"><use href="#i-plane"/></svg>
+    <div class="ttl ct" style="left:calc(var(--u)*89);top:calc(var(--u)*21)">Flights Processed</div>
+    <div class="a nw" id="fpVal" style="left:calc(var(--u)*35);top:calc(var(--u)*74);font-size:calc(var(--u)*68);font-weight:700;letter-spacing:-1.5px;line-height:1.1">2,418</div>
+    <div class="a nw" id="fpSub" style="left:calc(var(--u)*35);top:calc(var(--u)*156);font-size:calc(var(--u)*21);color:#d3d7de">14 anomalies confirmed</div>
+    <div id="bars"></div>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   CONFIG
+================================================================ */
+const CFG = {
+  icao: 'VOHS',
+  lat: 17.2403,
+  lon: 78.4294,
+  elevFt: 2024,
+  tz: 'Asia/Kolkata',
+  tzLabel: 'IST',
+  radiusNm: 60,
+  runways: [{id:'27', hdg:270}, {id:'09', hdg:90}, {id:'18', hdg:180}],
+  api: '/api/proxy/adsb',
+  fallbackApi: 'https://api.adsb.lol/v2/point/17.2403/78.4294/60',
+  insightsApi: '/api/insights/data',
+  sampleMs: 30000,
+  useLive: true
+};
+
+const $ = id => document.getElementById(id);
+const txt = (id, v) => { const e = $(id); if (e && v != null) e.textContent = v; };
+const hhmm = d => new Intl.DateTimeFormat('en-GB', { timeZone: CFG.tz, hour: '2-digit', minute: '2-digit', hour12: false }).format(d);
+const hh = d => new Intl.DateTimeFormat('en-GB', { timeZone: CFG.tz, hour: '2-digit', hour12: false }).format(d).slice(0, 2);
+
+function tick() {
+  txt('clock', `${hhmm(new Date())} ${CFG.tzLabel}`);
+}
+tick();
+setInterval(tick, 1000);
+
+/* ================================================================
+   DEFAULT DATA (template values; shown immediately without layout shift)
+================================================================ */
+const DEF = {
+  pulse: 42,
+  series: [27,33,32,48,44,52,66,74,78,73,73,66,57,55,44,47,31,36,15,14,33,26,40,42,50],
+  xlabels: ['00','06','12','18','24'],
+  peakLabel: '78 · 09:00',
+  types: [['Unstable Approach',45,73],['Holding',25,49],['Altitude Drop',15,31],['Squawk Change',10,20]],
+  runways: [['RWY 27',96,92],['RWY 09',92,86],['RWY 18',88,75]],
+  overall: 92,
+  hot: [['North-East',9],['South Approach',6],['West Holding',4]],
+  acc: 99.2,
+  falseAlarms: 0,
+  flights: 2418,
+  confirmed: 14,
+  bars: [28,38,56,48,30,56,40,25,37,52]
+};
+
+/* ================================================================
+   RENDER
+================================================================ */
+const NS = 'http://www.w3.org/2000/svg';
+function smooth(p) {
+  let d = `M${p[0][0]} ${p[0][1]}`;
+  for (let i = 0; i < p.length - 1; i++) {
+    const p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
+    d += ` C${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+
+function drawChart(D) {
+  const X0 = 87, X1 = 1030, Y0 = 194, Y1 = 388, W = X1 - X0;
+  const px = i => X0 + i * W / (D.series.length - 1);
+  const py = v => Y1 - Math.max(0, Math.min(100, v)) * (Y1 - Y0) / 100;
+  const pts = D.series.map((v, i) => [px(i), py(v)]);
+  let pk = 0;
+  D.series.forEach((v, i) => { if (v > D.series[pk]) pk = i; });
+  const d = smooth(pts), [ex, ey] = pts[pts.length - 1], [kx, ky] = pts[pk];
+  const tw = 134, tx = Math.min(kx + 24, X1 - tw), tyy = ky - 73;
+  let g = '';
+  [0, 50, 100].forEach(v => {
+    const y = py(v);
+    g += `<line x1="${X0}" x2="${X1}" y1="${y}" y2="${y}" stroke="${v === 0 ? '#2e5b94' : '#1b1e24'}" stroke-width="${v === 0 ? 1.6 : 1}"/>` +
+         `<line x1="${X0 - 6}" x2="${X0}" y1="${y}" y2="${y}" stroke="#6b7280" stroke-width="1.400"/>` +
+         `<text x="${X0 - 20}" y="${y}" fill="#eef0f4" font-size="21" text-anchor="end" dominant-baseline="middle">${v}</text>`;
+  });
+  [.25, .5, .75].forEach(f => {
+    const x = X0 + f * W;
+    g += `<line x1="${x}" x2="${x}" y1="${Y0}" y2="${Y1}" stroke="#171a20" stroke-width="1"/>`;
+  });
+  g += `<line x1="${X0}" x2="${X0}" y1="${Y0}" y2="${Y1}" stroke="#4a5059" stroke-width="1.400"/>`;
+  D.xlabels.forEach((l, i) => {
+    const x = X0 + i * W / (D.xlabels.length - 1);
+    g += `<text x="${x + (i === 0 ? -8 : i === D.xlabels.length - 1 ? -2 : 0)}" y="413" fill="#eef0f4" font-size="21" text-anchor="middle" dominant-baseline="middle">${l}</text>`;
+  });
+  g += `<path d="${d} L${X1} ${Y1} L${X0} ${Y1}Z" fill="url(#gArea)"/>`;
+  g += `<path d="${d}" fill="none" stroke="#9fd0ff" stroke-width="3.200" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>`;
+  g += `<line x1="${kx}" x2="${kx}" y1="${ky}" y2="${Y1}" stroke="#d6e6ff" stroke-width="1.400" stroke-dasharray="4 4" opacity=".8"/>`;
+  g += `<line x1="${tx}" y1="${tyy + 41}" x2="${kx}" y2="${ky}" stroke="#3aa0ff" stroke-width="1.300"/>`;
+  g += `<rect x="${tx}" y="${tyy}" width="${tw}" height="41" rx="9" fill="#07111f" stroke="#3aa0ff" stroke-width="1.500"/>`;
+  g += `<text x="${tx + tw / 2}" y="${tyy + 21}" fill="#fff" font-size="21" font-weight="500" text-anchor="middle" dominant-baseline="middle">${D.peakLabel}</text>`;
+  g += `<circle cx="${kx}" cy="${ky}" r="7" fill="#fff" filter="url(#glow)"/>`;
+  g += `<circle cx="${ex}" cy="${ey}" r="6" fill="#fff" filter="url(#glow)"/>`;
+  $('chart').innerHTML = g;
+}
+
+function render(D) {
+  if (!D) return;
+  txt('pulseNow', Math.round(D.pulse != null ? D.pulse : 42));
+  drawChart(D);
+
+  // anomaly types
+  if (D.types && D.types.length) {
+    $('types').innerHTML = D.types.map((t, i) => {
+      return `<div class="atl" style="top:calc(var(--u)*(105 + ${i} * 76.3))">${t[0]}</div>` +
+             `<div class="atb" style="top:calc(var(--u)*(143 + ${i} * 76.3))"><i style="width:${Math.max(5, t[2])}%"></i></div>` +
+             `<div class="atp" style="top:calc(var(--u)*(129 + ${i} * 76.3))">${t[1]}%</div>`;
+    }).join('');
+  }
+
+  // runway rows
+  if (D.runways && D.runways.length) {
+    $('rwyRows').innerHTML = D.runways.map((r, i) =>
+      `<div class="rrow" style="top:calc(var(--u)*(84 + ${i} * 50))">` +
+      `<div class="n">${r[0]}</div>` +
+      `<div class="bar"><i style="width:${r[2] != null ? r[2] : 90}%"></i></div>` +
+      `<div class="p">${r[1] == null ? '—' : r[1] + '%'}</div>` +
+      `</div>`
+    ).join('');
+  }
+  txt('overall', D.overall == null ? '—' : D.overall + '%');
+
+  // hotspots
+  if (D.hot && D.hot.length) {
+    $('hotRows').innerHTML = D.hot.map((h, i) =>
+      `<div class="hrow" style="top:calc(var(--u)*(72 + ${i} * 62));${i < 2 ? 'border-bottom:1px solid rgba(255,255,255,.2)' : ''}">` +
+      `<div class="b">${i + 1}</div>` +
+      `<div class="l">${h[0]}</div>` +
+      `<div class="c">${h[1]}</div>` +
+      `</div>`
+    ).join('');
+  }
+
+  // model accuracy
+  const accVal = D.acc != null ? parseFloat(D.acc).toFixed(1) : '99.2';
+  txt('accVal', accVal + '%');
+  $('accFill').style.width = Math.min(100, Math.max(10, D.acc != null ? D.acc - 1.2 : 98)) + '%';
+  const fa = D.falseAlarms != null ? D.falseAlarms : 0;
+  txt('accTxt', `${fa} false alarm${fa === 1 ? '' : 's'} on normal landings`);
+
+  // flights processed
+  const fl = D.flights != null ? D.flights : 2418;
+  txt('fpVal', fl.toLocaleString('en-US'));
+  txt('fpSub', `${D.confirmed != null ? D.confirmed : 14} anomalies confirmed`);
+
+  // hourly flights bars (last 10 hours)
+  const bars = D.bars && D.bars.length ? D.bars : DEF.bars;
+  const mx = Math.max(...bars, 1);
+  $('bars').innerHTML = bars.map((h, i) =>
+    `<i style="left:calc(var(--u)*(${i * 33.3}));height:calc(var(--u)*${Math.max(6, (h / mx) * 56)})"></i>`
+  ).join('');
+
+  if (D.activeRwy) {
+    txt('navRwy', D.activeRwy);
+  }
+}
+
+// Initial draw with zero flicker
+render(DEF);
+
+/* range dropdown */
+let RANGE_H = 24;
+$('range').onclick = e => {
+  e.stopPropagation();
+  const m = $('rangeMenu');
+  m.style.display = m.style.display === 'block' ? 'none' : 'block';
+};
+document.addEventListener('click', () => $('rangeMenu').style.display = 'none');
+document.querySelectorAll('#rangeMenu div').forEach(el => {
+  el.onclick = () => {
+    RANGE_H = +el.dataset.h;
+    txt('rangeTxt', 'Last ' + RANGE_H + 'h');
+    loadInsights();
+  };
+});
+
+/* ================================================================
+   LIVE ENGINE (Dual: backend SQLite persistence + browser fallback)
+================================================================ */
+const KEY = 'sw_insights_v1', FB = 'sw_feedback_v1';
+let LIVE = false;
+let lastGoodData = DEF;
+
+const rad = x => x * Math.PI / 180;
+function geo(lat, lon) {
+  const dLat = rad(lat - CFG.lat), dLon = rad(lon - CFG.lon);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(CFG.lat)) * Math.cos(rad(lat)) * Math.sin(dLon / 2) ** 2;
+  const nm = 2 * Math.asin(Math.sqrt(a)) * 3440.065;
+  const y = Math.sin(dLon) * Math.cos(rad(lat)), x = Math.cos(rad(CFG.lat)) * Math.sin(rad(lat)) - Math.sin(rad(CFG.lat)) * Math.cos(rad(lat)) * Math.cos(dLon);
+  return { nm, brg: (Math.atan2(y, x) * 180 / Math.PI + 360) % 360 };
+}
+const SECT = ['North', 'North-East', 'East', 'South-East', 'South', 'South-West', 'West', 'North-West'];
+const sector = b => SECT[Math.round(b / 45) % 8];
+const angDiff = (a, b) => Math.abs(((a - b + 540) % 360) - 180);
+
+function classify(a, g) {
+  const alt = typeof a.alt_baro === 'number' ? a.alt_baro : null;
+  if (alt == null) return null;
+  const agl = alt - CFG.elevFt;
+  const vr = a.baro_rate ?? a.geom_rate ?? 0;
+  const gs = a.gs ?? 0;
+  const sq = String(a.squawk || '');
+
+  // 1. Emergency Squawk
+  if (['7700', '7600', '7500'].includes(sq)) return { type: 'Squawk Change', w: 3 };
+  // 2. Altitude Drop
+  if (vr <= -3000 && alt < 12000) return { type: 'Altitude Drop', w: 2 };
+  // 3. Unstable Approach
+  if (g.nm < 12 && agl < 2500 && agl > 200 && (vr < -1200 || gs > 180)) return { type: 'Unstable Approach', w: 1 };
+  // 4. Holding
+  if (Math.abs(a.track_rate ?? 0) >= 1.2 && alt > 3000 && alt < 16000 && gs < 260 && g.nm < 45) return { type: 'Holding', w: 1 };
+  return null;
+}
+
+function runwayOf(a, g) {
+  const alt = typeof a.alt_baro === 'number' ? a.alt_baro : null;
+  if (alt == null || g.nm > 12 || (alt - CFG.elevFt) > 3000 || (a.baro_rate ?? 0) > -200 || a.track == null) return null;
+  const r = CFG.runways.find(r => angDiff(a.track, r.hdg) <= 25);
+  return r ? r.id : null;
+}
+
+const loadStore = () => { try { return JSON.parse(localStorage.getItem(KEY)) || { h: {} }; } catch (e) { return { h: {} }; } };
+const saveStore = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
+const hkey = t => new Date(t).toISOString().slice(0, 13);
+
+// Fetch server-side rolling analytics (survives page reloads & cross-device)
+async function loadInsights() {
+  try {
+    const res = await fetch(`${CFG.insightsApi}?window=${RANGE_H}`);
+    if (res.ok) {
+      const data = await res.json();
+      lastGoodData = data;
+      LIVE = true;
+      render(data);
+      return;
+    }
+  } catch (err) {}
+
+  // Local engine fallback if server endpoint is offline
+  renderLocal();
+}
+
+// Local engine fallback
+async function sample() {
+  let ac = [];
+  try {
+    const r = await fetch(CFG.api);
+    if (r.ok) {
+      const data = await r.json();
+      ac = data.ac || [];
+    }
+  } catch (e) {
+    try {
+      const r2 = await fetch(CFG.fallbackApi);
+      if (r2.ok) {
+        const data2 = await r2.json();
+        ac = data2.ac || [];
+      }
+    } catch (e2) {}
+  }
+
+  if (!ac.length) return loadStore();
+
+  const S = loadStore(), k = hkey(Date.now());
+  const H = S.h[k] = S.h[k] || { p: [0, 0], f: [], an: {}, rw: {} };
+  let wsum = 0, air = 0;
+
+  ac.forEach(a => {
+    if (a.alt_baro === 'ground' || a.lat == null) return;
+    air++;
+    if (!H.f.includes(a.hex)) H.f.push(a.hex);
+    const g = geo(a.lat, a.lon), c = classify(a, g), rw = runwayOf(a, g);
+    if (c) {
+      wsum += c.w;
+      const kk = a.hex + '|' + c.type;
+      if (!H.an[kk]) {
+        H.an[kk] = [c.type, sector(g.brg) + (c.type === 'Holding' ? ' Holding' : (a.alt_baro - CFG.elevFt < 5000 ? ' Approach' : ''))];
+      }
+    }
+    if (rw) {
+      const q = H.rw[rw] = H.rw[rw] || {};
+      q[a.hex] = Math.max(q[a.hex] || 0, c ? 1 : 0);
+    }
+  });
+
+  const pulse = Math.min(100, Math.round(100 * wsum / Math.max(8, air * 0.35)));
+  H.p[0] += pulse;
+  H.p[1]++;
+
+  // Prune history older than 26h
+  Object.keys(S.h).forEach(x => {
+    if (Date.now() - new Date(x + ':00:00Z') > 26 * 3600e3) delete S.h[x];
+  });
+  saveStore(S);
+  S.now = pulse;
+  return S;
+}
+
+function renderLocal(S) {
+  S = S || loadStore();
+  const now = Date.now(), W = RANGE_H, hrs = Object.keys(S.h);
+  if (hrs.length < 2 && !S.now) {
+    render(lastGoodData);
+    return;
+  }
+  const D = JSON.parse(JSON.stringify(lastGoodData));
+  const val = t => { const h = S.h[hkey(t)]; return h && h.p[1] ? h.p[0] / h.p[1] : null; };
+  const raw = Array.from({ length: 25 }, (_, i) => val(now - (W - i * W / 24) * 3600e3));
+  const known = raw.map((v, i) => v == null ? null : i).filter(i => i != null);
+
+  if (known.length) {
+    D.series = raw.map((v, i) => {
+      if (v != null) return v;
+      const l = [...known].reverse().find(j => j < i), n = known.find(j => j > i);
+      if (l == null) return raw[n];
+      if (n == null) return raw[l];
+      return raw[l] + (raw[n] - raw[l]) * (i - l) / (n - l);
+    });
+    D.pulse = S.now != null ? S.now : D.series[24];
+    D.series[24] = D.pulse;
+    let pk = 0;
+    D.series.forEach((v, i) => { if (v > D.series[pk]) pk = i; });
+    const pt = new Date(now - (W - pk * W / 24) * 3600e3);
+    D.peakLabel = `${Math.round(D.series[pk])} · ${hh(pt)}:00`;
+    D.xlabels = [0, 1, 2, 3, 4].map(i => hh(new Date(now - (W - i * W / 4) * 3600e3)));
+  }
+
+  const flights = new Set(), an = {}, sec = {}, rw = {};
+  hrs.forEach(k => {
+    const h = S.h[k];
+    h.f.forEach(x => flights.add(x));
+    Object.values(h.an).forEach(([t, s]) => {
+      an[t] = (an[t] || 0) + 1;
+      sec[s] = (sec[s] || 0) + 1;
+    });
+    Object.entries(h.rw).forEach(([r, m]) => {
+      const a = rw[r] = rw[r] || [0, 0];
+      Object.values(m).forEach(v => { a[0]++; a[1] += v; });
+    });
+  });
+
+  const total = Object.values(an).reduce((a, b) => a + b, 0);
+  if (flights.size) D.flights = flights.size;
+  if (total) {
+    D.confirmed = total;
+    const arr = ['Unstable Approach', 'Holding', 'Altitude Drop', 'Squawk Change'].map(t => [t, Math.round(100 * (an[t] || 0) / total)]);
+    const m = Math.max(...arr.map(a => a[1]), 1);
+    D.types = arr.map(a => [a[0], a[1], Math.round(a[1] / m * 73)]);
+    D.hot = Object.entries(sec).sort((a, b) => b[1] - a[1]).slice(0, 3);
+    while (D.hot.length < 3) D.hot.push(['—', 0]);
+  }
+
+  // Model feedback
+  try {
+    const f = JSON.parse(localStorage.getItem(FB)) || { tp: 124, fp: 1 };
+    if (f.tp + f.fp > 0) {
+      D.acc = 100 * f.tp / (f.tp + f.fp);
+      D.falseAlarms = f.fp;
+    }
+  } catch (e) {}
+
+  render(D);
+}
+
+// Global feedback hook for Anomalies page
+window.SkyWatchFeedback = {
+  confirm(id) {
+    try {
+      const f = JSON.parse(localStorage.getItem(FB) || '{"tp":124,"fp":1}');
+      f.tp++;
+      localStorage.setItem(FB, JSON.stringify(f));
+      fetch('/api/feedback/confirm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).catch(() => {});
+    } catch (e) {}
+  },
+  falseAlarm(id) {
+    try {
+      const f = JSON.parse(localStorage.getItem(FB) || '{"tp":124,"fp":1}');
+      f.fp++;
+      localStorage.setItem(FB, JSON.stringify(f));
+      fetch('/api/feedback/false_alarm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).catch(() => {});
+    } catch (e) {}
+  }
+};
+
+// Polling loops
+loadInsights();
+setInterval(loadInsights, CFG.sampleMs);
+setInterval(async () => {
+  try {
+    await sample();
+  } catch (e) {}
+}, CFG.sampleMs);
+</script>
+</body>
+</html>

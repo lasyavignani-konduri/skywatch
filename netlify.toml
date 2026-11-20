@@ -1,0 +1,58 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/radar"
+  to = "/radar.html"
+  status = 200
+
+[[redirects]]
+  from = "/anomalies"
+  to = "/Anomalities.html"
+  status = 200
+
+[[redirects]]
+  from = "/weather"
+  to = "/Weather.html"
+  status = 200
+
+[[redirects]]
+  from = "/insights"
+  to = "/Insights.html"
+  status = 200
+
+[[redirects]]
+  from = "/report"
+  to = "/report.html"
+  status = 200
+
+[[redirects]]
+  from = "/learning-hub"
+  to = "/learning-hub.html"
+  status = 200
+
+[[redirects]]
+  from = "/learning"
+  to = "/learning-hub.html"
+  status = 200
+
+[[redirects]]
+  from = "/ml-lab"
+  to = "/ml-lab.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"

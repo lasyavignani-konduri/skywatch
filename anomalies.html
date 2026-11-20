@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SkyWatch – Anomalies · Airspace Operations Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --u:calc(100vw / 1672);
+  --bg:#000000;
+  --text:#ffffff;
+  --muted:#a3a9b3;
+  --muted-2:#8f96a3;
+  --blue:#1f6fff;
+  --blue-text:#2f7dff;
+  --blue-soft:#bcd3f6;
+  --blue-soft-2:#a5c3f1;
+  --green:#1fe05d;
+  --line:rgba(255,255,255,.15);
+  --card-border:rgba(255,255,255,.22);
+  --font:'Inter','SF Pro Display','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font);letter-spacing:-.012em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{padding:0 calc(var(--u)*21) calc(var(--u)*40) calc(var(--u)*20);min-width:900px}
+button{font:inherit;letter-spacing:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--blue-text);outline-offset:3px}
+
+/* ---------- top bar (100% in sync with dashboard & radar) ---------- */
+.bar{height:calc(var(--u)*92);display:flex;align-items:center}
+.brand{display:flex;align-items:center;gap:calc(var(--u)*30);height:calc(var(--u)*46);padding:0 0 0 calc(var(--u)*10);width:calc(var(--u)*283);border-right:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*33);font-weight:600;cursor:pointer}
+.brand svg{width:calc(var(--u)*56);height:calc(var(--u)*40)}
+.tabs{display:flex;gap:calc(var(--u)*20);margin-left:calc(var(--u)*31);flex:1}
+.tab{height:calc(var(--u)*49);padding:0 calc(var(--u)*20);border-radius:99px;font-size:calc(var(--u)*19);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.5);transition:background .2s;display:inline-flex;align-items:center;justify-content:center}
+.tab:hover{background:rgba(255,255,255,.14)}
+.tab.on{background:#fff;color:#000;border-color:#fff;font-weight:500}
+.st{display:flex;height:calc(var(--u)*46);border-left:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*21)}
+.st>div{display:flex;align-items:center;padding:0 calc(var(--u)*16) 0 calc(var(--u)*35)}
+.st>div+div{border-left:1px solid rgba(255,255,255,.2)}
+.st .dot{width:calc(var(--u)*18);height:calc(var(--u)*18);border-radius:50%;background:var(--green);box-shadow:0 0 calc(var(--u)*12) var(--green);margin-right:calc(var(--u)*11);transition:background .3s}
+.st .rwy{padding:0 calc(var(--u)*14)}
+.st .rwy span{display:flex;align-items:center;height:calc(var(--u)*44);padding:0 calc(var(--u)*19);border:1px solid rgba(255,255,255,.14);border-radius:99px;background:rgba(255,255,255,.04)}
+.st .clk{padding:0 calc(var(--u)*12) 0 calc(var(--u)*19)}
+
+/* ---------- grids (proportions identical to dashboard & radar) ---------- */
+.top,.bot{display:grid;gap:calc(var(--u)*22)}
+.top{grid-template-columns:425fr 380fr 380fr 380fr;height:calc(var(--u)*215);margin-top:calc(var(--u)*12)}
+.bot{grid-template-columns:1118fr 491fr;height:calc(var(--u)*550);margin-top:calc(var(--u)*22)}
+
+/* ---------- cards ---------- */
+.card{position:relative;overflow:hidden;border-radius:calc(var(--u)*28);border:1.5px solid var(--card-border);
+ background:linear-gradient(160deg,#101013 0%,#060608 45%,#020203 100%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 calc(var(--u)*40) rgba(255,255,255,.03),0 calc(var(--u)*30) calc(var(--u)*60) rgba(0,0,0,.7)}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+ background:linear-gradient(225deg,rgba(150,158,185,.15) 0%,rgba(255,255,255,.05) 14%,rgba(255,255,255,.015) 26%,transparent 38%)}
+.card>*{position:absolute}
+
+/* ---------- TOP STAT CARDS ---------- */
+.stat .label{left:calc(var(--u)*34);top:calc(var(--u)*24);font-size:calc(var(--u)*26);font-weight:500;letter-spacing:-.3px;color:#bcc1ca}
+#c-total .big{left:calc(var(--u)*36);top:calc(var(--u)*68);font-size:calc(var(--u)*74);font-weight:700;line-height:1;letter-spacing:-1px}
+#c-total .sub{left:calc(var(--u)*38);top:calc(var(--u)*156);font-size:calc(var(--u)*22);color:var(--muted);font-weight:400}
+#c-total svg{right:calc(var(--u)*24);top:calc(var(--u)*82);width:calc(var(--u)*240);height:calc(var(--u)*92)}
+
+.sev{left:0;right:0;top:calc(var(--u)*88);display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*40)}
+.sev .num{font-size:calc(var(--u)*66);font-weight:600;line-height:1}
+.sev-dot{border-radius:50%}
+.sev-dot.high{width:calc(var(--u)*56);height:calc(var(--u)*56);background:radial-gradient(circle at 40% 35%,#e1efff,#9dc1f5 70%);box-shadow:0 0 calc(var(--u)*30) rgba(160,200,255,.5)}
+.sev-dot.med{width:calc(var(--u)*54);height:calc(var(--u)*54);background:var(--blue);box-shadow:0 0 calc(var(--u)*20) rgba(31,111,255,.4)}
+.sev-dot.low{width:calc(var(--u)*58);height:calc(var(--u)*58);background:transparent;border:calc(var(--u)*3.5) solid var(--blue)}
+
+/* ---------- RECENT INCIDENTS PANEL ---------- */
+#incidents h2{left:calc(var(--u)*38);top:calc(var(--u)*28);font-size:calc(var(--u)*34);font-weight:600;letter-spacing:-.5px}
+.search{right:calc(var(--u)*246);top:calc(var(--u)*26);width:calc(var(--u)*310);height:calc(var(--u)*52);border-radius:calc(var(--u)*26);border:1.5px solid rgba(255,255,255,.22);
+ background:#07090b;display:flex;align-items:center;padding-left:calc(var(--u)*20);gap:calc(var(--u)*14)}
+.search svg{width:calc(var(--u)*24);height:calc(var(--u)*24);flex:none;stroke:#e6e9ef;fill:none;stroke-width:2.2;stroke-linecap:round}
+.search input{flex:1;background:none;border:0;outline:0;color:#fff;font-family:var(--font);font-size:calc(var(--u)*19);font-weight:400;min-width:0}
+.search input::placeholder{color:#c2c7d0}
+
+.btn{border-radius:99px;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-weight:600;letter-spacing:-.2px;cursor:pointer;border:0;transition:all .15s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 calc(var(--u)*6) calc(var(--u)*18) rgba(0,0,0,.6)}
+.btn:active{transform:scale(.98)}
+.btn.white{background:#fff;color:#000}
+.btn.outline{background:transparent;border:2px solid var(--blue-text);color:var(--blue-text)}
+#ackAll{right:calc(var(--u)*34);top:calc(var(--u)*26);width:calc(var(--u)*195);height:calc(var(--u)*52);font-size:calc(var(--u)*19)}
+
+.thead{left:0;right:0;top:calc(var(--u)*100);height:calc(var(--u)*50);display:grid;grid-template-columns:160fr 200fr 190fr 250fr 300fr;align-items:center;padding-left:calc(var(--u)*38);padding-right:calc(var(--u)*20);font-size:calc(var(--u)*21);font-weight:500;color:#d4d8df;border-bottom:1px solid rgba(255,255,255,.15)}
+.rows{left:0;right:0;top:calc(var(--u)*152);bottom:calc(var(--u)*16);display:flex;flex-direction:column;overflow-y:auto}
+.row{height:calc(var(--u)*68);min-height:calc(var(--u)*68);display:grid;grid-template-columns:160fr 200fr 190fr 250fr 300fr;align-items:center;padding-left:calc(var(--u)*38);padding-right:calc(var(--u)*20);font-size:calc(var(--u)*21);letter-spacing:-.2px;font-weight:400;color:#f2f4f7;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.12);transition:background .15s}
+.row:hover{background:rgba(255,255,255,.03)}
+.row.sel{background:linear-gradient(90deg,#141b22,#151d25);border-left:calc(var(--u)*4) solid var(--blue-text)}
+.row.ack{opacity:.45}
+.row.alert-new{animation:newRowFlash 2.5s ease-out}
+@keyframes newRowFlash{
+  0%{background:rgba(31,111,255,.45);border-left:calc(var(--u)*5) solid #fff}
+  50%{background:rgba(31,111,255,.2)}
+  100%{background:transparent}
+}
+.row .flight{font-weight:600}
+.badge{display:inline-flex;align-items:center;justify-content:center;height:calc(var(--u)*36);border-radius:99px;font-size:calc(var(--u)*18);font-weight:500}
+.badge.high{width:calc(var(--u)*102);background:linear-gradient(180deg,#cfe0fa,#a9c6f2);color:#0b1220;font-weight:600}
+.badge.medium{width:calc(var(--u)*102);background:var(--blue);color:#fff}
+.badge.low{width:calc(var(--u)*106);border:2px solid var(--blue);color:#dfe4ee;font-weight:400}
+.telem{white-space:nowrap}
+
+/* ---------- DETAIL PANEL ---------- */
+#detail .id{left:calc(var(--u)*38);top:calc(var(--u)*30);font-size:calc(var(--u)*36);font-weight:700;letter-spacing:-.5px}
+#detail .rule{left:calc(var(--u)*38);top:calc(var(--u)*86);font-size:calc(var(--u)*23);color:var(--muted);font-weight:400}
+#detail .badge{position:absolute;right:calc(var(--u)*38);top:calc(var(--u)*32);height:calc(var(--u)*44);width:calc(var(--u)*108);font-size:calc(var(--u)*20);font-weight:600}
+.hr{left:calc(var(--u)*38);right:calc(var(--u)*38);height:1px;background:rgba(255,255,255,.18)}
+.kv{left:calc(var(--u)*38);right:calc(var(--u)*38);top:calc(var(--u)*156)}
+.kv div{display:flex;justify-content:space-between;align-items:center;height:calc(var(--u)*54);font-size:calc(var(--u)*22);letter-spacing:-.2px;color:#c7ccd5}
+.kv b{font-weight:600;color:#fff}
+#btnAck{left:calc(var(--u)*38);bottom:calc(var(--u)*34);width:calc(var(--u)*195);height:calc(var(--u)*56);font-size:calc(var(--u)*20)}
+#btnRadar{right:calc(var(--u)*38);bottom:calc(var(--u)*34);width:calc(var(--u)*205);height:calc(var(--u)*56);font-size:calc(var(--u)*20);font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="bar">
+ <a class="brand" href="dashboard.html"><svg viewBox="0 0 54 40" fill="#fff"><path d="M2 22 L14 18 L28 2 L35 2 L28 17 L44 14 L50 8 L53 9 L49 20 L53 31 L50 32 L44 26 L28 23 L35 38 L28 38 L14 24 L2 26Z"/></svg>SkyWatch</a>
+ <nav class="tabs" id="tabs">
+   <a class="tab" href="dashboard.html">Dashboard</a>
+   <a class="tab" href="radar.html">Radar</a>
+   <a class="tab on" href="Anomalities.html">Anomalies</a>
+   <a class="tab" href="weather.html">Weather</a>
+   <a class="tab" href="insights.html">Insights</a>
+   <a class="tab" href="replay.html">Replay</a>
+   <a class="tab" href="report.html">Report</a>
+ </nav>
+ <div class="st">
+   <div><span class="dot" id="live-dot"></span><span id="live-text">Live</span></div>
+   <div class="rwy"><span id="top-rwy">RWY 27</span></div>
+   <div class="clk" id="clk">14:22 IST</div>
+ </div>
+</header>
+
+<section class="top">
+  <!-- STAT: Total Events -->
+  <article class="card stat" id="c-total">
+    <div class="label">Total Events</div>
+    <div class="big" id="sTotal">14</div>
+    <div class="sub">Last 24h</div>
+    <svg viewBox="0 0 262 86" fill="none">
+      <defs>
+        <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f6fff" stop-opacity=".22"/><stop offset="1" stop-color="#1f6fff" stop-opacity="0"/></linearGradient>
+        <filter id="glow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <path d="M0 80 C20 74 40 56 62 54 C84 52 96 66 118 66 C140 66 150 44 172 40 C194 36 206 46 226 42 C238 40 244 38 250 36 L250 86 L0 86Z" fill="url(#fade)"/>
+      <path d="M0 80 C20 74 40 56 62 54 C84 52 96 66 118 66 C140 66 150 44 172 40 C194 36 206 46 226 42 C238 40 244 38 250 36" stroke="#2f80ff" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="250" cy="36" r="6.5" fill="#fff" stroke="#1f6fff" stroke-width="3"/>
+    </svg>
+  </article>
+
+  <!-- STAT: High -->
+  <article class="card stat" id="c-high">
+    <div class="label">High</div>
+    <div class="sev"><div class="sev-dot high"></div><div class="num" id="sHigh">2</div></div>
+  </article>
+
+  <!-- STAT: Medium -->
+  <article class="card stat" id="c-med">
+    <div class="label">Medium</div>
+    <div class="sev"><div class="sev-dot med"></div><div class="num" id="sMed">5</div></div>
+  </article>
+
+  <!-- STAT: Low -->
+  <article class="card stat" id="c-low">
+    <div class="label">Low</div>
+    <div class="sev"><div class="sev-dot low"></div><div class="num" id="sLow">7</div></div>
+  </article>
+</section>
+
+<section class="bot">
+  <!-- RECENT INCIDENTS PANEL -->
+  <article class="card" id="incidents">
+    <h2>Recent Incidents</h2>
+    <label class="search">
+      <svg viewBox="0 0 28 28"><circle cx="12.5" cy="12.5" r="9"/><path d="M19.5 19.5L25 25"/></svg>
+      <input id="q" type="text" placeholder="Search incidents..." autocomplete="off">
+    </label>
+    <button class="btn white" id="ackAll">Acknowledge All</button>
+
+    <div class="thead"><div>Time</div><div>Flight</div><div>Severity</div><div>Rule</div><div>Telemetry</div></div>
+    <div class="rows" id="rows"></div>
+  </article>
+
+  <!-- DETAIL PANEL -->
+  <aside class="card" id="detail">
+    <div class="id" id="dId">AIC2417</div>
+    <div class="badge high" id="dBadge">High</div>
+    <div class="rule" id="dRule">Rapid Altitude Drop</div>
+    <div class="hr" style="top:calc(var(--u)*136)"></div>
+    <div class="kv">
+      <div><span>Triggered</span><b id="dT">14:22 IST</b></div>
+      <div><span>Altitude change</span><b id="dA">-1,900 ft</b></div>
+      <div><span>Speed change</span><b id="dS">-34 kt</b></div>
+      <div><span>Weather</span><b id="dW">Low visibility</b></div>
+    </div>
+    <div class="hr" style="top:calc(var(--u)*390)"></div>
+    <button class="btn white" id="btnAck">Acknowledge</button>
+    <button class="btn outline" id="btnRadar">Open on Radar</button>
+  </aside>
+</section>
+
+<script>
+  /* ---- Canonical baseline data matching reference screenshot ---- */
+  let incidents = [
+    {t:'14:22',f:'AIC2417',s:'High',  r:'Altitude Drop',tel:'3,400 ft – 4,800 fpm',
+     title:'Rapid Altitude Drop',trig:'14:22 IST',alt:'-1,900 ft',spd:'-34 kt',wx:'Low visibility',ack:false},
+    {t:'14:18',f:'IGO331', s:'Medium',r:'Holding',      tel:'6,000 ft · 210 kt',
+     title:'Holding Pattern',trig:'14:18 IST',alt:'0 ft',spd:'-12 kt',wx:'Haze',ack:false},
+    {t:'14:11',f:'VTI812', s:'High',  r:'Squawk 7700',  tel:'8,200 ft · 260 kt',
+     title:'Emergency Squawk 7700',trig:'14:11 IST',alt:'-600 ft',spd:'-18 kt',wx:'Crosswind',ack:false},
+    {t:'14:03',f:'SEJ774', s:'Medium',r:'Go-Around',    tel:'1,200 ft · 150 kt',
+     title:'Go-Around Initiated',trig:'14:03 IST',alt:'+800 ft',spd:'+9 kt',wx:'Low visibility',ack:false},
+    {t:'13:55',f:'AXB539', s:'Low',   r:'Low Approach', tel:'2,100 ft · 170 kt',
+     title:'Low Approach Path',trig:'13:55 IST',alt:'-300 ft',spd:'-6 kt',wx:'Haze',ack:false},
+  ];
+
+  let selected = 0, query = '';
+  const rowsEl = document.getElementById('rows');
+  const dId = document.getElementById('dId');
+  const dBadge = document.getElementById('dBadge');
+  const dRule = document.getElementById('dRule');
+  const dT = document.getElementById('dT');
+  const dA = document.getElementById('dA');
+  const dS = document.getElementById('dS');
+  const dW = document.getElementById('dW');
+  const sTotal = document.getElementById('sTotal');
+  const sHigh = document.getElementById('sHigh');
+  const sMed = document.getElementById('sMed');
+  const sLow = document.getElementById('sLow');
+  const qInput = document.getElementById('q');
+  const ackAll = document.getElementById('ackAll');
+  const btnAck = document.getElementById('btnAck');
+  const btnRadar = document.getElementById('btnRadar');
+
+  function renderRows() {
+    const q = query.trim().toLowerCase();
+    const list = incidents.map((d, i) => ({ d, i })).filter(({ d }) => {
+      if (!q) return true;
+      return d.f.toLowerCase().includes(q) ||
+             d.r.toLowerCase().includes(q) ||
+             d.s.toLowerCase().includes(q) ||
+             d.tel.toLowerCase().includes(q);
+    });
+
+    rowsEl.innerHTML = '';
+    list.forEach(({ d, i }) => {
+      const row = document.createElement('div');
+      row.className = 'row' + (i === selected ? ' sel' : '') + (d.ack ? ' ack' : '') + (d.isNew ? ' alert-new' : '');
+      const sevClass = d.s.toLowerCase();
+      row.innerHTML = `
+        <div>${d.t}</div>
+        <div class="flight">${d.f}</div>
+        <div><span class="badge ${sevClass}">${d.s}</span></div>
+        <div>${d.r}</div>
+        <div class="telem">${d.tel}</div>
+      `;
+      row.onclick = () => {
+        selected = i;
+        renderRows();
+        renderDetail();
+      };
+      rowsEl.appendChild(row);
+    });
+  }
+
+  function renderDetail() {
+    const d = incidents[selected] || incidents[0];
+    if (!d) return;
+    dId.textContent = d.f;
+    dBadge.textContent = d.s;
+    dBadge.className = 'badge ' + d.s.toLowerCase();
+    dRule.textContent = d.title || d.r;
+    dT.textContent = d.trig;
+    dA.textContent = d.alt;
+    dS.textContent = d.spd;
+    dW.textContent = d.wx;
+    btnAck.textContent = d.ack ? 'Acknowledged' : 'Acknowledge';
+    btnAck.style.opacity = d.ack ? '0.5' : '1';
+  }
+
+  qInput.addEventListener('input', e => {
+    query = e.target.value;
+    renderRows();
+  });
+
+  /* ---- live ticking IST clock ---- */
+  const clockEl = document.getElementById('clk');
+  function updateClock() {
+    if (!clockEl) return;
+    const now = new Date();
+    clockEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }) + ' IST';
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  /* ---- open on radar action ---- */
+  btnRadar.onclick = () => {
+    const flight = incidents[selected] ? incidents[selected].f : '';
+    location.href = `radar.html?flight=${encodeURIComponent(flight)}`;
+  };
+
+  /* ---- acknowledge actions ---- */
+  btnAck.onclick = () => {
+    if (incidents[selected]) {
+      incidents[selected].ack = true;
+      fetch('/api/anomalies/ack?id=' + encodeURIComponent(incidents[selected].f), { method: 'POST' }).catch(() => {});
+      renderRows();
+      renderDetail();
+    }
+  };
+
+  ackAll.onclick = () => {
+    incidents.forEach(d => d.ack = true);
+    fetch('/api/anomalies/ack', { method: 'POST' }).catch(() => {});
+    renderRows();
+    renderDetail();
+  };
+
+  /* ---- real-time backend synchronization ---- */
+  async function syncAnomalies() {
+    try {
+      const res = await fetch('/api/anomalies');
+      if (!res.ok) return;
+      const data = await res.json();
+
+      // Update stat cards dynamically
+      if (data.summary) {
+        if (sTotal) sTotal.textContent = data.summary.total || 14;
+        if (sHigh) sHigh.textContent = data.summary.high || 2;
+        if (sMed) sMed.textContent = data.summary.medium || 5;
+        if (sLow) sLow.textContent = data.summary.low || 7;
+      }
+
+      // Update active runway
+      if (data.weather && data.weather.activeRunway) {
+        const topRwy = document.getElementById('top-rwy');
+        if (topRwy) topRwy.textContent = 'RWY ' + data.weather.activeRunway;
+      }
+
+      // Dynamic anomaly rotation
+      if (data.anomalousFlights && data.anomalousFlights.length > 0) {
+        let changed = false;
+        data.anomalousFlights.forEach(f => {
+          const exists = incidents.some(x => x.f === f.callsign);
+          if (!exists) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+            const sev = (f.severity || 'Medium').charAt(0).toUpperCase() + (f.severity || 'Medium').slice(1).toLowerCase();
+            const altDiff = f.vrateFpm ? `${f.vrateFpm > 0 ? '+' : ''}${Math.round(f.vrateFpm * 0.4)} ft` : '-400 ft';
+            const spdDiff = f.gsKt ? `-18 kt` : '-12 kt';
+            const wxDesc = (data.weather && data.weather.category === 'MVFR') ? 'Low visibility' : 'Haze';
+
+            incidents.unshift({
+              t: timeStr,
+              f: f.callsign,
+              s: sev,
+              r: f.issue || 'Anomaly Detected',
+              tel: `${Number(f.altFt || 3400).toLocaleString()} ft · ${f.gsKt || 200} kt`,
+              title: f.label || `${f.issue || 'Anomaly'} Flagged`,
+              trig: `${timeStr} IST`,
+              alt: altDiff,
+              spd: spdDiff,
+              wx: wxDesc,
+              ack: false,
+              isNew: true
+            });
+            changed = true;
+          }
+        });
+
+        if (changed) {
+          if (incidents.length > 8) incidents.length = 8;
+          renderRows();
+          renderDetail();
+        }
+      }
+    } catch (err) {
+      console.warn('[Sync Anomalies]', err);
+    }
+  }
+
+  // Initial sync & recurring interval
+  syncAnomalies();
+  setInterval(syncAnomalies, 5000);
+
+  // SSE Real-time push
+  if (typeof EventSource !== 'undefined') {
+    try {
+      const sse = new EventSource('/api/stream');
+      sse.onmessage = () => syncAnomalies();
+    } catch (e) {}
+  }
+
+  renderRows();
+  renderDetail();
+</script>
+</body>
+</html>

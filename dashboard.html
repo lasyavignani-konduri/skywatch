@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SkyWatch – Airspace Operations Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--u:calc(100vw/1672);--blue:#1e8fff;--blue2:#3aa0ff;--line:rgba(255,255,255,.15)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;color:#fff;font-family:Inter,"SF Pro Display","Helvetica Neue",Arial,sans-serif;letter-spacing:-.012em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{padding:0 calc(var(--u)*21) calc(var(--u)*40) calc(var(--u)*20);min-width:900px}
+button{font:inherit;letter-spacing:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:3px}
+
+.bar{height:calc(var(--u)*92);display:flex;align-items:center}
+.brand{display:flex;align-items:center;gap:calc(var(--u)*30);height:calc(var(--u)*46);padding:0 0 0 calc(var(--u)*10);width:calc(var(--u)*283);border-right:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*33);font-weight:600}
+.brand svg{width:calc(var(--u)*56);height:calc(var(--u)*40)}
+.tabs{display:flex;gap:calc(var(--u)*20);margin-left:calc(var(--u)*31);flex:1}
+.tab{height:calc(var(--u)*49);padding:0 calc(var(--u)*20);border-radius:99px;font-size:calc(var(--u)*19);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.5);transition:background .2s;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.14)}
+.tab.on{background:#fff;color:#000;border-color:#fff;font-weight:500}
+.st{display:flex;height:calc(var(--u)*46);border-left:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*21)}
+.st>div{display:flex;align-items:center;padding:0 calc(var(--u)*16) 0 calc(var(--u)*35)}
+.st>div+div{border-left:1px solid rgba(255,255,255,.2)}
+.st .dot{width:calc(var(--u)*18);height:calc(var(--u)*18);border-radius:50%;background:#22d65a;box-shadow:0 0 calc(var(--u)*12) #22d65a;margin-right:calc(var(--u)*11);transition:background .3s}
+.st .rwy{padding:0 calc(var(--u)*14)}
+.st .rwy span{display:flex;align-items:center;height:calc(var(--u)*44);padding:0 calc(var(--u)*19);border:1px solid rgba(255,255,255,.14);border-radius:99px;background:rgba(255,255,255,.04)}
+.st .clk{padding:0 calc(var(--u)*12) 0 calc(var(--u)*19)}
+
+.top,.bot{display:grid;gap:calc(var(--u)*22)}
+.top{grid-template-columns:1194fr 415fr;height:calc(var(--u)*468);margin-top:calc(var(--u)*12)}
+.bot{grid-template-columns:386fr 372fr 419fr 386fr;height:calc(var(--u)*281);margin-top:calc(var(--u)*24)}
+
+.card{position:relative;overflow:hidden;border-radius:calc(var(--u)*30);border:1px solid var(--line);
+ background:linear-gradient(160deg,#101013 0%,#060608 45%,#020203 100%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 calc(var(--u)*40) rgba(255,255,255,.03),0 calc(var(--u)*30) calc(var(--u)*60) rgba(0,0,0,.7)}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+ background:linear-gradient(225deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.05) 20%,rgba(255,255,255,0) 42%)}
+.card>*{position:absolute}
+.card h3{font-weight:500;font-size:calc(var(--u)*24);color:#e6ebf2;white-space:nowrap}
+
+.hero{border-radius:calc(var(--u)*36);background:#050507}
+.hero .img{top:calc(var(--u)*-74);left:calc(var(--u)*144);width:calc(var(--u)*1274);max-width:none;height:auto;-webkit-mask:linear-gradient(90deg,transparent 0,#000 24%);mask:linear-gradient(90deg,transparent 0,#000 24%)}
+.hero .shade{inset:0;background:linear-gradient(90deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.25) 40%,rgba(0,0,0,0) 62%),linear-gradient(0deg,rgba(0,0,0,.35),transparent 30%)}
+.hero .dots{left:0;top:0;width:calc(var(--u)*420);height:calc(var(--u)*150);background:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.4px) 0 0/calc(var(--u)*9) calc(var(--u)*9);-webkit-mask:radial-gradient(ellipse at 20% 0,#000,transparent 70%);mask:radial-gradient(ellipse at 20% 0,#000,transparent 70%)}
+.hero h1{left:calc(var(--u)*40);top:calc(var(--u)*106);font-size:calc(var(--u)*55);line-height:calc(var(--u)*58);font-weight:600;letter-spacing:-.025em;z-index:2;width:calc(var(--u)*560)}
+.hero p{left:calc(var(--u)*40);top:calc(var(--u)*250);font-size:calc(var(--u)*28);color:#c9d1de;z-index:2;letter-spacing:-.01em}
+.hero .go{left:calc(var(--u)*40);top:calc(var(--u)*348);width:calc(var(--u)*235);height:calc(var(--u)*59);border-radius:99px;background:#fff;color:#000;font-size:calc(var(--u)*25);font-weight:500;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*14);z-index:2;box-shadow:0 calc(var(--u)*10) calc(var(--u)*30) rgba(0,0,0,.5);transition:all .2s ease}
+.hero .go:hover{transform:translateY(-2px);box-shadow:0 calc(var(--u)*14) calc(var(--u)*36) rgba(47,107,255,.4)}
+.hero .go svg{width:calc(var(--u)*24);height:calc(var(--u)*24);transition:transform .2s}
+.hero .go:hover svg{transform:translateX(3px)}
+
+.rw .pic{left:0;right:0;bottom:0;height:calc(var(--u)*86);background:url('runaway.png') center bottom/100% auto no-repeat;-webkit-mask:linear-gradient(0deg,#000 40%,transparent);mask:linear-gradient(0deg,#000 40%,transparent);opacity:.9}
+.rw h3{left:calc(var(--u)*40);top:calc(var(--u)*22);font-size:calc(var(--u)*28)}
+.rw .g{left:calc(var(--u)*84);top:calc(var(--u)*72);width:calc(var(--u)*248)}
+.rw .g svg{width:100%;display:block}
+.rw .n{left:0;right:0;top:calc(var(--u)*145);text-align:center;font-size:calc(var(--u)*68);font-weight:600;letter-spacing:-.03em;line-height:1}
+.rw .pill{left:calc(var(--u)*144);top:calc(var(--u)*227);width:calc(var(--u)*128);height:calc(var(--u)*38);border:1px solid #1e8fff;border-radius:99px;color:#3aa0ff;font-size:calc(var(--u)*18);display:flex;align-items:center;justify-content:center;box-shadow:0 0 calc(var(--u)*14) rgba(30,143,255,.25),inset 0 0 calc(var(--u)*10) rgba(30,143,255,.12)}
+.rw hr{left:calc(var(--u)*40);right:calc(var(--u)*40);top:calc(var(--u)*282);border:0;border-top:1px solid rgba(255,255,255,.14)}
+.rw .r{left:calc(var(--u)*40);right:calc(var(--u)*40);height:calc(var(--u)*28);display:flex;align-items:center;font-size:calc(var(--u)*19)}
+.rw .r svg{width:calc(var(--u)*22);height:calc(var(--u)*22);margin-right:calc(var(--u)*20);flex:none}
+.rw .r span{flex:1;color:#c9d1de}
+.rw .r b{margin-left:auto}
+
+.stat h3{left:calc(var(--u)*40);top:calc(var(--u)*20)}
+.c1 h3{left:calc(var(--u)*40)}.c2 h3{left:calc(var(--u)*33)}.c3 h3{left:calc(var(--u)*29)}.c4 h3{left:calc(var(--u)*31)}
+.big{font-weight:700;letter-spacing:-.04em;line-height:1;white-space:nowrap}
+.sub{font-size:calc(var(--u)*23);color:#cfd6e2;white-space:nowrap}
+.blue{color:var(--blue2)}
+.trk{height:calc(var(--u)*20);border-radius:99px;background:#1b1b1f;box-shadow:inset 0 1px 2px rgba(0,0,0,.6);overflow:hidden}
+.trk i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#2a86ff,#55b0ff);box-shadow:0 0 calc(var(--u)*14) rgba(60,150,255,.45);transition:width .6s ease}
+.bars{display:flex;align-items:flex-end;justify-content:space-between}
+.bars i{width:calc(var(--u)*18);background:linear-gradient(180deg,#2e9bff,#1478e6);border-radius:2px;transition:height .4s ease}
+</style>
+</head>
+<body>
+
+<header class="bar">
+ <a class="brand" href="dashboard.html"><svg viewBox="0 0 54 40" fill="#fff"><path d="M2 22 L14 18 L28 2 L35 2 L28 17 L44 14 L50 8 L53 9 L49 20 L53 31 L50 32 L44 26 L28 23 L35 38 L28 38 L14 24 L2 26Z"/></svg>SkyWatch</a>
+ <nav class="tabs" id="tabs">
+   <a class="tab on" href="dashboard.html">Dashboard</a>
+   <a class="tab" href="radar.html">Radar</a>
+   <a class="tab" href="anomalies.html">Anomalies</a>
+   <a class="tab" href="weather.html">Weather</a>
+   <a class="tab" href="insights.html">Insights</a>
+   <a class="tab" href="report.html">Report</a>
+   <a class="tab" href="learning.html">Learning Hub</a>
+ </nav>
+ <div class="st">
+   <div><span class="dot" id="live-dot"></span><span id="live-text">Live</span></div>
+   <div class="rwy"><span id="top-rwy">RWY 27</span></div>
+   <div class="clk" id="clk">14:22 IST</div>
+ </div>
+</header>
+
+<section class="top">
+ <article class="card hero">
+  <img class="img" src="hero.png" alt="Hyderabad Airspace Operations">
+  <div class="shade"></div>
+  <div class="dots"></div>
+  <h1>Hyderabad Airspace Operations Hub</h1>
+  <p>Live overview of VOHS airspace</p>
+  <a class="go" href="radar.html">Open Radar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+ </article>
+ <aside class="card rw">
+  <div class="pic"></div>
+  <h3>Active Runway</h3>
+  <div class="g"><svg viewBox="0 0 200 110">
+  <defs>
+   <linearGradient id="a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1e8fff"/><stop offset="1" stop-color="#3aa0ff"/></linearGradient>
+   <linearGradient id="b" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0a2a5e"/><stop offset="1" stop-color="#144d9f"/></linearGradient>
+   <filter id="f" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#1e8fff" flood-opacity=".8"/></filter>
+  </defs>
+  <path d="M18 100A82 82 0 0 1 182 100" stroke="#16181f" stroke-width="17" fill="none" stroke-linecap="round"/>
+  <path d="M18 100A82 82 0 0 1 182 100" stroke="url(#b)" stroke-width="17" stroke-linecap="round" opacity=".7" fill="none"/>
+  <path id="gauge-arc" d="M18 100A82 82 0 0 1 182 100" pathLength="100" stroke="url(#a)" stroke-width="17" stroke-linecap="round" stroke-dasharray="49 100" filter="url(#f)" fill="none"/>
+  <polygon id="gauge-needle" points="96,8 101,9 108,48 105,49" fill="#fff" transform-origin="100 100"/>
+  </svg></div>
+  <div class="n" id="rwy-num">27</div>
+  <div class="pill" id="rwy-pill">Moderate</div>
+  <hr>
+  <div class="r" style="top:calc(var(--u)*295)"><svg viewBox="0 0 24 24" fill="none" stroke="#e5eaf1" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11a3 3 0 1 0-3-3M3 13h15a3 3 0 1 1-3 3M3 17h7"/></svg><span>Wind</span><b style="font-weight:500" id="rwy-wind">270°  12 kt</b></div>
+  <div class="r" style="top:calc(var(--u)*331)"><svg viewBox="0 0 24 24" fill="#e5eaf1"><path d="M22 12l-6-1.2-4.5-6H9l2.2 6L6 11 4 8.5H2L3.5 12 2 15.5h2L6 13l5.200 1.200L9 20h2.500l4.500-6z"/></svg><span>Headwind</span><b style="font-weight:500" id="rwy-headwind">11 kt</b></div>
+  <div class="r" style="top:calc(var(--u)*368)"><svg viewBox="0 0 24 24" fill="#e5eaf1"><path d="M22 12l-6-1.2-4.5-6H9l2.2 6L6 11 4 8.5H2L3.5 12 2 15.5h2L6 13l5.200 1.200L9 20h2.500l4.500-6z"/></svg><span>Crosswind</span><b style="font-weight:500" id="rwy-crosswind">4 kt</b></div>
+ </aside>
+</section>
+
+<section class="bot">
+ <article class="card stat c1"><h3>Active Traffic</h3>
+  <div class="big" id="traffic-count" style="left:calc(var(--u)*40);top:calc(var(--u)*60);font-size:calc(var(--u)*84)">23</div>
+  <div class="sub blue" style="left:calc(var(--u)*43);top:calc(var(--u)*152)"><span id="traffic-arrow">▲</span> <span id="traffic-trend" style="color:var(--blue2)">+3</span> <span style="color:#cfd6e2">vs last hour</span></div>
+  <svg style="left:calc(var(--u)*18);bottom:calc(var(--u)*17);width:calc(var(--u)*345);height:calc(var(--u)*72);overflow:visible" viewBox="0 0 345 72" fill="none"><defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e8fff" stop-opacity=".22"/><stop offset="1" stop-color="#1e8fff" stop-opacity="0"/></linearGradient></defs>
+  <path id="traffic-area" d="M0 67C25 70 40 28 62 26C85 24 95 46 112 46C132 46 140 22 158 22C178 22 188 44 208 44C228 44 236 22 256 22C276 22 288 40 305 38C322 36 330 8 345 3L345 72L0 72Z" fill="url(#s)"/>
+  <path id="traffic-line" d="M0 67C25 70 40 28 62 26C85 24 95 46 112 46C132 46 140 22 158 22C178 22 188 44 208 44C228 44 236 22 256 22C276 22 288 40 305 38C322 36 330 8 345 3" stroke="#2f98ff" stroke-width="3" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(47,152,255,.7))"/>
+  <circle id="traffic-dot" cx="345" cy="3" r="6.500" fill="#fff" style="filter:drop-shadow(0 0 6px #4db0ff)"/></svg>
+ </article>
+ <article class="card stat c2"><h3>Anomalies 24h</h3>
+  <div class="big" id="anomalies-count" style="left:calc(var(--u)*36);top:calc(var(--u)*60);font-size:calc(var(--u)*84)">14</div>
+  <div class="sub blue" id="anomalies-open" style="left:calc(var(--u)*36);top:calc(var(--u)*152)">2 open</div>
+  <div class="bars" id="anomaly-bars" style="left:calc(var(--u)*43);bottom:calc(var(--u)*26);width:calc(var(--u)*303);height:calc(var(--u)*64)">
+    <i style="height:calc(var(--u)*40)"></i>
+    <i style="height:calc(var(--u)*36)"></i>
+    <i style="height:calc(var(--u)*29)"></i>
+    <i style="height:calc(var(--u)*58)"></i>
+    <i style="height:calc(var(--u)*38)"></i>
+    <i style="height:calc(var(--u)*28)"></i>
+    <i style="height:calc(var(--u)*46)"></i>
+    <i style="height:calc(var(--u)*63)"></i>
+    <i style="height:calc(var(--u)*42)"></i>
+  </div>
+ </article>
+ <article class="card stat c3"><h3>Arrivals &amp; Departures</h3>
+  <div class="big" id="arrivals-count" style="left:calc(var(--u)*37);top:calc(var(--u)*75);font-size:calc(var(--u)*61)">118</div>
+  <div style="left:calc(var(--u)*197);top:calc(var(--u)*85);width:1px;height:calc(var(--u)*92);background:rgba(255,255,255,.18)"></div>
+  <div class="big" id="departures-count" style="left:calc(var(--u)*253);top:calc(var(--u)*75);font-size:calc(var(--u)*61)">124</div>
+  <div class="sub" style="left:calc(var(--u)*34);top:calc(var(--u)*152);color:#e2e7ef">Arrivals</div>
+  <div class="sub" style="left:calc(var(--u)*252);top:calc(var(--u)*152);color:#e2e7ef">Departures</div>
+  <div class="trk" style="left:calc(var(--u)*32);bottom:calc(var(--u)*41);width:calc(var(--u)*355)"><i id="arr-dep-bar" style="width:63.500%"></i></div>
+ </article>
+ <article class="card stat c4"><h3>Corridor Health</h3>
+  <div class="big" id="corridor-pct" style="left:calc(var(--u)*31);top:calc(var(--u)*64);font-size:calc(var(--u)*78)">96.4%</div>
+  <div class="sub" style="left:calc(var(--u)*31);top:calc(var(--u)*152);color:#e2e7ef">On glideslope</div>
+  <div class="trk" style="left:calc(var(--u)*31);bottom:calc(var(--u)*41);width:calc(var(--u)*322)"><i id="corridor-bar" style="width:94%"></i></div>
+ </article>
+</section>
+
+<script>
+// ========================================================
+// REAL-TIME CLOCK (IST)
+// ========================================================
+function updateClock() {
+  const el = document.getElementById('clk');
+  if (el) {
+    el.textContent = new Date().toLocaleTimeString('en-GB', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit'
+    }) + ' IST';
+  }
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ========================================================
+// DYNAMIC DASHBOARD DATA INGESTION
+// ========================================================
+async function fetchDashboardData() {
+  try {
+    const res = await fetch('/api/dashboard');
+    if (!res.ok) throw new Error('Network error ' + res.status);
+    const d = await res.json();
+    applyDashboardData(d);
+  } catch (err) {
+    console.warn('[Dashboard] Data fetch notice:', err.message);
+    const dot = document.getElementById('live-dot');
+    const txt = document.getElementById('live-text');
+    if (dot) {
+      dot.style.background = '#FFB020';
+      dot.style.boxShadow = '0 0 10px rgba(255,176,32,.7)';
+    }
+    if (txt) txt.textContent = 'Stale';
+  }
+}
+
+function applyDashboardData(d) {
+  if (!d) return;
+
+  // Status Dot
+  const dot = document.getElementById('live-dot');
+  const txt = document.getElementById('live-text');
+  if (dot) {
+    dot.style.background = '#22d65a';
+    dot.style.boxShadow = '0 0 calc(var(--u)*12) #22d65a';
+  }
+  if (txt) txt.textContent = 'Live';
+
+  // Active Runway
+  const topRwy = document.getElementById('top-rwy');
+  const rwyNum = document.getElementById('rwy-num');
+  const rwyPill = document.getElementById('rwy-pill');
+  const rwyWind = document.getElementById('rwy-wind');
+  const rwyHeadwind = document.getElementById('rwy-headwind');
+  const rwyCrosswind = document.getElementById('rwy-crosswind');
+
+  const rwy = d.active_runway || '27';
+  if (topRwy) topRwy.textContent = `RWY ${rwy}`;
+  if (rwyNum) rwyNum.textContent = rwy;
+  if (rwyPill) rwyPill.textContent = d.runway_pill || 'Moderate';
+  if (rwyWind) rwyWind.textContent = `${d.wind_deg || 270}°  ${d.wind_kt || 12} kt`;
+  if (rwyHeadwind) rwyHeadwind.textContent = `${d.headwind_kt || 11} kt`;
+  if (rwyCrosswind) rwyCrosswind.textContent = `${d.crosswind_kt || 4} kt`;
+
+  // Runway needle rotation
+  const needle = document.getElementById('gauge-needle');
+  if (needle) {
+    const targetAngle = rwy === '27' ? 4 : -42;
+    needle.setAttribute('transform', `rotate(${targetAngle} 100 100)`);
+  }
+
+  // Active Traffic
+  const trafficCount = document.getElementById('traffic-count');
+  const trafficTrend = document.getElementById('traffic-trend');
+  const trafficArrow = document.getElementById('traffic-arrow');
+  if (trafficCount) trafficCount.textContent = d.active_traffic !== undefined ? d.active_traffic : 23;
+  if (trafficTrend && d.traffic_vs_last_hour) {
+    const vs = d.traffic_vs_last_hour.replace(' vs last hour', '');
+    trafficTrend.textContent = vs.startsWith('+') ? vs : '+' + vs;
+  }
+
+  // Anomalies 24h
+  const anomaliesCount = document.getElementById('anomalies-count');
+  const anomaliesOpen = document.getElementById('anomalies-open');
+  if (anomaliesCount) anomaliesCount.textContent = d.anomalies_24h !== undefined ? d.anomalies_24h : 14;
+  if (anomaliesOpen) anomaliesOpen.textContent = `${d.anomalies_open !== undefined ? d.anomalies_open : 2} open`;
+
+  // Anomaly Bars
+  if (Array.isArray(d.bars)) {
+    const barEls = document.querySelectorAll('#anomaly-bars i');
+    barEls.forEach((el, idx) => {
+      if (d.bars[idx] !== undefined) {
+        el.style.height = `calc(var(--u) * ${Math.max(16, Math.min(64, d.bars[idx]))})`;
+      }
+    });
+  }
+
+  // Arrivals & Departures
+  const arrCount = document.getElementById('arrivals-count');
+  const depCount = document.getElementById('departures-count');
+  const arrDepBar = document.getElementById('arr-dep-bar');
+  if (arrCount) arrCount.textContent = d.arrivals !== undefined ? d.arrivals : 118;
+  if (depCount) depCount.textContent = d.departures !== undefined ? d.departures : 124;
+  if (arrDepBar && d.arrivals && d.departures) {
+    const pct = ((d.arrivals / (d.arrivals + d.departures)) * 100).toFixed(1);
+    arrDepBar.style.width = `${pct}%`;
+  }
+
+  // Corridor Health
+  const corrPct = document.getElementById('corridor-pct');
+  const corrBar = document.getElementById('corridor-bar');
+  if (corrPct) corrPct.textContent = `${d.corridor_health !== undefined ? d.corridor_health : 96.4}%`;
+  if (corrBar && d.corridor_health !== undefined) {
+    corrBar.style.width = `${Math.min(100, Math.max(10, d.corridor_health))}%`;
+  }
+}
+
+// Initial fetch + continuous live polling every 5s
+fetchDashboardData();
+setInterval(fetchDashboardData, 5000);
+
+// SSE real-time stream connection
+if (typeof EventSource !== 'undefined') {
+  try {
+    const sse = new EventSource('/api/stream');
+    sse.onmessage = (e) => {
+      try {
+        const msg = JSON.parse(e.data);
+        if (msg.dashboard) applyDashboardData(msg.dashboard);
+      } catch (err) {}
+    };
+  } catch (err) {}
+}
+</script>
+</body>
+</html>

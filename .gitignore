@@ -1,0 +1,7 @@
+node_modules/
+.env
+skywatch.sqlite
+*.log
+__pycache__/
+.DS_Store
+test_*.png

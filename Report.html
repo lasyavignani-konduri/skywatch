@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SkyWatch – Report</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{--u:calc(100vw/1672);--blue:#1e8fff;--blue2:#3aa0ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;color:#fff;font-family:Inter,"SF Pro Display","Helvetica Neue",Arial,sans-serif;letter-spacing:-.012em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{min-width:900px}button{font:inherit;letter-spacing:inherit;color:inherit;background:none;border:0;cursor:pointer}:focus-visible{outline:2px solid var(--blue2);outline-offset:3px}
+.stg{position:relative;width:calc(var(--u)*1672);height:calc(var(--u)*941);margin:0 auto;overflow:hidden}.stg>*,.rc>*{position:absolute}
+.hl{left:0;top:calc(var(--u)*82);width:calc(var(--u)*1672);height:1px;background:rgba(255,255,255,.2)}
+.brandw{left:calc(var(--u)*22);top:calc(var(--u)*16);width:calc(var(--u)*60);height:calc(var(--u)*42)}.brandw svg{width:100%;height:100%}
+.bt{left:calc(var(--u)*98);top:calc(var(--u)*12);font-size:calc(var(--u)*36);font-weight:600;line-height:calc(var(--u)*50);letter-spacing:-.02em}
+.vd{width:1px;background:rgba(255,255,255,.2)}
+.tb{top:calc(var(--u)*11);height:calc(var(--u)*52);border-radius:99px;font-size:calc(var(--u)*22);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.5);transition:background .2s}
+.tb:hover{background:rgba(255,255,255,.14)}.tb.on{background:#fff;color:#000;border-color:#fff;font-weight:500}
+.dot{left:calc(var(--u)*1329);top:calc(var(--u)*28);width:calc(var(--u)*20);height:calc(var(--u)*20);border-radius:50%;background:#22d65a;box-shadow:0 0 calc(var(--u)*12) #22d65a}
+.mt{left:calc(var(--u)*1360);top:calc(var(--u)*22);font-size:calc(var(--u)*23);line-height:calc(var(--u)*32)}.rwy{left:calc(var(--u)*1428);top:calc(var(--u)*13);width:calc(var(--u)*97);height:calc(var(--u)*48);border:1px solid rgba(255,255,255,.2);border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:calc(var(--u)*22);background:rgba(255,255,255,.04)}
+.clk{left:calc(var(--u)*1555);top:calc(var(--u)*22);font-size:calc(var(--u)*24);font-weight:600;line-height:calc(var(--u)*32);white-space:nowrap}
+.hero{left:0;top:calc(var(--u)*83);width:calc(var(--u)*1672);height:calc(var(--u)*128);background:url(airplane.png) calc(var(--u)*591) calc(var(--u)*-97)/calc(var(--u)*1045) calc(var(--u)*348) no-repeat #000;-webkit-mask-image:linear-gradient(90deg,transparent 30%,#000 62%);mask-image:linear-gradient(90deg,transparent 30%,#000 62%)}
+.hbar{left:calc(var(--u)*33);top:calc(var(--u)*101);width:calc(var(--u)*10);height:calc(var(--u)*81);border-radius:calc(var(--u)*5);background:linear-gradient(180deg,#8fc8ff,#1e8fff 60%,#0b4fb3);box-shadow:0 0 calc(var(--u)*14) rgba(30,143,255,.6)}
+.ht{left:calc(var(--u)*66);top:calc(var(--u)*93);font-size:calc(var(--u)*48);font-weight:700;line-height:calc(var(--u)*58);letter-spacing:-.025em}.hs{left:calc(var(--u)*66);top:calc(var(--u)*155);font-size:calc(var(--u)*26);line-height:calc(var(--u)*32);color:#e3e8f0}
+.rc{overflow:hidden;border-radius:calc(var(--u)*22);border:1px solid rgba(255,255,255,.2);background:linear-gradient(160deg,#101013 0%,#060608 45%,#020203 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 calc(var(--u)*40) rgba(255,255,255,.03),0 calc(var(--u)*30) calc(var(--u)*60) rgba(0,0,0,.7)}
+.rc::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(225deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,.04) 20%,rgba(255,255,255,0) 42%)}
+.lb{font-size:calc(var(--u)*25);line-height:calc(var(--u)*30);color:#e8edf5;white-space:nowrap}.big{font-size:calc(var(--u)*56);font-weight:700;line-height:1;letter-spacing:-.025em;white-space:nowrap}.dl{font-size:calc(var(--u)*24);line-height:calc(var(--u)*30);color:#e8edf5;white-space:nowrap;display:flex;align-items:center;gap:calc(var(--u)*8)}.dl b{font-weight:500;color:var(--blue2)}.dl svg{width:calc(var(--u)*26);height:calc(var(--u)*26);fill:none;stroke:var(--blue2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ic{width:calc(var(--u)*44);height:calc(var(--u)*40);fill:none;stroke:var(--blue);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tt{font-size:calc(var(--u)*27);font-weight:600;line-height:calc(var(--u)*34);white-space:nowrap;letter-spacing:-.02em}.tt span{font-weight:400}
+.lg{font-size:calc(var(--u)*21);line-height:calc(var(--u)*26);white-space:nowrap;color:#e8edf5}.lg .d{display:inline-block;width:calc(var(--u)*20);height:calc(var(--u)*20);border-radius:50%;vertical-align:middle;margin-right:0}.lv{font-size:calc(var(--u)*21);line-height:calc(var(--u)*26);text-align:right;white-space:nowrap;color:#aeb8c8}.lv b{font-weight:600;color:#fff}
+.kb{width:calc(var(--u)*11);border-radius:calc(var(--u)*6);background:linear-gradient(180deg,#4aa8ff,#1e8fff 55%,#0a5fd6)}.kt{font-size:calc(var(--u)*24);line-height:calc(var(--u)*28);width:calc(var(--u)*340);color:#f2f5fa}.ks{height:1px;background:rgba(255,255,255,.18);width:calc(var(--u)*337)}
+.nm{width:calc(var(--u)*38);height:calc(var(--u)*38);border-radius:50%;background:#1e8fff;display:grid;place-items:center;font-size:calc(var(--u)*22);font-weight:500}.rt2{font-size:calc(var(--u)*24);line-height:calc(var(--u)*30);white-space:nowrap}
+.pill{border:3px solid #1e8fff;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:calc(var(--u)*30);font-weight:600;color:#2f93ff;background:rgba(30,143,255,.06);box-shadow:0 0 calc(var(--u)*18) rgba(30,143,255,.35)}
+.twr{left:calc(var(--u)*194);top:calc(var(--u)*11);width:calc(var(--u)*556);height:calc(var(--u)*185);background:url(towers.png) 0 0/calc(var(--u)*556) calc(var(--u)*185) no-repeat;-webkit-mask-image:linear-gradient(90deg,transparent 18%,#000 55%);mask-image:linear-gradient(90deg,transparent 18%,#000 55%)}
+.trk{background:#2b2e34;border-radius:calc(var(--u)*11);overflow:hidden}.trk i{display:block;height:100%;border-radius:calc(var(--u)*11);background:linear-gradient(90deg,#2f9bff,#0a6bff);box-shadow:0 0 calc(var(--u)*14) rgba(30,143,255,.7)}
+/* Download button cluster - prominent, high-contrast, off the hero airplane image */
+.dl-cluster{display:flex;gap:calc(var(--u)*12);align-items:center;z-index:20;background:#060a10;border:1px solid rgba(47,107,255,.5);padding:calc(var(--u)*8) calc(var(--u)*16);border-radius:calc(var(--u)*14);box-shadow:0 calc(var(--u)*8) calc(var(--u)*24) rgba(0,0,0,.85)}
+.dl-btn{height:calc(var(--u)*44);padding:0 calc(var(--u)*18);border-radius:calc(var(--u)*10);font-size:calc(var(--u)*20);font-weight:700;display:flex;align-items:center;gap:calc(var(--u)*8);cursor:pointer;transition:all .18s;border:0}
+.dl-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}.dl-btn:active{transform:translateY(0)}
+.dl-btn.pdf{background:#1e8fff;color:#fff;box-shadow:0 0 calc(var(--u)*14) rgba(30,143,255,.5)}
+.dl-btn.csv{background:#1ea750;color:#fff;box-shadow:0 0 calc(var(--u)*14) rgba(34,214,90,.4)}
+.dl-btn svg{width:calc(var(--u)*20);height:calc(var(--u)*20);fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+/* Badge showing last refresh */
+.live-badge{display:flex;align-items:center;gap:calc(var(--u)*8);font-size:calc(var(--u)*20);color:#aeb8c8}
+.live-badge .pulse{width:calc(var(--u)*8);height:calc(var(--u)*8);border-radius:50%;background:#22d65a;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+/* Print styles */
+@media print{
+  .tb,.dl-cluster,.live-badge,.hbar,.dot,.mt,.rwy,.clk,.vd,.twr,.hero{display:none!important}
+  .stg{width:100%!important;height:auto!important;overflow:visible!important}
+  .rc{page-break-inside:avoid;break-inside:avoid}
+  *{position:static!important;color:#000!important;background:#fff!important;box-shadow:none!important;border-color:#ccc!important}
+  .big,.ht,.tt,.lb,.kt,.rt2{color:#000!important}
+  #tsv{display:none}
+  body{background:#fff!important}
+}
+</style></head><body><div class="stg">
+<div class="hero"></div><div class="hl"></div><div class="brandw"><svg viewBox="0 0 54 40" fill="#fff"><path d="M2 22 L14 18 L28 2 L35 2 L28 17 L44 14 L50 8 L53 9 L49 20 L53 31 L50 32 L44 26 L28 23 L35 38 L28 38 L14 24 L2 26Z"/></svg></div><div class="bt">SkyWatch</div><div class="vd" style="left:calc(var(--u)*287);top:calc(var(--u)*14);height:calc(var(--u)*48)"></div><button class="tb" style="left:calc(var(--u)*310);width:calc(var(--u)*137)" data-href="dashboard.html">Dashboard</button><button class="tb" style="left:calc(var(--u)*467);width:calc(var(--u)*96)" data-href="radar.html">Radar</button><button class="tb" style="left:calc(var(--u)*582);width:calc(var(--u)*128)" data-href="anomalies.html">Anomalies</button><button class="tb" style="left:calc(var(--u)*730);width:calc(var(--u)*115)" data-href="weather.html">Weather</button><button class="tb" style="left:calc(var(--u)*864);width:calc(var(--u)*114)" data-href="insights.html">Insights</button><button class="tb on" style="left:calc(var(--u)*996);width:calc(var(--u)*111)" data-href="Report.html">Report</button><button class="tb" style="left:calc(var(--u)*1125);width:calc(var(--u)*155)" data-href="learning-hub.html">Learning Hub</button>
+<div class="vd" style="left:calc(var(--u)*1303);top:calc(var(--u)*14);height:calc(var(--u)*48)"></div><div class="dot" id="modeDot"></div><div class="mt" id="modeTxt">Live</div><div class="vd" style="left:calc(var(--u)*1415);top:calc(var(--u)*14);height:calc(var(--u)*48)"></div><div class="rwy" id="rwyChip">RWY 27</div><div class="vd" style="left:calc(var(--u)*1538);top:calc(var(--u)*14);height:calc(var(--u)*48)"></div><div class="clk" id="clk">14:22 IST</div>
+<div class="hbar"></div><div class="ht">Daily Shift Report</div>
+<div class="hs" id="hs">Hyderabad Airport (VOHS) • 17 Nov 2026</div>
+<!-- Download buttons — placed on clean pure black area, completely off the airplane image -->
+<div class="dl-cluster" style="position:absolute;left:calc(var(--u)*520);top:calc(var(--u)*100)">
+  <div class="live-badge"><div class="pulse"></div><span id="lastRefresh">Refreshing…</span></div>
+  <button class="dl-btn csv" id="btnCsv" title="Export CSV">
+    <svg viewBox="0 0 20 20"><path d="M3 17h14M10 3v11M6 10l4 4 4-4"/></svg>Export CSV
+  </button>
+  <button class="dl-btn pdf" id="btnPdf" title="Download PDF">
+    <svg viewBox="0 0 20 20"><path d="M4 4h8l4 4v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM12 4v4h4"/><path d="M7 13h6M7 10h4"/></svg>Download PDF
+  </button>
+</div>
+<!-- KPI Row -->
+<article class="rc" style="left:calc(var(--u)*22);top:calc(var(--u)*213);width:calc(var(--u)*398);height:calc(var(--u)*173)"><svg class="ic" viewBox="0 0 44 40" style="left:calc(var(--u)*44);top:calc(var(--u)*18)"><path d="M3 24L37 8c2-1 4 1 3 3L22 26l-4 11-4-1 1-8-9-3z" fill="#1e8fff" stroke="none"/></svg><div class="lb" style="left:calc(var(--u)*109);top:calc(var(--u)*20)">Total Flights</div><div class="big" id="rT" style="left:calc(var(--u)*51);top:calc(var(--u)*61)">—</div><div class="dl" style="left:calc(var(--u)*51);top:calc(var(--u)*125)"><svg viewBox="0 0 26 26"><path d="M3 18l7-7 5 5 8-8M16 8h7v7"/></svg><b id="rTd">+3%</b><span id="rTx"> vs previous shift</span></div></article>
+<article class="rc" style="left:calc(var(--u)*441);top:calc(var(--u)*213);width:calc(var(--u)*383);height:calc(var(--u)*173)"><svg class="ic" viewBox="0 0 40 40" style="left:calc(var(--u)*39);top:calc(var(--u)*18)"><path d="M20 4L38 35H2z" fill="#1e8fff" stroke="none"/><path d="M20 15v10M20 29v2" stroke="#06121f" stroke-width="3"/></svg><div class="lb" style="left:calc(var(--u)*103);top:calc(var(--u)*20)">Anomalies</div><div class="big" id="rA" style="left:calc(var(--u)*50);top:calc(var(--u)*61)">—</div><div class="dl" style="left:calc(var(--u)*48);top:calc(var(--u)*125)"><svg viewBox="0 0 26 26"><path d="M13 22V5M6 12l7-7 7 7"/></svg><b id="rAd">+1</b><span id="rAx"> vs previous shift</span></div></article>
+<article class="rc" style="left:calc(var(--u)*846);top:calc(var(--u)*213);width:calc(var(--u)*384);height:calc(var(--u)*173)"><svg class="ic" viewBox="0 0 40 40" style="left:calc(var(--u)*35);top:calc(var(--u)*18)"><circle cx="20" cy="20" r="16"/><path d="M20 10v10l7 4"/></svg><div class="lb" style="left:calc(var(--u)*99);top:calc(var(--u)*20)" id="rUl">ATC Uptime</div><div class="big" id="rU" style="left:calc(var(--u)*43);top:calc(var(--u)*61)">99.7%</div><div class="dl" style="left:calc(var(--u)*43);top:calc(var(--u)*125)" id="rUt">Target ≥ 99%</div></article>
+<article class="rc" style="left:calc(var(--u)*1252);top:calc(var(--u)*213);width:calc(var(--u)*397);height:calc(var(--u)*173)"><svg class="ic" viewBox="0 0 44 40" style="left:calc(var(--u)*38);top:calc(var(--u)*18)"><path d="M17 4L4 36M27 4l13 32M22 6v6M22 17v6M22 28v6" /><path d="M4 36h36" /></svg><div class="lb" style="left:calc(var(--u)*109);top:calc(var(--u)*20)" id="rRl">Runway 27 Usage</div><div class="big" id="rR" style="left:calc(var(--u)*45);top:calc(var(--u)*61)">72%</div><div class="trk" style="left:calc(var(--u)*45);top:calc(var(--u)*130);width:calc(var(--u)*326);height:calc(var(--u)*21)"><i id="rRb" style="width:71%"></i></div></article>
+<!-- Middle Row -->
+<article class="rc" style="left:calc(var(--u)*22);top:calc(var(--u)*407);width:calc(var(--u)*534);height:calc(var(--u)*277)"><div class="tt" style="left:calc(var(--u)*33);top:calc(var(--u)*9)">Operations Summary</div><svg style="left:calc(var(--u)*46);top:calc(var(--u)*52);width:calc(var(--u)*202);height:calc(var(--u)*202)" viewBox="0 0 202 202"><g transform="rotate(-90 101 101)" fill="none" stroke-width="35"><circle id="oD" cx="101" cy="101" r="83.5" pathLength="100" stroke="#7ab8ff" stroke-dasharray="50 100" stroke-dashoffset="-50"/><circle id="oA" cx="101" cy="101" r="83.5" pathLength="100" stroke="#1e8fff" stroke-dasharray="50 100"/></g></svg><div id="oT" style="left:calc(var(--u)*46);width:calc(var(--u)*202);top:calc(var(--u)*123);text-align:center;font-size:calc(var(--u)*36);font-weight:700;line-height:1">—</div><div style="left:calc(var(--u)*46);width:calc(var(--u)*202);top:calc(var(--u)*162);text-align:center;font-size:calc(var(--u)*21);line-height:calc(var(--u)*26);color:#e8edf5">Total Flights</div><i class="lg" style="left:calc(var(--u)*272);top:calc(var(--u)*103);position:absolute"><span class="d" style="background:#1e8fff"></span></i><div class="lg" style="left:calc(var(--u)*300);top:calc(var(--u)*100)">Arrivals</div><div class="lv" style="right:calc(var(--u)*19);top:calc(var(--u)*100)" id="oAv"><b>—</b></div><i class="lg" style="left:calc(var(--u)*272);top:calc(var(--u)*157);position:absolute"><span class="d" style="background:#7ab8ff"></span></i><div class="lg" style="left:calc(var(--u)*300);top:calc(var(--u)*154)">Departures</div><div class="lv" style="right:calc(var(--u)*19);top:calc(var(--u)*154)" id="oDv"><b>—</b></div></article>
+<article class="rc" style="left:calc(var(--u)*578);top:calc(var(--u)*407);width:calc(var(--u)*606);height:calc(var(--u)*277)"><div class="tt" style="left:calc(var(--u)*27);top:calc(var(--u)*10)">Traffic Trend <span>(Last 24h)</span></div><svg id="tsv" style="left:0;top:0;width:calc(var(--u)*606);height:calc(var(--u)*277)" viewBox="0 0 606 277"></svg><div id="ttp" style="left:calc(var(--u)*309);top:calc(var(--u)*46);height:calc(var(--u)*38);padding:0 calc(var(--u)*10);display:flex;align-items:center;border:1px solid #2f8fff;border-radius:calc(var(--u)*8);background:#07101e;font-size:calc(var(--u)*21);white-space:nowrap;z-index:2">2.6k · 09:00</div></article>
+<article class="rc" style="left:calc(var(--u)*1206);top:calc(var(--u)*407);width:calc(var(--u)*443);height:calc(var(--u)*277)"><div class="tt" style="left:calc(var(--u)*29);top:calc(var(--u)*10)">Key Takeaways</div><div class="kb" style="left:calc(var(--u)*39);top:calc(var(--u)*63);height:calc(var(--u)*54)"></div><div class="kt" id="k1" style="left:calc(var(--u)*77);top:calc(var(--u)*61)">Loading…</div><div class="ks" style="left:calc(var(--u)*77);top:calc(var(--u)*123)"></div><div class="kb" style="left:calc(var(--u)*39);top:calc(var(--u)*133);height:calc(var(--u)*54)"></div><div class="kt" id="k2" style="left:calc(var(--u)*77);top:calc(var(--u)*131)">Loading…</div><div class="ks" style="left:calc(var(--u)*77);top:calc(var(--u)*194)"></div><div class="kb" style="left:calc(var(--u)*39);top:calc(var(--u)*203);height:calc(var(--u)*46)"></div><div class="kt" id="k3" style="left:calc(var(--u)*77);top:calc(var(--u)*210)">Loading…</div></article>
+<!-- Bottom Row -->
+<article class="rc" style="left:calc(var(--u)*22);top:calc(var(--u)*705);width:calc(var(--u)*878);height:calc(var(--u)*192)"><svg class="ic" viewBox="0 0 36 44" style="left:calc(var(--u)*40);top:calc(var(--u)*17);width:calc(var(--u)*36);height:calc(var(--u)*44)"><path d="M18 3a11 11 0 0 0-6 20c1 1 2 3 2 5h8c0-2 1-4 2-5A11 11 0 0 0 18 3zM13 33h10M14 38h8"/></svg><div class="tt" id="recT" style="left:calc(var(--u)*105);top:calc(var(--u)*14);font-size:calc(var(--u)*30)">Recommendations</div><div class="ks" style="left:calc(var(--u)*108);top:calc(var(--u)*71);width:calc(var(--u)*737)"></div><div class="nm" style="left:calc(var(--u)*45);top:calc(var(--u)*79)">1</div><div class="rt2" id="r1" style="left:calc(var(--u)*112);top:calc(var(--u)*83)">Monitor increased holding patterns in NE sector.</div><div class="ks" style="left:calc(var(--u)*108);top:calc(var(--u)*120);width:calc(var(--u)*737)"></div><div class="nm" style="left:calc(var(--u)*45);top:calc(var(--u)*128)">2</div><div class="rt2" id="r2" style="left:calc(var(--u)*112);top:calc(var(--u)*132)">Review cause of altitude drop for AIC2417.</div><div class="ks" style="left:calc(var(--u)*108);top:calc(var(--u)*170);width:calc(var(--u)*737)"></div></article>
+<article class="rc" style="left:calc(var(--u)*923);top:calc(var(--u)*705);width:calc(var(--u)*726);height:calc(var(--u)*192)"><div class="twr"></div><svg class="ic" viewBox="0 0 42 42" style="left:calc(var(--u)*38);top:calc(var(--u)*19);width:calc(var(--u)*42);height:calc(var(--u)*42)"><circle cx="21" cy="21" r="18"/><path d="M12 22l6 6 12-13"/></svg><div class="tt" style="left:calc(var(--u)*111);top:calc(var(--u)*17);font-size:calc(var(--u)*30)">Shift Status</div><div class="pill" id="sP" style="left:calc(var(--u)*40);top:calc(var(--u)*88);width:calc(var(--u)*191);height:calc(var(--u)*66)">Nominal</div><div class="vd" style="left:calc(var(--u)*270);top:calc(var(--u)*91);height:calc(var(--u)*62)"></div><div style="left:calc(var(--u)*313);top:calc(var(--u)*89);font-size:calc(var(--u)*22);line-height:calc(var(--u)*28);color:#e8edf5;white-space:nowrap">Report Generated</div><div id="sG" style="left:calc(var(--u)*313);top:calc(var(--u)*121);font-size:calc(var(--u)*24);line-height:calc(var(--u)*30);white-space:nowrap">14:22 IST</div></article>
+</div><script>
+(function(){
+const $=id=>document.getElementById(id),set=(id,v)=>{const e=$(id);if(e&&v!=null)e.textContent=v};
+const f=n=>Math.round(n).toLocaleString("en-US");
+// Clock
+function clk(){set("clk",new Date().toLocaleTimeString("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit"})+" IST")}clk();setInterval(clk,15000);
+// Nav
+document.querySelectorAll(".tb").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.href)location.href=b.dataset.href}));
+// Trend chart
+function smooth(p){let d=`M${p[0][0]} ${p[0][1]}`;for(let i=0;i<p.length-1;i++){const a=p[i-1]||p[i],b=p[i],c=p[i+1],e=p[i+2]||c;d+=`C${(b[0]+(c[0]-a[0])/6).toFixed(1)} ${(b[1]+(c[1]-a[1])/6).toFixed(1)} ${(c[0]-(e[0]-b[0])/6).toFixed(1)} ${(c[1]-(e[1]-b[1])/6).toFixed(1)} ${c[0].toFixed(1)} ${c[1].toFixed(1)}`}return d}
+function trend(h){if(!h||h.length<2)return;const X0=70,X1=574,YB=226,YT=76,mx=Math.max(...h,1),pk=h.indexOf(Math.max(...h)),y=v=>YB-v/mx*(YB-YT),x=i=>X0+i*(X1-X0)/(h.length-1);
+ const pts=h.map((v,i)=>[x(i),y(v)]),d=smooth(pts),step=[100,200,500,1000,2000,5000].find(s=>mx/s<=2.7)||5000;let g="";
+ for(let v=0;v<=mx*.999;v+=step){const yy=y(v);g+=`<line x1="${X0-8}" x2="${X0}" y1="${yy}" y2="${yy}" stroke="#cfd6e2" stroke-width="1.3"/><text x="${X0-22}" y="${yy+7}" text-anchor="end" fill="#e8edf5" font-size="21">${v==0?0:v>=1000?v/1000+"k":v}</text>`}
+ [[0,"00:00"],[6,"06:00"],[12,"12:00"],[18,"18:00"],[24,"24:00"]].forEach(([hr,t])=>{const xx=X0+hr*(X1-X0)/24;g+=`<line x1="${xx}" x2="${xx}" y1="${YB}" y2="${YB+8}" stroke="#cfd6e2" stroke-width="1.3"/><text x="${xx}" y="${YB+29}" text-anchor="middle" fill="#e8edf5" font-size="21">${t}</text>`});
+ $("tsv").innerHTML=`<defs><linearGradient id="ta" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e8fff" stop-opacity=".6"/><stop offset="1" stop-color="#0a2a66" stop-opacity=".08"/></linearGradient><filter id="tg"><feGaussianBlur stdDeviation="3"/></filter></defs>
+ <line x1="${X0}" x2="${X0}" y1="${YT-8}" y2="${YB}" stroke="#cfd6e2" stroke-width="1.3"/><line x1="${X0}" x2="${X1+4}" y1="${YB}" y2="${YB}" stroke="#cfd6e2" stroke-width="1.3"/>${g}
+ <path d="${d}L${X1} ${YB}L${X0} ${YB}Z" fill="url(#ta)"/><path d="${d}" fill="none" stroke="#2f8fff" stroke-width="6" opacity=".5" filter="url(#tg)"/><path d="${d}" fill="none" stroke="#7cc0ff" stroke-width="3"/>
+ <path d="M${pts[pk][0]} ${pts[pk][1]}L${pts[pk][0]+22} ${pts[pk][1]-8}" stroke="#2f8fff" stroke-width="1.3"/><circle cx="${pts[pk][0]}" cy="${pts[pk][1]}" r="6.5" fill="#fff"/>`;
+ const t=$("ttp");t.style.left=`calc(var(--u)*${(pts[pk][0]+22).toFixed(0)})`;t.style.top=`calc(var(--u)*${(pts[pk][1]-35).toFixed(0)})`;t.textContent=(h[pk]/1000).toFixed(1)+"k · "+String(pk).padStart(2,"0")+":00"}
+
+// Update UI from data
+window.SkyWatch=window.SkyWatch||{};
+SkyWatch.updateReport=function(d){
+ if(d.mode){set("modeTxt",d.mode);const c=d.mode==="Live"?"#22d65a":"#e0a93b";$("modeDot").style.background=c;$("modeDot").style.boxShadow="0 0 calc(var(--u)*12) "+c}
+ if(d.runway)set("rwyChip","RWY "+d.runway);
+ if(d.airport||d.date)set("hs",(d.airport?d.airport.name:"Hyderabad Airport (VOHS)")+" • "+(d.date||""));
+ if(d.total){set("rT",f(d.total.count));set("rTd",(d.total.delta_pct>=0?"+":"")+d.total.delta_pct+"%")}
+ if(d.anomalies){set("rA",d.anomalies.count);set("rAd",(d.anomalies.delta>=0?"+":"")+d.anomalies.delta)}
+ if(d.uptime){set("rU",d.uptime.pct.toFixed(1)+"%");set("rUt","Target ≥ "+d.uptime.target+"%");if(d.uptime.label)set("rUl",d.uptime.label)}
+ if(d.runway_usage){set("rR",d.runway_usage.pct+"%");set("rRl","Runway "+d.runway_usage.runway+" Usage");$("rRb").style.width=d.runway_usage.pct+"%"}
+ if(d.ops){const a=d.ops.arrivals,b=d.ops.departures,t=Math.max(1,a+b);set("oT",f(a+b));$("oA").setAttribute("stroke-dasharray",a/t*100+" 100");$("oD").setAttribute("stroke-dasharray",b/t*100+" 100");$("oD").setAttribute("stroke-dashoffset",-a/t*100);
+  $("oAv").innerHTML=`<b>${f(a)}</b> (${Math.round(a/t*100)}%)`;$("oDv").innerHTML=`<b>${f(b)}</b> (${Math.round(b/t*100)}%)`}
+ if(d.trend)trend(d.trend);
+ if(d.takeaways)d.takeaways.slice(0,3).forEach((t,i)=>set("k"+(i+1),t));
+ if(d.recommendations)d.recommendations.slice(0,2).forEach((t,i)=>set("r"+(i+1),t));
+ if(d.status)set("sP",d.status);
+ if(d.generated)set("sG",d.generated);
+ // Update refresh badge
+ set("lastRefresh","Updated "+new Date().toLocaleTimeString("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit"})+" IST");
+};
+
+// Design fallback values
+const DESIGN=()=>({mode:"Live",runway:"27",airport:{name:"Hyderabad Airport (VOHS)"},date:new Date().toLocaleDateString("en-IN",{timeZone:"Asia/Kolkata",day:"2-digit",month:"short",year:"numeric"}),total:{count:2418,delta_pct:3},anomalies:{count:14,delta:1},uptime:{pct:99.7,target:99},runway_usage:{runway:"27",pct:72},
+ ops:{arrivals:1198,departures:1220},trend:[1090,1180,1160,1260,1320,1400,1480,1700,2100,2600,2450,2300,2220,2050,1900,1800,1650,1560,1500,1330,1380,1500,1700,1900,1900],
+ takeaways:["Traffic remained within expected range.","2 high severity anomalies recorded.","Runway 27 usage at 72%."],recommendations:["Monitor increased holding patterns in NE sector.","Review cause of altitude drop for AIC2417."],status:"Nominal",generated:new Date().toLocaleTimeString("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit"})+" IST"});
+SkyWatch.updateReport(DESIGN());
+
+// Live polling
+async function poll(){
+  try{
+    const r=await fetch("/api/page/report");
+    if(!r.ok)throw new Error("report endpoint unavailable");
+    const data=await r.json();
+    window._reportData=data;
+    SkyWatch.updateReport(data);
+  }catch(e){
+    // Fallback to /api/summary
+    try{
+      const s=await fetch("/api/summary?period=today").then(r=>r.json());
+      const w=await fetch("/api/weather").then(r=>r.json()).catch(()=>({}));
+      const arrivals=s.keyNumbers?s.keyNumbers.arrivals:0;
+      const departures=s.keyNumbers?s.keyNumbers.departures:0;
+      const data={
+        mode:"Live",runway:s.activeRunway||"27",
+        airport:{name:"Hyderabad Airport (VOHS)"},
+        date:new Date().toLocaleDateString("en-IN",{timeZone:"Asia/Kolkata",day:"2-digit",month:"short",year:"numeric"}),
+        total:{count:arrivals+departures,delta_pct:3},
+        anomalies:{count:s.alerts?s.alerts.total:0,delta:s.alerts?s.alerts.high:0},
+        uptime:{pct:99.7,target:99,label:"ATC Uptime"},
+        runway_usage:{runway:s.activeRunway||"27",pct:72},
+        ops:{arrivals,departures},
+        trend:[1090,1180,1160,1260,1320,1400,1480,1700,2100,2600,2450,2300,2220,2050,1900,1800,1650,1560,1500,1330,1380,1500,1700,1900,1900],
+        takeaways:[`${arrivals+departures} total movements recorded.`,s.alerts&&s.alerts.high>0?`${s.alerts.high} high-severity alerts active.`:"No high-severity alerts.","Systems operating normally."],
+        recommendations:["Continue standard monitoring procedures.","Review all flagged anomalies before shift end."],
+        status:s.alerts&&s.alerts.high>3?"Elevated":"Nominal",
+        generated:new Date().toLocaleTimeString("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit"})+" IST"
+      };
+      window._reportData=data;
+      SkyWatch.updateReport(data);
+    }catch(e2){}
+  }
+}
+poll();setInterval(poll,30000);
+
+// CSV Export
+function buildCSV(d){
+  if(!d)return"No data available";
+  const rows=[
+    ["SkyWatch Daily Shift Report"],
+    ["Generated",d.generated||""],
+    ["Airport",d.airport?d.airport.name:""],
+    ["Date",d.date||""],
+    ["Mode",d.mode||""],
+    [""],
+    ["KPI","Value"],
+    ["Total Flights",d.total?d.total.count:""],
+    ["Anomalies",d.anomalies?d.anomalies.count:""],
+    ["ATC Uptime",d.uptime?d.uptime.pct+"%":""],
+    ["Active Runway",d.runway||""],
+    ["Runway Usage",d.runway_usage?d.runway_usage.pct+"%":""],
+    [""],
+    ["Operations",""],
+    ["Arrivals",d.ops?d.ops.arrivals:""],
+    ["Departures",d.ops?d.ops.departures:""],
+    [""],
+    ["Key Takeaways",""],
+    ...(d.takeaways||[]).map((t,i)=>[i+1,t]),
+    [""],
+    ["Recommendations",""],
+    ...(d.recommendations||[]).map((r,i)=>[i+1,r]),
+    [""],
+    ["Shift Status",d.status||""],
+  ];
+  return rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+}
+
+$("btnCsv").addEventListener("click",()=>{
+  const csv=buildCSV(window._reportData||DESIGN());
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="SkyWatch_Report_"+new Date().toISOString().split("T")[0]+".csv";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+$("btnPdf").addEventListener("click",()=>{
+  window.print();
+});
+})();
+</script></body></html>

@@ -1,0 +1,738 @@
+[
+  {
+    "id": "rapid-altitude-drop",
+    "term": "Rapid Altitude Drop",
+    "shortName": "Altitude Drop",
+    "title": "Abnormal High-Rate Descent Event",
+    "category": "anomalies",
+    "severity": "High",
+    "shortDef": "Descent rate exceeding 3,000 fpm below FL100 or 1,500 fpm during final approach stabilization.",
+    "fullDef": "A Rapid Altitude Drop is flagged when an aircraft vertical speed indicates an excessive descent rate inconsistent with standard operating envelopes. In terminal maneuvering areas (TMA), descents faster than 3,000 ft/min trigger immediate tactical review. Below 1,000 ft above aerodrome level, descent rates exceeding 1,000 ft/min breach stabilized approach criteria and trigger unstabilized approach warnings.",
+    "operationalContext": "At Rajiv Gandhi International (VOHS), aircraft descending onto RWY 09 or RWY 27 intercept the glide slope at 4,000 ft MSL (~2,000 ft AGL). A vertical descent rate exceeding 1,500 fpm within 5 NM of the threshold poses immediate terrain proximity and runway overrun hazards.",
+    "keyParameters": [
+      {
+        "param": "TMA Threshold",
+        "value": "> 3,000 ft/min",
+        "meaning": "Descent rate in terminal airspace"
+      },
+      {
+        "param": "Final Approach Gate",
+        "value": "> 1,000 ft/min",
+        "meaning": "Below 1,000 ft AGL stabilization limit"
+      },
+      {
+        "param": "Severity Classification",
+        "value": "High",
+        "meaning": "Immediate controller monitoring required"
+      }
+    ],
+    "relatedTerms": [
+      "Go-Around",
+      "Low Approach",
+      "Glide Slope",
+      "TCAS",
+      "Decision Altitude (DA)"
+    ]
+  },
+  {
+    "id": "squawk-7700",
+    "term": "Squawk 7700",
+    "shortName": "Emergency Squawk",
+    "title": "Aeronautical General Emergency Transponder Code",
+    "category": "anomalies",
+    "severity": "High",
+    "shortDef": "Universal transponder code indicating an airborne emergency threatening the safety of the aircraft.",
+    "fullDef": "Squawk 7700 is the international Secondary Surveillance Radar (SSR) transponder code transmitted by an aircraft crew in response to any general in-flight emergency. When set, ATC radar displays highlight the target with visual and audible alarms, and the aircraft receives unconditional priority routing, expedited altitude clearances, and immediate emergency ground service staging.",
+    "operationalContext": "When an inbound flight into Hyderabad TMA squawks 7700, Hyderabad Approach immediately sanitizes the airspace corridor, verifies pilot intentions, coordinates with Airport Fire & Rescue (ARFF Category 9), and establishes a sterile frequency if needed.",
+    "keyParameters": [
+      {
+        "param": "Code",
+        "value": "7700",
+        "meaning": "General Emergency (Mayday / Pan-Pan)"
+      },
+      {
+        "param": "Priority",
+        "value": "Unconditional",
+        "meaning": "Priority over all conflicting traffic"
+      },
+      {
+        "param": "ATC Action",
+        "value": "Sanitize Corridor",
+        "meaning": "Clear altitude layers and vector around"
+      }
+    ],
+    "relatedTerms": [
+      "Squawk 7600",
+      "Squawk 7500",
+      "Disruption Pulse",
+      "Corridor Health"
+    ]
+  },
+  {
+    "id": "holding-pattern",
+    "term": "Holding Pattern",
+    "shortName": "Holding",
+    "title": "Predefined Airspace Racetrack Delay Maneuver",
+    "category": "anomalies",
+    "severity": "Medium",
+    "shortDef": "Racetrack-shaped flight path used to delay aircraft due to runway congestion, weather, or ATC spacing.",
+    "fullDef": "A holding pattern keeps an aircraft within a specified airspace segment while awaiting onward clearance. Standard holding consists of two 180-degree right turns connected by straight legs (typically 1 minute inbound leg below 14,000 ft). Holding patterns are detected automatically by tracking heading reversals and cyclic trajectory loops.",
+    "operationalContext": "At VOHS, primary holding fixes are located at TEBUR (East) and OPROK (West). When convective storms develop over Shamshabad, inbound aircraft are stacked vertically at 1,000 ft separation intervals.",
+    "keyParameters": [
+      {
+        "param": "Leg Duration",
+        "value": "1.0 min (< 14,000 ft)",
+        "meaning": "Inbound leg timing"
+      },
+      {
+        "param": "Standard Turn",
+        "value": "Right-hand 3 deg/sec",
+        "meaning": "Standard rate turn"
+      },
+      {
+        "param": "Vertical Separation",
+        "value": "1,000 ft",
+        "meaning": "Vertical spacing in holding stack"
+      }
+    ],
+    "relatedTerms": [
+      "Go-Around",
+      "Corridor Health",
+      "Disruption Pulse",
+      "METAR"
+    ]
+  },
+  {
+    "id": "go-around",
+    "term": "Go-Around",
+    "shortName": "Missed Approach",
+    "title": "Aborted Landing Procedure and Climb Out",
+    "category": "anomalies",
+    "severity": "Medium",
+    "shortDef": "Standard safety maneuver executing an aborted landing attempt from intermediate or final approach.",
+    "fullDef": "A go-around occurs when a flight crew or ATC decides that an approach cannot safely continue to a landing. Typical causes include runway obstruction, sudden windshear, low ceiling below decision altitude without visual contact, or unstabilized approach parameters. Aircraft immediately pitch up to climb thrust, retract gear/flaps according to SOP, and follow the published missed approach procedure.",
+    "operationalContext": "Published missed approach for VOHS RWY 09 requires climbing straight ahead to 4,000 ft then turning onto track 140 to re-enter radar sequencing or proceed to holding.",
+    "keyParameters": [
+      {
+        "param": "Climb Rate",
+        "value": "+1,500 to +3,000 fpm",
+        "meaning": "Immediate positive climb indication"
+      },
+      {
+        "param": "Gate Altitude",
+        "value": "1,000 ft IMC / 500 ft VMC",
+        "meaning": "Stabilization decision altitude"
+      },
+      {
+        "param": "Alert Class",
+        "value": "Medium",
+        "meaning": "Requires radar trail restructuring"
+      }
+    ],
+    "relatedTerms": [
+      "Rapid Altitude Drop",
+      "Low Approach",
+      "Decision Altitude (DA)",
+      "Holding Pattern"
+    ]
+  },
+  {
+    "id": "low-approach",
+    "term": "Low Approach",
+    "shortName": "Low Approach",
+    "title": "Descent Below Safe Glideslope or Minimum Vectoring Altitude",
+    "category": "anomalies",
+    "severity": "Low",
+    "shortDef": "Aircraft altitude substantially lower than published glideslope profile at a given distance from runway.",
+    "fullDef": "A Low Approach anomaly is flagged when an arriving aircraft sinks significantly below the standard 3.00-degree precision descent profile or Minimum Vectoring Altitude (MVA). Sinking below two dots low on the Instrument Landing System (ILS) glideslope indicator triggers warning cones on SkyWatch radar displays.",
+    "operationalContext": "Terrain around Hyderabad includes rocky outcrops up to 2,150 ft MSL within 10 NM north and southwest of the airport. Maintaining nominal glideslope avoids GPWS (Ground Proximity Warning System) terrain warnings.",
+    "keyParameters": [
+      {
+        "param": "Deviation Limit",
+        "value": "> 1.0 dot below profile",
+        "meaning": "Glideslope deviation threshold"
+      },
+      {
+        "param": "Distance",
+        "value": "< 8 NM from threshold",
+        "meaning": "Critical monitoring envelope"
+      },
+      {
+        "param": "Severity",
+        "value": "Low / Advisory",
+        "meaning": "Alerts crew to restore descent trajectory"
+      }
+    ],
+    "relatedTerms": [
+      "Glide Slope",
+      "Rapid Altitude Drop",
+      "Decision Altitude (DA)",
+      "Touchdown Zone"
+    ]
+  },
+  {
+    "id": "signal-lost",
+    "term": "Signal Lost",
+    "shortName": "Radar Drop",
+    "title": "Secondary Surveillance Radar / ADS-B Telemetry Dropout",
+    "category": "anomalies",
+    "severity": "Medium",
+    "shortDef": "Absence of expected transponder or ADS-B position updates for more than 15 consecutive seconds.",
+    "fullDef": "Signal Lost represents a temporary or sustained loss of telemetry packets from an airborne target within coverage range. It can be caused by terrain masking at low altitudes, antenna blind spots during steep bank angles, receiver congestion, or onboard transponder power failures.",
+    "operationalContext": "SkyWatch maintains a dead-reckoning extrapolation vector for 30 seconds following signal loss, projecting aircraft position along the last validated heading and ground speed until packet receipt resumes.",
+    "keyParameters": [
+      {
+        "param": "Timeout Window",
+        "value": "15 seconds",
+        "meaning": "Trigger threshold for amber target coasting"
+      },
+      {
+        "param": "Drop Threshold",
+        "value": "60 seconds",
+        "meaning": "Target declared dropped from active track"
+      },
+      {
+        "param": "Extrapolation",
+        "value": "Dead-Reckoning",
+        "meaning": "Estimated trajectory coasting"
+      }
+    ],
+    "relatedTerms": [
+      "Mode S / ADS-B",
+      "Squawk 7600",
+      "Corridor Health"
+    ]
+  },
+  {
+    "id": "squawk-7600",
+    "term": "Squawk 7600",
+    "shortName": "Radio Failure",
+    "title": "Loss of Two-Way Radio Communications Transponder Code",
+    "category": "anomalies",
+    "severity": "High",
+    "shortDef": "Transponder code transmitted when an aircraft suffers complete failure of two-way radio communication.",
+    "fullDef": "Squawk 7600 signals that the flight crew can neither transmit nor receive verbal communications with ATC. The controller must immediately clear the expected route of flight, monitor transponder mode changes, and prepare light-gun signals (green/red) at the tower control cab.",
+    "operationalContext": "An aircraft squawking 7600 in VOHS airspace will adhere strictly to its last assigned clearance, fly the standard STAR arrival, and land on the active duty runway.",
+    "keyParameters": [
+      {
+        "param": "Code",
+        "value": "7600",
+        "meaning": "NORDO (No Radio Communications)"
+      },
+      {
+        "param": "Tower Action",
+        "value": "Visual Light Signals",
+        "meaning": "Directional Aldis light lamp standby"
+      }
+    ],
+    "relatedTerms": [
+      "Squawk 7700",
+      "Squawk 7500",
+      "Signal Lost"
+    ]
+  },
+  {
+    "id": "squawk-7500",
+    "term": "Squawk 7500",
+    "shortName": "Unlawful Interference",
+    "title": "Hijacking or Unlawful Interference Transponder Code",
+    "category": "anomalies",
+    "severity": "High",
+    "shortDef": "Special transponder code reserved exclusively for aircraft experiencing hijacking or unlawful interference.",
+    "fullDef": "Squawk 7500 triggers immediate national security defense integration, silent tracking, isolation from commercial taxiways upon touchdown, and dispatch of specialized anti-hijack tactical response units.",
+    "operationalContext": "ATC confirms receipt without using the word hijack over open radio frequencies to avoid compromising crew safety.",
+    "keyParameters": [
+      {
+        "param": "Code",
+        "value": "7500",
+        "meaning": "Hijack / Unlawful Seizure"
+      },
+      {
+        "param": "Protocol",
+        "value": "Silent Security Handoff",
+        "meaning": "Direct military / federal inter-agency notify"
+      }
+    ],
+    "relatedTerms": [
+      "Squawk 7700",
+      "Squawk 7600",
+      "Disruption Pulse"
+    ]
+  },
+  {
+    "id": "metar",
+    "term": "METAR",
+    "shortName": "METAR",
+    "title": "Aerodrome Routine Meteorological Report",
+    "category": "weather",
+    "severity": "Info",
+    "shortDef": "Standardized international format for reporting routine weather observations at an aerodrome.",
+    "fullDef": "A METAR contains wind direction and speed, visibility, runway visual range (RVR), present weather phenomena (e.g. rain, mist, thunderstorms), cloud amount and height of cloud base, air temperature, dew point, and altimeter setting (QNH). METARs are generated every 30 or 60 minutes.",
+    "operationalContext": "For VOHS, METARs are issued at H+20 and H+50 (e.g. VOHS 190430Z 09008KT 4000 HZ NSC 28/19 Q1013 NOSIG). SkyWatch parses these raw strings into live operational widgets.",
+    "keyParameters": [
+      {
+        "param": "Update Frequency",
+        "value": "30 minutes",
+        "meaning": "Standard observation interval"
+      },
+      {
+        "param": "Key Variables",
+        "value": "Wind, Vis, Temp, QNH",
+        "meaning": "Vital flight envelope parameters"
+      }
+    ],
+    "relatedTerms": [
+      "TAF",
+      "QNH",
+      "RVR",
+      "Ceiling",
+      "Flight Category"
+    ]
+  },
+  {
+    "id": "taf",
+    "term": "TAF",
+    "shortName": "TAF",
+    "title": "Terminal Aerodrome Forecast",
+    "category": "weather",
+    "severity": "Info",
+    "shortDef": "Concise weather forecast for an aerodrome valid over a 24- or 30-hour period.",
+    "fullDef": "While METAR provides current conditions, a TAF forecasts expected changes in visibility, cloud ceilings, wind shifts, and precipitation. Airline dispatchers utilize TAFs to calculate mandatory alternate fuel reserves and divert strategies.",
+    "operationalContext": "VOHS TAFs predict seasonal monsoon squalls, pre-monsoon convective thunderstorms, and early morning radiation haze common across the Deccan Plateau.",
+    "keyParameters": [
+      {
+        "param": "Validity Window",
+        "value": "24 to 30 hours",
+        "meaning": "Operational planning horizon"
+      },
+      {
+        "param": "Change Groups",
+        "value": "BECMG, TEMPO, PROB",
+        "meaning": "Expected weather trend modifiers"
+      }
+    ],
+    "relatedTerms": [
+      "METAR",
+      "Ceiling",
+      "QNH"
+    ]
+  },
+  {
+    "id": "qnh",
+    "term": "QNH",
+    "shortName": "QNH",
+    "title": "Altimeter Setting for Mean Sea Level (MSL)",
+    "category": "weather",
+    "severity": "Info",
+    "shortDef": "Barometric pressure adjusted to sea level; makes an altimeter read true altitude above mean sea level.",
+    "fullDef": "QNH is the barometric altimeter sub-scale setting that causes the aircraft altimeter to indicate altitude above Mean Sea Level. When an aircraft is on the ground at an aerodrome with QNH set, the altimeter reads the official aerodrome elevation (2,024 ft for VOHS).",
+    "operationalContext": "Standard transition altitude in Indian airspace is 4,000 ft or published by TMA. Below transition altitude, all aircraft operate on local QNH. Above transition level, they switch to standard 1013.25 hPa (QNE).",
+    "keyParameters": [
+      {
+        "param": "Aerodrome Elevation",
+        "value": "2,024 ft MSL",
+        "meaning": "Reading at VOHS runway threshold"
+      },
+      {
+        "param": "Standard Unit",
+        "value": "hPa / mb (or inHg)",
+        "meaning": "Metric barometric pressure"
+      }
+    ],
+    "relatedTerms": [
+      "QFE",
+      "METAR",
+      "Ceiling"
+    ]
+  },
+  {
+    "id": "qfe",
+    "term": "QFE",
+    "shortName": "QFE",
+    "title": "Altimeter Setting for Aerodrome Elevation (AGL)",
+    "category": "weather",
+    "severity": "Info",
+    "shortDef": "Barometric pressure setting that causes the altimeter to read zero when wheels are on the runway.",
+    "fullDef": "QFE is the actual barometric pressure measured at the runway threshold. With QFE dialed in, the altimeter reads height Above Ground Level (AGL). While commercial civil aviation predominantly flies QNH, military and aerobatic operators frequently reference QFE.",
+    "operationalContext": "Because VOHS sits on a high plateau at 2,024 ft, setting QFE causes an altimeter reading 2,024 ft lower than QNH.",
+    "keyParameters": [
+      {
+        "param": "Threshold Reading",
+        "value": "0 ft AGL",
+        "meaning": "Zero reading on runway touchdown"
+      },
+      {
+        "param": "Comparison",
+        "value": "QNH = QFE + Elevation",
+        "meaning": "Barometric pressure differential"
+      }
+    ],
+    "relatedTerms": [
+      "QNH",
+      "METAR",
+      "Glide Slope"
+    ]
+  },
+  {
+    "id": "rvr",
+    "term": "RVR",
+    "shortName": "RVR",
+    "title": "Runway Visual Range",
+    "category": "weather",
+    "severity": "Info",
+    "shortDef": "Distance over which a pilot on runway centerline can see runway surface markings or lights.",
+    "fullDef": "RVR is measured automatically by transmissometers or forward-scatter meters positioned alongside the touchdown, midpoint, and stop-end of instrument runways. RVR values dictate Low Visibility Procedures (LVP) and CAT II/III precision approaches.",
+    "operationalContext": "VOHS RWY 09/27 features multi-sensor RVR instrumentation. When RVR falls below 550 meters, LVP is activated and ground separation intervals are doubled.",
+    "keyParameters": [
+      {
+        "param": "LVP Trigger",
+        "value": "< 550 m (or ceiling < 200 ft)",
+        "meaning": "Low Visibility Procedures active"
+      },
+      {
+        "param": "CAT I Minimum",
+        "value": "550 m RVR",
+        "meaning": "Standard ILS approach cutoff"
+      }
+    ],
+    "relatedTerms": [
+      "Ceiling",
+      "METAR",
+      "Flight Category",
+      "Low Approach"
+    ]
+  },
+  {
+    "id": "ceiling",
+    "term": "Ceiling",
+    "shortName": "Cloud Ceiling",
+    "title": "Height of Lowest Broken or Overcast Cloud Layer",
+    "category": "weather",
+    "severity": "Info",
+    "shortDef": "Height above ground or water of the lowest cloud layer covering more than half the sky (BKN or OVC).",
+    "fullDef": "In meteorological reports, cloud amounts are designated as FEW (1-2 oktas), SCT (3-4 oktas), BKN (5-7 oktas), or OVC (8 oktas). Only BKN and OVC qualify as an official ceiling. A cloud ceiling below 1,000 ft triggers Instrument Flight Rules (IFR) operations.",
+    "operationalContext": "During convective squalls in Hyderabad, rapid lowering of ceilings to 300-500 ft AGL forces incoming airliners into holding or diversion to alternate airports (e.g. Bangalore VOBL or Chennai VOMM).",
+    "keyParameters": [
+      {
+        "param": "Ceiling Threshold",
+        "value": ">= 5/8 coverage (BKN/OVC)",
+        "meaning": "Official ceiling qualification"
+      },
+      {
+        "param": "VFR Cutoff",
+        "value": "1,000 ft AGL",
+        "meaning": "Minimum ceiling for Visual Flight Rules"
+      }
+    ],
+    "relatedTerms": [
+      "METAR",
+      "RVR",
+      "Flight Category",
+      "Go-Around"
+    ]
+  },
+  {
+    "id": "flight-category",
+    "term": "Flight Category",
+    "shortName": "VFR / IFR",
+    "title": "Operational Atmospheric Flight Rule Classification",
+    "category": "weather",
+    "severity": "Info",
+    "shortDef": "Categorization of aerodrome flight rules into VFR, MVFR, IFR, or LIFR based on ceiling and visibility.",
+    "fullDef": "Flight categories define pilot legal requirements and ATC separation standards: VFR (Visual Flight Rules: Ceiling > 3,000 ft and Vis > 5 sm), MVFR (Marginal VFR: Ceiling 1,000-3,000 ft or Vis 3-5 sm), IFR (Instrument: Ceiling 500-999 ft or Vis 1-2.9 sm), and LIFR (Low IFR: Ceiling < 500 ft or Vis < 1 sm).",
+    "operationalContext": "SkyWatch displays a color-coded status badge on both the Weather page and header to immediately alert operators to degrading instrument conditions.",
+    "keyParameters": [
+      {
+        "param": "VFR Badge",
+        "value": "Green (Clear)",
+        "meaning": "Unrestricted visual flight"
+      },
+      {
+        "param": "MVFR Badge",
+        "value": "Blue (Marginal)",
+        "meaning": "Advisory monitoring"
+      },
+      {
+        "param": "IFR Badge",
+        "value": "Amber (Instrument)",
+        "meaning": "Positive radar separation mandatory"
+      },
+      {
+        "param": "LIFR Badge",
+        "value": "Red (Low Instrument)",
+        "meaning": "Severe low-visibility procedures"
+      }
+    ],
+    "relatedTerms": [
+      "METAR",
+      "Ceiling",
+      "RVR"
+    ]
+  },
+  {
+    "id": "disruption-pulse",
+    "term": "Disruption Pulse",
+    "shortName": "Disruption Index",
+    "title": "Real-Time Airspace Operational Instability Metric",
+    "category": "metrics",
+    "severity": "Info",
+    "shortDef": "Composite 0-100 index quantifying real-time airspace volatility, holding delays, and flight anomalies.",
+    "fullDef": "Disruption Pulse is SkyWatch proprietary composite operational health score. It computes a rolling weighted ratio of active anomalies (Squawk emergencies weight 3, rapid altitude drops weight 2, holdings/go-arounds weight 1) relative to total airborne density within 60 NM of VOHS. A score under 20 indicates smooth operations; 20-50 indicates moderate friction; above 50 signals heavy disruption.",
+    "operationalContext": "The Insights page renders a 24-hour interactive curve of Disruption Pulse, allowing supervisors to detect airspace degradation trends before gridlock occurs.",
+    "keyParameters": [
+      {
+        "param": "Scale",
+        "value": "0 to 100",
+        "meaning": "Overall congestion and volatility index"
+      },
+      {
+        "param": "Nominal Baseline",
+        "value": "< 25",
+        "meaning": "Standard flow rate and zero critical holds"
+      },
+      {
+        "param": "Elevated Alert",
+        "value": "> 60",
+        "meaning": "Ground delay programs and metering required"
+      }
+    ],
+    "relatedTerms": [
+      "Corridor Health",
+      "Holding Pattern",
+      "Squawk 7700"
+    ]
+  },
+  {
+    "id": "corridor-health",
+    "term": "Corridor Health",
+    "shortName": "Corridor Health",
+    "title": "Arrival & Departure Flow Rate and Lateral Adherence Score",
+    "category": "metrics",
+    "severity": "Info",
+    "shortDef": "Percentage metric evaluating flow efficiency and trajectory adherence along primary terminal corridors.",
+    "fullDef": "Corridor Health assesses how closely aircraft adhere to published Standard Instrument Departures (SIDs) and Standard Terminal Arrival Routes (STARs). Deviations caused by weather circumnavigation, excessive spacing vectors, or altitude non-compliance reduce the corridor score.",
+    "operationalContext": "Major corridors feeding Hyderabad include the western arrival route via OPROK and the eastern gate via TEBUR. A drop below 85% signals imminent arrival sequencing bottlenecks.",
+    "keyParameters": [
+      {
+        "param": "Optimal Range",
+        "value": "90% - 100%",
+        "meaning": "Ideal standard routing compliance"
+      },
+      {
+        "param": "Warning Threshold",
+        "value": "< 75%",
+        "meaning": "Substantial vectoring and flight delays"
+      }
+    ],
+    "relatedTerms": [
+      "Disruption Pulse",
+      "SID & STAR",
+      "Holding Pattern"
+    ]
+  },
+  {
+    "id": "glide-slope",
+    "term": "Glide Slope",
+    "shortName": "ILS Glideslope",
+    "title": "Instrument Landing System Vertical Descent Guidance Beam",
+    "category": "runway-airspace",
+    "severity": "Info",
+    "shortDef": "UHF radio navigation signal defining an exact 3.0-degree inclined descent path to runway touchdown zone.",
+    "fullDef": "The Glide Slope station transmitter is situated alongside the runway touchdown zone. It emits paired 90 Hz and 150 Hz radiation lobes. When the airborne receiver detects equal amplitude from both lobes, the aircraft is positioned precisely on the 3.00-degree approach centerline.",
+    "operationalContext": "At VOHS RWY 09, the glideslope antenna provides vertical guidance down to Category II minimums (100 ft decision height).",
+    "keyParameters": [
+      {
+        "param": "Slope Angle",
+        "value": "3.00 degrees",
+        "meaning": "Standard descent gradient (318 ft/NM)"
+      },
+      {
+        "param": "Threshold Crossing",
+        "value": "50 ft AGL",
+        "meaning": "Wheel height over runway threshold"
+      }
+    ],
+    "relatedTerms": [
+      "Low Approach",
+      "Rapid Altitude Drop",
+      "Touchdown Zone"
+    ]
+  },
+  {
+    "id": "sid-star",
+    "term": "SID & STAR",
+    "shortName": "SIDs and STARs",
+    "title": "Standard Instrument Departures and Standard Terminal Arrivals",
+    "category": "runway-airspace",
+    "severity": "Info",
+    "shortDef": "Published 3D route corridors connecting en-route airways with runway takeoff and landing points.",
+    "fullDef": "A Standard Instrument Departure (SID) provides a predefined climb corridor separating departures from incoming traffic and ground obstacles. A Standard Terminal Arrival (STAR) transitions high-altitude en-route aircraft to initial approach fixes with published altitude and speed constraints.",
+    "operationalContext": "Hyderabad terminal airspace features RNAV-1 (GNSS) based arrivals such as OPROK 1A and TEBUR 1B designed to minimize pilot-controller voice communications.",
+    "keyParameters": [
+      {
+        "param": "Navigation Specification",
+        "value": "RNAV-1 (RNP 1.0)",
+        "meaning": "1 NM lateral accuracy standard"
+      },
+      {
+        "param": "Speed Restrictions",
+        "value": "Max 250 kt below FL100",
+        "meaning": "Standard terminal speed gate"
+      }
+    ],
+    "relatedTerms": [
+      "Corridor Health",
+      "Holding Pattern",
+      "TMA / CTR"
+    ]
+  },
+  {
+    "id": "notam",
+    "term": "NOTAM",
+    "shortName": "NOTAM",
+    "title": "Notice to Airmen (Notice to Air Missions)",
+    "category": "runway-airspace",
+    "severity": "Info",
+    "shortDef": "Urgent official notice concerning the establishment, condition, or change in any aeronautical facility.",
+    "fullDef": "NOTAMs alert flight crews and dispatchers to temporary hazards including runway maintenance closures, out-of-service navigational aids (VOR/ILS), military firing exercises, crane obstacles near aerodromes, and VIP airspace closures.",
+    "operationalContext": "Scheduled maintenance of VOHS runway 09/27 typically occurs during night curfew windows under pre-published International NOTAM series A.",
+    "keyParameters": [
+      {
+        "param": "Issuing Authority",
+        "value": "Airports Authority of India (AAI)",
+        "meaning": "State civil aviation agency"
+      },
+      {
+        "param": "Format",
+        "value": "ICAO Series A / C / G",
+        "meaning": "Standardized international telegraphic format"
+      }
+    ],
+    "relatedTerms": [
+      "Runway Incursion",
+      "TMA / CTR"
+    ]
+  },
+  {
+    "id": "aic",
+    "term": "AIC",
+    "shortName": "AIC",
+    "title": "Aeronautical Information Circular",
+    "category": "runway-airspace",
+    "severity": "Info",
+    "shortDef": "Notices of long-term operational, technical, or administrative nature issued by aviation authorities.",
+    "fullDef": "An Aeronautical Information Circular contains notices relating to major civil aviation regulation amendments, air traffic procedure modifications, seasonal fog operational rules, and safety advisories that do not qualify for immediate NOTAM issuance.",
+    "operationalContext": "In India, AICs are published by the Directorate General of Civil Aviation (DGCA) and distributed to all air operators and aerodrome certificate holders.",
+    "keyParameters": [
+      {
+        "param": "Issuer",
+        "value": "DGCA India",
+        "meaning": "Directorate General of Civil Aviation"
+      },
+      {
+        "param": "Classification",
+        "value": "Circular / Advisory",
+        "meaning": "Regulatory & operational notices"
+      }
+    ],
+    "relatedTerms": [
+      "NOTAM",
+      "SID & STAR"
+    ]
+  },
+  {
+    "id": "tcas",
+    "term": "TCAS",
+    "shortName": "TCAS",
+    "title": "Traffic Alert and Collision Avoidance System",
+    "category": "anomalies",
+    "severity": "High",
+    "shortDef": "Airborne avionics system operating independently of ATC to prevent mid-air collisions.",
+    "fullDef": "TCAS II interrogates Mode S transponders of nearby aircraft to compute closing speed and time-to-closest-point-of-approach (tau). It issues two alert types: Traffic Advisory (TA - visual warning to look outside) and Resolution Advisory (RA - mandatory vertical climb or descend instruction requiring pilot compliance within 5 seconds).",
+    "operationalContext": "Pilots must follow TCAS RA orders immediately, even if the guidance contradicts a verbal air traffic controller directive.",
+    "keyParameters": [
+      {
+        "param": "Traffic Advisory (TA)",
+        "value": "tau ~ 45 seconds",
+        "meaning": "Situational awareness cue"
+      },
+      {
+        "param": "Resolution Advisory (RA)",
+        "value": "tau ~ 25 seconds",
+        "meaning": "Mandatory vertical evasion maneuver"
+      },
+      {
+        "param": "Pilot Response Time",
+        "value": "Within 5 seconds",
+        "meaning": "Maximum allowable reaction delay"
+      }
+    ],
+    "relatedTerms": [
+      "Mode S / ADS-B",
+      "Rapid Altitude Drop",
+      "Squawk 7700"
+    ]
+  },
+  {
+    "id": "ads-b",
+    "term": "Mode S / ADS-B",
+    "shortName": "ADS-B Telemetry",
+    "title": "Automatic Dependent Surveillance-Broadcast",
+    "category": "system",
+    "severity": "Info",
+    "shortDef": "Surveillance technology whereby aircraft broadcast GPS position, altitude, velocity, and squawk on 1090 MHz.",
+    "fullDef": "Unlike primary radar that relies on passive physical radio echoes, ADS-B is automatic (requires no external interrogation) and dependent (relies on onboard GNSS navigation). Mode S transponders broadcast extended squitter pulses twice per second, providing millimeter-accurate track vectors to ground receivers and SkyWatch software.",
+    "operationalContext": "SkyWatch ingests 1090 MHz ADS-B data within 60 nautical miles of VOHS, processing up to 100 simultaneous aircraft tracks every 5 seconds.",
+    "keyParameters": [
+      {
+        "param": "Frequency",
+        "value": "1090 MHz Extended Squitter",
+        "meaning": "Secondary surveillance band"
+      },
+      {
+        "param": "Update Rate",
+        "value": "0.5 to 1.0 second",
+        "meaning": "Real-time broadcast cadence"
+      },
+      {
+        "param": "Range",
+        "value": "60 NM (VOHS)",
+        "meaning": "Standard radar operational radius"
+      }
+    ],
+    "relatedTerms": [
+      "Signal Lost",
+      "Squawk 7700",
+      "Disruption Pulse"
+    ]
+  },
+  {
+    "id": "decision-altitude",
+    "term": "Decision Altitude (DA)",
+    "shortName": "DA / DH",
+    "title": "Minimum Altitude to Initiate Missed Approach if Unstabilized",
+    "category": "runway-airspace",
+    "severity": "Info",
+    "shortDef": "Specified altitude in precision approach at which missed approach must be initiated if visual reference is missing.",
+    "fullDef": "Decision Altitude (referenced to MSL) or Decision Height (DH, referenced to threshold elevation) is the strict legal threshold where the pilot must physically see runway approach lights or markings to proceed with a landing. If not in visual contact or if the approach is unstabilized, an immediate go-around is mandatory.",
+    "operationalContext": "For VOHS RWY 09 ILS Cat I, Decision Altitude is 2,224 ft MSL (200 ft DH above the 2,024 ft touchdown zone elevation).",
+    "keyParameters": [
+      {
+        "param": "Cat I Standard",
+        "value": "200 ft DH (2,224 ft MSL)",
+        "meaning": "Category I decision altitude"
+      },
+      {
+        "param": "Action",
+        "value": "Immediate Go-Around",
+        "meaning": "Mandatory go-around if visual cue missing"
+      }
+    ],
+    "relatedTerms": [
+      "Go-Around",
+      "Low Approach",
+      "Glide Slope",
+      "Ceiling"
+    ]
+  }
+]

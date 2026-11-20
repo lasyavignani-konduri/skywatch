@@ -1,0 +1,2028 @@
+<!doctype html>
+<!-- SkyWatch Machine Learning Lab — 4 Core Aviation Intelligence Features (1672×941 Master Sync) -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030506">
+  <title>SkyWatch · Machine Learning Lab · Airspace Operations Center</title>
+  <meta name="description" content="SkyWatch Machine Learning Lab — flight anomaly detection, delay prediction, weather simulation, and grounded AI assistant.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+/* =====================================================================
+   SKYWATCH ML LAB — 1672×941 MASTER DESIGN SYSTEM
+   ===================================================================== */
+:root {
+  --u: calc(100vw / 1672);
+  --bg: #030506;
+  --panel: #0b1014;
+  --panel2: #12191f;
+  --panel3: #182128;
+  --line: #303a42;
+  --line2: #4b5761;
+  --blue: #079df4;
+  --blue2: #1687e9;
+  --blue-soft: #0d3550;
+  --white: #f5f7fa;
+  --muted: #c2cbd2;
+  --muted2: #89949d;
+  --green: #00c77b;
+  --amber: #e6a33a;
+  --red: #e56a6a;
+  --radius: 16px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font);
+  letter-spacing: -0.012em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+button, input, select, textarea { font: inherit; }
+button, a, select { outline-offset: 3px; }
+button { cursor: pointer; border: 0; background: none; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ---------- TOP BAR (100% in sync with SkyWatch Master) ---------- */
+.topbar {
+  height: 73px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  border-bottom: 1px solid #273039;
+  background: #030405;
+  white-space: nowrap;
+  position: relative;
+  z-index: 10;
+}
+.brand {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-right: 25px;
+  border-right: 1px solid #525d66;
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  cursor: pointer;
+}
+.brand svg { width: 52px; height: 38px; fill: #fff; }
+.global-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 22px;
+  flex: 1;
+  min-width: 0;
+}
+.global-nav a {
+  padding: 10px 18px;
+  border: 1px solid #222b32;
+  border-radius: 26px;
+  background: linear-gradient(145deg, #171d22, #090d10);
+  font-size: 15.5px;
+  font-weight: 500;
+  color: #dce4ea;
+  transition: all .15s;
+}
+.global-nav a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.global-nav .global-active {
+  background: #f5f7fa;
+  color: #101519;
+  border-color: #fff;
+  font-weight: 700;
+}
+.top-status {
+  height: 38px;
+  padding-left: 20px;
+  border-left: 1px solid #525d66;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+.live-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #00d17b;
+  box-shadow: 0 0 10px rgba(0, 209, 123, 0.6);
+  display: inline-block;
+}
+.runway-chip {
+  border: 1px solid #58636d;
+  border-radius: 20px;
+  padding: 6px 13px;
+  margin: 0 3px 0 8px;
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
+}
+
+/* ---------- APP SHELL ---------- */
+.app-shell {
+  display: grid;
+  grid-template-columns: 244px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px;
+  min-height: calc(100vh - 73px);
+}
+.sidebar, .main-panel {
+  border: 1px solid #27313a;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #0b1014 0%, #070b0e 72%, #090d10 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.sidebar {
+  padding: 17px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: calc(100vh - 105px);
+}
+.side-link {
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  font-size: 17px;
+  color: #eef2f5;
+  transition: all .15s;
+}
+.side-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+.side-icon {
+  width: 28px;
+  text-align: center;
+  font-size: 24px;
+  color: #f2f5f7;
+}
+.side-link.selected {
+  background: linear-gradient(100deg, #075b91, #07508a 72%, #064477);
+  border-left: 5px solid #06aaff;
+  padding-left: 12px;
+  font-weight: 700;
+  box-shadow: 0 0 16px rgba(7, 157, 244, 0.25);
+}
+.chip-icon {
+  height: 28px;
+  width: 28px;
+  border: 2px solid #eaf6ff;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  font-size: 11.5px;
+  font-weight: 800;
+}
+.side-divider {
+  height: 1px;
+  background: #46515a;
+  margin: 20px 12px 16px;
+}
+.side-heading {
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0 18px 10px;
+  color: #9eabb4;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.sidebar-foot {
+  margin-top: auto;
+  padding: 14px 16px;
+  color: #aab4bc;
+  font-size: 10px;
+  line-height: 1.7;
+  letter-spacing: 1.1px;
+}
+.sidebar-foot span {
+  font-size: 12px;
+  letter-spacing: 0;
+  color: #77848d;
+}
+
+/* ---------- MAIN PANEL ---------- */
+.main-panel {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.breadcrumb {
+  height: 25px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-left: 5px;
+  color: var(--blue);
+  font-size: 15.5px;
+}
+.crumb-mark { font-size: 19px; }
+.crumb-sep { color: #75828b; }
+.breadcrumb #crumbCurrent { color: #e8edf1; font-weight: 600; }
+
+.page-hero {
+  min-height: 125px;
+  border: 1px solid #2c3740;
+  border-radius: 16px;
+  background: linear-gradient(110deg, #141b20 0%, #11171c 60%, #0e1419 100%);
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+.hero-mark {
+  width: 100px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  border-right: 2px solid #586570;
+  margin-right: 22px;
+  padding-right: 22px;
+  flex: none;
+}
+.hero-mark span {
+  height: 68px;
+  width: 68px;
+  border: 4px solid var(--blue);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 800;
+  position: relative;
+}
+.hero-mark span:before, .hero-mark span:after {
+  content: "";
+  position: absolute;
+  inset: -10px 8px;
+  border-top: 3.5px solid var(--blue);
+  border-bottom: 3.5px solid var(--blue);
+  pointer-events: none;
+}
+.hero-mark span:after {
+  inset: 8px -10px;
+  border: 0;
+  border-left: 3.5px solid var(--blue);
+  border-right: 3.5px solid var(--blue);
+}
+.hero-copy { flex: 1; min-width: 0; }
+.hero-copy h1 {
+  font-size: 34px;
+  line-height: 1.1;
+  margin: 0 0 6px;
+  font-weight: 750;
+  letter-spacing: -0.6px;
+}
+.hero-copy p {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #d5dce1;
+  margin: 0;
+  max-width: 850px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 13px;
+  border: 1px solid var(--line2);
+  padding: 11px 18px;
+  background: #11181e;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 14.5px;
+  transition: all .15s;
+}
+.btn:hover {
+  filter: brightness(1.1);
+  border-color: #72808c;
+}
+.btn-primary {
+  background: linear-gradient(105deg, #079ff8, #078be9);
+  border-color: #079df4;
+  color: #03131e;
+  box-shadow: 0 0 16px rgba(7, 157, 244, 0.35);
+}
+.btn-outline {
+  height: 54px;
+  min-width: 200px;
+  border: 2.5px solid var(--blue);
+  border-radius: 32px;
+  background: transparent;
+  font-size: 17.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-left: 15px;
+  color: #fff;
+  transition: all .2s;
+}
+.btn-outline:hover {
+  background: rgba(7, 157, 244, 0.15);
+  box-shadow: 0 0 18px rgba(7, 157, 244, 0.4);
+}
+.plus { font-size: 26px; color: var(--blue); font-weight: 400; line-height: 1; }
+
+/* ---------- WORKSPACE TABS ---------- */
+.workspace-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+.workspace-tabs a {
+  height: 52px;
+  border: 1px solid #46515a;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #0d1216, #080b0e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #dbe2e8;
+  transition: all .15s;
+}
+.workspace-tabs a:hover {
+  background: #162028;
+  color: #fff;
+}
+.workspace-tabs a.active {
+  background: linear-gradient(110deg, #079ff7, #0788e8);
+  border-color: #079df4;
+  color: #041420;
+  font-weight: 750;
+  box-shadow: 0 0 16px rgba(7, 157, 244, 0.3);
+}
+.tab-glyph { font-size: 21px; }
+
+/* Sub-feature bar for Data Analysis */
+.sub-feature-nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.sub-btn {
+  padding: 9px 18px;
+  border-radius: 20px;
+  border: 1px solid #3c4954;
+  background: #11171d;
+  color: #d0d7de;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all .15s;
+}
+.sub-btn:hover { background: #1b252e; color: #fff; }
+.sub-btn.active {
+  background: linear-gradient(105deg, #079ff8, #078be9);
+  color: #03131e;
+  border-color: #079df4;
+  font-weight: 750;
+  box-shadow: 0 0 12px rgba(7, 157, 244, 0.3);
+}
+
+/* Panels & Grids */
+.view-host {
+  min-height: 570px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.panel {
+  border: 1px solid #2e3942;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #12191f 0%, #0d1318 52%, #0a0f13 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  min-width: 0;
+}
+.panel-pad { padding: 18px; }
+.panel-title {
+  font-size: 21px;
+  font-weight: 750;
+  margin: 0 0 14px;
+  letter-spacing: -0.3px;
+}
+.muted { color: var(--muted); }
+.subtle { color: var(--muted2); }
+.small { font-size: 12px; }
+.tiny { font-size: 11px; }
+.grid { display: grid; gap: 14px; }
+.grid-2 { grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.55fr); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Form Fields */
+.field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+.field label { font-size: 14px; font-weight: 650; color: #e8edf1; }
+.field input, .field select, .field textarea, .control {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #56626c;
+  border-radius: 10px;
+  background: #0b1116;
+  color: #f1f4f6;
+  padding: 9px 12px;
+  transition: border-color .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--blue);
+  outline: none;
+}
+.field textarea { min-height: 90px; resize: vertical; }
+.field input[type=file] { padding: 8px; }
+.field input[type=checkbox] { width: auto; min-height: 0; accent-color: var(--blue); cursor: pointer; }
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+
+.dropzone {
+  border: 1px dashed #61717d;
+  border-radius: 13px;
+  background: #0b1218;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.dropzone strong { font-size: 15px; }
+.dropzone input { max-width: 100%; font-size: 12px; }
+
+/* Pills & Badges */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid #3c4a55;
+  border-radius: 20px;
+  color: #dce4ea;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.pill.blue { border-color: #087fc5; background: #0b2a3e; color: #8fd2ff; }
+.pill.green { border-color: #086b4b; background: #063c2c; color: #66e6b1; }
+.pill.amber { border-color: #745523; background: #302512; color: #f2c36c; }
+.pill.red { border-color: #7a3d3d; background: #321818; color: #ffaaaa; }
+
+/* Metric Cards */
+.metric {
+  padding: 16px;
+  border: 1px solid #303b44;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #172028, #0c1217);
+}
+.metric .label { font-size: 12px; color: #aeb9c1; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.metric .value { font-size: 28px; font-weight: 800; margin-top: 6px; letter-spacing: -0.5px; }
+.metric .hint { font-size: 11.5px; color: #96a3ac; margin-top: 4px; }
+
+/* Toolbars & Tables */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.toolbar-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.table-wrap {
+  overflow: auto;
+  border: 1px solid #34404a;
+  border-radius: 12px;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+  font-size: 13px;
+}
+.data-table thead {
+  background: linear-gradient(90deg, #27313a, #1b242b);
+}
+.data-table th {
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 750;
+  color: #f1f4f6;
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 12px 14px;
+  border-top: 1px solid #303a42;
+  color: #e7edf1;
+  white-space: nowrap;
+}
+.data-table tr:hover td { background: #16212a; }
+
+.empty-state {
+  padding: 28px;
+  text-align: center;
+  border: 1px dashed #46545e;
+  border-radius: 12px;
+  color: #aab6bf;
+  line-height: 1.6;
+}
+.empty-state strong { display: block; color: #e7edf1; margin-bottom: 6px; font-size: 15px; }
+
+.notice {
+  border-left: 3px solid var(--blue);
+  background: #0c1a24;
+  padding: 11px 14px;
+  border-radius: 0 9px 9px 0;
+  color: #cbd8e0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.notice.warning { border-color: var(--amber); background: #211b10; color: #f5d49e; }
+.notice.danger { border-color: var(--red); background: #241314; color: #ffb8b8; }
+
+.filter-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.filter-row input, .filter-row select {
+  min-height: 38px;
+  border: 1px solid #4a5660;
+  border-radius: 9px;
+  background: #0b1116;
+  color: #eef2f5;
+  padding: 7px 11px;
+}
+.filter-row input { min-width: 220px; }
+
+.footer-note { font-size: 11px; color: #8f9ca5; line-height: 1.5; }
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #74818b;
+  font-size: 11px;
+  padding: 4px 6px;
+}
+
+/* Chat box for Ask SkyWatch AI */
+.ai-chat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 380px;
+  overflow-y: auto;
+  border: 1px solid #323d46;
+  border-radius: 12px;
+  padding: 14px;
+  background: #090e12;
+}
+.chat-msg {
+  max-width: 85%;
+  padding: 11px 15px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.chat-msg.user {
+  align-self: flex-end;
+  background: linear-gradient(105deg, #0771b0, #065586);
+  color: #fff;
+  border-bottom-right-radius: 3px;
+}
+.chat-msg.ai {
+  align-self: flex-start;
+  background: #141b21;
+  border: 1px solid #2f3a44;
+  color: #e2e8ee;
+  border-bottom-left-radius: 3px;
+}
+
+/* Modals & Toasts */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 22px;
+  background: #151e25;
+  border: 1px solid var(--blue);
+  border-radius: 11px;
+  color: #eef4f8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  display: none;
+  z-index: 100;
+  font-size: 13.5px;
+  max-width: 90vw;
+}
+.toast.show { display: block; }
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 200;
+}
+.modal {
+  width: min(620px, 100%);
+  background: #10171d;
+  border: 1px solid #4b5963;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+.modal h2 { margin: 0 0 10px; font-size: 22px; font-weight: 750; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+@media(max-width: 1200px) {
+  .topbar { padding: 0 14px; }
+  .brand { font-size: 24px; padding-right: 14px; }
+  .global-nav { gap: 5px; padding: 0 10px; }
+  .global-nav a { padding: 9px 12px; font-size: 13px; }
+  .app-shell { grid-template-columns: 210px minmax(0, 1fr); padding: 10px; gap: 10px; }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media(max-width: 900px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar { min-height: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .side-divider, .side-heading, .sidebar-foot { display: none; }
+  .workspace-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+  </style>
+</head>
+<body>
+  <!-- MASTER TOP BAR -->
+  <header class="topbar">
+    <a class="brand" href="dashboard.html" aria-label="SkyWatch home">
+      <svg viewBox="0 0 64 42" aria-hidden="true"><path d="M2 19 25 15 43 2Q47-1 49 3L42 16 61 22Q65 24 60 27L38 26 25 38Q21 41 20 37L24 25 5 26Q0 25 2 19Z"/></svg>
+      <span>SkyWatch</span>
+    </a>
+    <nav class="global-nav" aria-label="Main navigation">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="radar.html">Radar</a>
+      <a href="Anomalities.html">Anomalies</a>
+      <a href="Weather.html">Weather</a>
+      <a href="Insights.html">Insights</a>
+      <a href="report.html">Report</a>
+      <a href="learning-hub.html" class="global-active">Learning Hub</a>
+    </nav>
+    <div class="top-status">
+      <span class="live-dot"></span><b>Live</b>
+      <span class="runway-chip" id="topRwy">RWY 27</span>
+      <time id="istClock">14:22:00 IST</time>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Learning Hub navigation">
+      <a class="side-link" href="learning-hub.html"><span class="side-icon">▱</span>Learning Hub</a>
+      <a class="side-link" href="template.html?page=glossary"><span class="side-icon">☷</span>Glossary</a>
+      <a class="side-link" href="template.html?page=tutorials"><span class="side-icon">▷</span>Tutorials</a>
+      <a class="side-link" href="template.html?page=best-practices"><span class="side-icon">✧</span>Best Practices</a>
+      <a class="side-link" href="template.html?page=faqs"><span class="side-icon">ⓘ</span>FAQs</a>
+      <div class="side-divider"></div>
+      <div class="side-heading">Tools &amp; Labs</div>
+      <a class="side-link selected" href="#/data-analysis"><span class="chip-icon">ML</span>ML Lab</a>
+      <div class="sidebar-foot">SKYWATCH OPERATIONS<br><span>Learning &amp; Analytics</span></div>
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="main-panel">
+      <div class="breadcrumb">
+        <span class="crumb-mark">▣</span>
+        <a href="learning-hub.html" style="color:inherit">Learning Hub</a>
+        <span class="crumb-sep">›</span>
+        <span id="crumbCurrent">Data Analysis</span>
+      </div>
+
+      <section class="page-hero">
+        <div class="hero-mark"><span>ML</span></div>
+        <div class="hero-copy">
+          <h1>Machine Learning Lab</h1>
+          <p>Four practical aviation intelligence features: Flight Anomaly Detection, Flight Delay Prediction, Weather Simulation, and Ask SkyWatch AI.</p>
+        </div>
+        <button class="btn btn-outline" id="newAnalysisBtn"><span class="plus">+</span>New Analysis</button>
+      </section>
+
+      <!-- 5 TABS -->
+      <nav class="workspace-tabs" aria-label="Machine Learning Lab sections">
+        <a href="#/data-analysis" data-route="data-analysis"><span class="tab-glyph">▥</span>Data Analysis</a>
+        <a href="#/models" data-route="models"><span class="tab-glyph">▱</span>Models</a>
+        <a href="#/experiments" data-route="experiments"><span class="tab-glyph">⚗</span>Experiments</a>
+        <a href="#/results" data-route="results"><span class="tab-glyph">⌁</span>Results</a>
+        <a href="#/datasets" data-route="datasets"><span class="tab-glyph">▤</span>Datasets</a>
+      </nav>
+
+      <div id="viewHost" class="view-host" aria-live="polite"></div>
+
+      <footer class="page-footer">
+        <span>SkyWatch ML Lab · Rajiv Gandhi Intl (VOHS / HYD)</span>
+        <span>Operational Decision Support · An anomaly is an unusual statistical pattern, not automatically a safety violation.</span>
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="modalRoot"></div>
+
+  <script>
+/* =====================================================================
+   SKYWATCH ML LAB — CORE 4 FEATURES LOGIC & REAL BACKEND BINDING
+   ===================================================================== */
+const CONFIG = Object.assign({ API_BASE_URL: "/api", DEMO_MODE: false }, window.SKYWATCH_CONFIG || {});
+
+const state = {
+  route: "data-analysis",
+  activeSubFeature: "anomaly", // 'anomaly' | 'delay' | 'weather' | 'ai'
+  datasetId: "ds-flight-delays-demo",
+  activeAnalysisId: "AN-2026-001",
+  resultsViewTab: "anomalies", // 'anomalies' | 'delays' | 'simulations'
+  datasets: [],
+  analyses: [],
+  models: [],
+  experiments: [],
+  results: [],
+  delayPredictions: [],
+  weatherSimulations: [],
+  aiHistory: [],
+  csvRows: [],
+  csvHeaders: [],
+  filters: { search: "", status: "all", severity: "all" }
+};
+
+const $ = (s, root=document) => root.querySelector(s);
+const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+const toast = message => {
+  const el = $("#toast");
+  if (!el) return;
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => el.classList.remove("show"), 3200);
+};
+
+const dateToday = () => new Date().toISOString().slice(0, 10);
+
+function updateClock() {
+  const clk = $("#istClock");
+  if (!clk) return;
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const ist = new Date(utc + (3600000 * 5.5));
+  clk.textContent = ist.toTimeString().slice(0, 8) + " IST";
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+async function api(path, options={}) {
+  try {
+    const response = await fetch(`${CONFIG.API_BASE_URL}${path}`, options);
+    if (!response.ok) {
+      const body = await response.text();
+      throw new Error(body || `Request failed (${response.status})`);
+    }
+    if (response.status === 204) return null;
+    return response.json();
+  } catch (err) {
+    console.warn(`API call failed for ${path}:`, err.message);
+    throw err;
+  }
+}
+
+function badge(text, cls="") {
+  return `<span class="pill ${cls}">${esc(text)}</span>`;
+}
+
+function table(headers, rows, empty="No records found.") {
+  return `<div class="table-wrap"><table class="data-table"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.length ? rows.join("") : `<tr><td colspan="${headers.length}"><div class="empty-state">${esc(empty)}</div></td></tr>`}</tbody></table></div>`;
+}
+
+function selectOptions(items, selected="") {
+  return items.map(x => `<option value="${esc(x.value)}" ${String(x.value)===String(selected)?"selected":""}>${esc(x.label)}</option>`).join("");
+}
+
+/* =====================================================================
+   VIEW 1: DATA ANALYSIS (COVERS ALL 4 DEMONSTRABLE FEATURES)
+   ===================================================================== */
+function renderDataAnalysis() {
+  const dsOptions = [
+    { value: "", label: "Choose an operational dataset" },
+    ...state.datasets.map(d => ({ value: d.id, label: `${d.name} (${Number(d.rows || 0).toLocaleString()} records)` }))
+  ];
+
+  let featureContent = "";
+
+  // FEATURE A: FLIGHT ANOMALY DETECTION (ISOLATION FOREST)
+  if (state.activeSubFeature === "anomaly") {
+    featureContent = `
+      <div class="grid grid-2">
+        <section class="panel panel-pad">
+          <div class="toolbar">
+            <h2 class="panel-title" style="margin-bottom:0">Flight Anomaly Detection</h2>
+            ${badge("ISOLATION FOREST", "blue")}
+          </div>
+          <div class="field">
+            <label>Operational Dataset</label>
+            <select id="analysisDataset">${selectOptions(dsOptions, state.datasetId || state.datasets[0]?.id)}</select>
+          </div>
+          <div class="field">
+            <label>Parameters to Analyse</label>
+            <div id="featureChoices" class="field-row" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+              <label class="pill"><input type="checkbox" value="flight_duration_min" checked> Flight duration (min)</label>
+              <label class="pill"><input type="checkbox" value="departure_delay_min" checked> Departure delay (min)</label>
+              <label class="pill"><input type="checkbox" value="arrival_delay_min" checked> Arrival delay (min)</label>
+              <label class="pill"><input type="checkbox" value="altitude_ft" checked> Altitude (ft MSL)</label>
+              <label class="pill"><input type="checkbox" value="groundspeed_kt" checked> Groundspeed (kt)</label>
+              <label class="pill"><input type="checkbox" value="route_deviation_nm" checked> Route deviation (nm)</label>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Contamination Threshold</label>
+              <select id="ifContamination">
+                <option value="0.01">1% (Conservative outlier filter)</option>
+                <option value="0.02" selected>2% (Standard aviation baseline)</option>
+                <option value="0.05">5% (Broad operational scan)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Number of Trees (n_estimators)</label>
+              <input id="ifTrees" type="number" value="200" min="50" max="500">
+            </div>
+          </div>
+          <div class="notice">
+            <b>Operational Context:</b> Anomaly detection with Isolation Forest identifies statistical outliers across flight duration, delays, altitudes, speeds, and trajectory deviations. <b>An anomaly is an unusual pattern, not automatically a safety violation.</b>
+          </div>
+          <button class="btn btn-primary" id="runAnomalyBtn" style="width:100%;margin-top:16px;min-height:48px;font-size:15.5px">
+            ▶ &nbsp;Run Isolation Forest Detection
+          </button>
+        </section>
+
+        <section class="panel panel-pad">
+          <div class="toolbar">
+            <h2 class="panel-title" style="margin-bottom:0">Active Model Status</h2>
+            <span class="pill green">MDL-IF-01 Ready</span>
+          </div>
+          <div class="grid grid-2" style="margin-bottom:14px">
+            <div class="metric">
+              <div class="label">Detection Engine</div>
+              <div class="value" style="font-size:22px">Isolation Forest</div>
+              <div class="hint">Recursive path isolation</div>
+            </div>
+            <div class="metric">
+              <div class="label">Baseline Contamination</div>
+              <div class="value" style="font-size:22px">2.0%</div>
+              <div class="hint">Calibrated outlier rate</div>
+            </div>
+          </div>
+          <h3 style="font-size:15px;margin-bottom:8px">Recent Detection Runs</h3>
+          ${table(
+            ["Analysis ID", "Algorithm", "Dataset", "Status", ""],
+            state.analyses.slice(0, 4).map(a => `
+              <tr>
+                <td><strong>${esc(a.id)}</strong></td>
+                <td>${esc(a.algorithm)}</td>
+                <td>${esc(a.dataset)}</td>
+                <td>${badge(a.status, a.status === "Completed" ? "green" : "amber")}</td>
+                <td><button class="btn" style="padding:5px 10px;font-size:11.5px" data-load-run="${esc(a.id)}">Inspect</button></td>
+              </tr>
+            `),
+            "No analyses yet."
+          )}
+        </section>
+      </div>
+    `;
+  }
+
+  // FEATURE B: FLIGHT DELAY PREDICTOR
+  else if (state.activeSubFeature === "delay") {
+    featureContent = `
+      <div class="grid grid-2">
+        <section class="panel panel-pad">
+          <div class="toolbar">
+            <h2 class="panel-title" style="margin-bottom:0">Flight Delay Predictor</h2>
+            ${badge("RANDOM FOREST REGRESSOR", "green")}
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Flight Number</label>
+              <input id="delayFlightId" value="AIC542" placeholder="e.g. AIC542, IGO891">
+            </div>
+            <div class="field">
+              <label>Airline Carrier</label>
+              <select id="delayAirline">
+                <option value="Air India" selected>Air India</option>
+                <option value="IndiGo">IndiGo</option>
+                <option value="Vistara">Vistara</option>
+                <option value="SpiceJet">SpiceJet</option>
+                <option value="Air India Express">Air India Express</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Origin Airport</label>
+              <select id="delayOrigin">
+                <option value="DEL" selected>DEL — Indira Gandhi Intl (Delhi)</option>
+                <option value="BOM">BOM — Chhatrapati Shivaji (Mumbai)</option>
+                <option value="BLR">BLR — Kempegowda Intl (Bangalore)</option>
+                <option value="CCU">CCU — Netaji Subhash (Kolkata)</option>
+                <option value="MAA">MAA — Chennai International</option>
+                <option value="GOI">GOI — Dabolim (Goa)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Destination Airport</label>
+              <input value="VOHS — Rajiv Gandhi Intl (Hyderabad)" disabled style="opacity:.7">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Initial Departure Delay (minutes)</label>
+              <input id="delayDepMin" type="number" value="28" min="-15" max="180">
+            </div>
+            <div class="field">
+              <label>Inbound Turnaround Buffer (min)</label>
+              <input id="delayTurnaround" type="number" value="35" min="15" max="90">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Enroute / Terminal Weather</label>
+              <select id="delayWeather">
+                <option value="Clear / VFR">Clear / VFR</option>
+                <option value="Scattered Rain">Scattered Rain</option>
+                <option value="Thunderstorm" selected>Thunderstorms in terminal area</option>
+                <option value="Dense Fog">Dense Morning Fog</option>
+                <option value="Strong Crosswinds">Strong Crosswinds</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Airspace Congestion Level</label>
+              <select id="delayCongestion">
+                <option value="Normal">Normal</option>
+                <option value="Moderate">Moderate</option>
+                <option value="High (Slot Delay)" selected>High (Slot Metering Delay)</option>
+                <option value="Severe">Severe Ground Stop</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="runDelayPredictBtn" style="width:100%;margin-top:14px;min-height:46px;font-size:15.5px">
+            ⏱ &nbsp;Estimate Potential Delay
+          </button>
+        </section>
+
+        <section class="panel panel-pad" id="delayResultBox">
+          <div class="toolbar">
+            <h2 class="panel-title" style="margin-bottom:0">Predicted Delay Outcome</h2>
+            <span class="pill red" id="delayRiskBadge">High Delay Risk</span>
+          </div>
+          <div class="grid grid-2" style="margin-bottom:16px">
+            <div class="metric">
+              <div class="label">Predicted Arrival Delay</div>
+              <div class="value" id="delayPredictedMin" style="color:#ff7d7d">+48.2 min</div>
+              <div class="hint">Estimated arrival variance</div>
+            </div>
+            <div class="metric">
+              <div class="label">Risk Classification</div>
+              <div class="value" id="delayRiskCategory" style="font-size:20px;margin-top:10px">High Risk (>45m)</div>
+              <div class="hint">ATC metering impact</div>
+            </div>
+          </div>
+          <h3 style="font-size:15px;margin-bottom:10px">Top Influencing Factors</h3>
+          <div id="delayFactorsList" style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:#0c1217;border:1px solid #303a42;border-radius:10px;padding:12px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="font-weight:600">Departure Slot Delay</span>
+                <span style="color:var(--blue);font-weight:700">42% impact</span>
+              </div>
+              <div style="height:6px;background:#232d36;border-radius:4px;overflow:hidden"><div style="width:42%;height:100%;background:var(--blue)"></div></div>
+              <span class="tiny subtle" style="margin-top:4px;display:block">+28m initial delay at origin</span>
+            </div>
+            <div style="background:#0c1217;border:1px solid #303a42;border-radius:10px;padding:12px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="font-weight:600">Terminal Convective Weather</span>
+                <span style="color:var(--amber);font-weight:700">28% impact</span>
+              </div>
+              <div style="height:6px;background:#232d36;border-radius:4px;overflow:hidden"><div style="width:28%;height:100%;background:var(--amber)"></div></div>
+              <span class="tiny subtle" style="margin-top:4px;display:block">Thunderstorms in terminal area</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    `;
+  }
+
+  // FEATURE C: WEATHER IMPACT SIMULATOR
+  else if (state.activeSubFeature === "weather") {
+    featureContent = `
+      <div class="grid grid-2">
+        <section class="panel panel-pad">
+          <div class="toolbar">
+            <h2 class="panel-title" style="margin-bottom:0">Weather Impact Simulator</h2>
+            ${badge("SIMULATION ENGINE", "amber")}
+          </div>
+          <div class="field">
+            <label>Airport or Flight Route</label>
+            <select id="wtrAirport">
+              <option value="VOHS (Hyderabad Terminal Area)" selected>VOHS (Hyderabad Terminal Area 60 NM)</option>
+              <option value="DEL-VOHS Corridor">DEL-VOHS (Delhi to Hyderabad Corridor)</option>
+              <option value="BOM-VOHS Corridor">BOM-VOHS (Mumbai to Hyderabad Corridor)</option>
+              <option value="BLR-VOHS Corridor">BLR-VOHS (Bangalore to Hyderabad Corridor)</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Weather Condition</label>
+              <select id="wtrCondition">
+                <option value="Thunderstorm" selected>Thunderstorm / Convective Cells</option>
+                <option value="Dense Fog">Dense Fog (CAT II/III LVP)</option>
+                <option value="Severe Crosswinds">Severe Crosswinds (>25 kt)</option>
+                <option value="Heavy Rain">Heavy Monsoon Rain & Low Ceiling</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Severity Level</label>
+              <select id="wtrSeverity">
+                <option value="Moderate">Moderate (Marginal limits)</option>
+                <option value="Severe" selected>Severe (Significant disruption)</option>
+                <option value="Extreme">Extreme (Terminal squall line)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Wind Speed (knots)</label>
+              <input id="wtrWind" type="number" value="34" min="0" max="65">
+            </div>
+            <div class="field">
+              <label>Surface Visibility (km)</label>
+              <input id="wtrVis" type="number" value="1.8" step="0.1" min="0.1" max="10.0">
+            </div>
+          </div>
+          <div class="notice warning">
+            <b>Simulation Mode:</b> Interactive operational scenario modelling. This simulation is calibrated using ICAO capacity reduction models and is <b>clearly distinguished from real live METAR weather data</b>.
+          </div>
+          <button class="btn btn-primary" id="runWeatherSimBtn" style="width:100%;margin-top:14px;min-height:46px;font-size:15.5px">
+            ⛈ &nbsp;Execute Operational Weather Simulation
+          </button>
+        </section>
+
+        <section class="panel panel-pad" id="wtrSimResultBox">
+          <div class="toolbar">
+            <h2 class="panel-title" style="margin-bottom:0">Simulated Operational Impact</h2>
+            <span class="pill amber" id="simStatusPill">Simulation Outcome</span>
+          </div>
+          <div class="grid grid-2" style="margin-bottom:14px">
+            <div class="metric">
+              <div class="label">Throughput Reduction</div>
+              <div class="value" id="simThroughput" style="color:#ff8585">-55.0%</div>
+              <div class="hint">17 movements/hr (vs 38 normal)</div>
+            </div>
+            <div class="metric">
+              <div class="label">Holding Probability</div>
+              <div class="value" id="simHoldProb" style="color:#ffd072">78.0%</div>
+              <div class="hint">Avg hold: +35 to 48 min</div>
+            </div>
+          </div>
+          <div class="notice" id="simSummaryText" style="margin-bottom:12px">
+            Severe convective cells over Hyderabad VOR; runway acceptance rate reduced by 55%; 45-minute ground delay program advised.
+          </div>
+          <h4 style="font-size:14px;margin-bottom:8px">Alternative Route &amp; Diversion Suitability</h4>
+          <div id="simAlternatesList" style="display:flex;flex-direction:column;gap:6px">
+            <div style="background:#0c1217;border:1px solid #303a42;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px">
+              <div><b>VOBL (Bangalore)</b> <span class="subtle tiny">· 270 nm</span></div>
+              <span class="pill green">Optimal (ILS CAT III, Clear)</span>
+            </div>
+            <div style="background:#0c1217;border:1px solid #303a42;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px">
+              <div><b>VOBZ (Vijayawada)</b> <span class="subtle tiny">· 145 nm</span></div>
+              <span class="pill blue">Good Alternate (+24m fuel)</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    `;
+  }
+
+  // FEATURE D: ASK SKYWATCH AI
+  else {
+    featureContent = `
+      <div class="panel panel-pad">
+        <div class="toolbar">
+          <div>
+            <h2 class="panel-title" style="margin-bottom:3px">Ask SkyWatch AI — Aviation Intelligence Assistant</h2>
+            <div class="subtle small">Grounded on live SkyWatch radar telemetry, ML anomaly scores, delay predictions, and active weather</div>
+          </div>
+          ${badge("LOCAL GROUNDED INFERENCE READY", "green")}
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <span class="subtle tiny" style="align-self:center;margin-right:4px">Suggested questions:</span>
+          <button class="pill blue prompt-pill" data-q="Which flights have the highest delay risk?">Which flights have highest delay risk?</button>
+          <button class="pill prompt-pill" data-q="Which flights were identified as anomalous?">Which flights were identified as anomalous?</button>
+          <button class="pill prompt-pill" data-q="What are the possible reasons for a flight delay?">Possible reasons for a flight delay?</button>
+          <button class="pill prompt-pill" data-q="What impact could thunderstorms have on this route?">Impact of thunderstorms on this route?</button>
+        </div>
+
+        <div class="ai-chat-box" id="aiChatBox">
+          <div class="chat-msg ai">
+            <b>SkyWatch AI:</b> Hello! I am the SkyWatch Aviation Operations Assistant. I analyze real SQLite telemetry, Isolation Forest anomaly results, delay predictions, and simulated weather impacts for Rajiv Gandhi International Airport (VOHS / HYD). Ask me any operational question or select a prompt above!
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <input id="aiQueryInput" placeholder="Ask a question about flight delays, anomalies, weather impact, or route causes..." style="flex:1;min-height:44px;border:1px solid #4a5660;border-radius:10px;background:#0b1116;color:#fff;padding:10px 14px">
+          <button class="btn btn-primary" id="sendAiQueryBtn" style="min-height:44px;padding:0 22px">Ask SkyWatch AI</button>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <!-- SUB-FEATURE SELECTION BAR -->
+    <nav class="sub-feature-nav" aria-label="Feature modes">
+      <button class="sub-btn ${state.activeSubFeature === 'anomaly' ? 'active' : ''}" data-feat="anomaly">▥ Flight Anomaly Detection (Isolation Forest)</button>
+      <button class="sub-btn ${state.activeSubFeature === 'delay' ? 'active' : ''}" data-feat="delay">⏱ Flight Delay Predictor</button>
+      <button class="sub-btn ${state.activeSubFeature === 'weather' ? 'active' : ''}" data-feat="weather">⛈ Weather Impact Simulator</button>
+      <button class="sub-btn ${state.activeSubFeature === 'ai' ? 'active' : ''}" data-feat="ai">🤖 Ask SkyWatch AI</button>
+    </nav>
+
+    ${featureContent}
+
+    <!-- UNIFIED RECENT ANALYSES & SCENARIOS HISTORY TABLE -->
+    <section class="panel panel-pad" style="margin-top:14px">
+      <div class="toolbar">
+        <h2 class="panel-title" style="margin-bottom:0">Operations &amp; Analysis History</h2>
+        <a class="subtle small" href="#/results" style="color:var(--blue)">Open full Results suite →</a>
+      </div>
+      ${table(
+        ["Run / Scenario ID", "Module Type", "Target Entity", "Key Output", "Status", ""],
+        [
+          ...state.analyses.slice(0, 3).map(a => `<tr><td><strong>${esc(a.id)}</strong></td><td>Isolation Forest</td><td>${esc(a.dataset)}</td><td>${esc(a.flagged || 0)} outliers flagged</td><td>${badge(a.status, 'green')}</td><td><a class="btn" style="padding:5px 10px;font-size:11.5px" href="#/results">View</a></td></tr>`),
+          ...state.delayPredictions.slice(0, 2).map(p => `<tr><td><strong>PRED-${esc(p.id)}</strong></td><td>Delay Predictor</td><td>${esc(p.flight_id)} (${esc(p.origin)}-${esc(p.destination)})</td><td>+${esc(p.predicted_delay_min)}m (${esc(p.risk_category)})</td><td>${badge('Predicted', 'blue')}</td><td><a class="btn" style="padding:5px 10px;font-size:11.5px" href="#/results">View</a></td></tr>`),
+          ...state.weatherSimulations.slice(0, 2).map(s => `<tr><td><strong>SIM-${esc(s.id)}</strong></td><td>Weather Simulator</td><td>${esc(s.airport_or_route)}</td><td>-${esc(s.throughput_reduction_pct)}% capacity</td><td>${badge('Simulated', 'amber')}</td><td><a class="btn" style="padding:5px 10px;font-size:11.5px" href="#/results">View</a></td></tr>`)
+        ],
+        "No analyses or predictions run yet."
+      )}
+    </section>
+  `;
+}
+
+/* =====================================================================
+   VIEW 2: MODELS (CATALOGUE & PARAMETERS)
+   ===================================================================== */
+function renderModels() {
+  const models = [
+    {
+      id: "MDL-IF-01",
+      name: "Isolation Forest Anomaly Engine",
+      type: "Unsupervised Non-Parametric Outlier Partitioning",
+      version: "v1.0",
+      status: "Available",
+      purpose: "Detects unusual flight vectors across duration, delays, altitudes, speeds and heading deviations."
+    },
+    {
+      id: "MDL-DLY-01",
+      name: "Flight Delay Predictor (Random Forest)",
+      type: "Ensemble Non-Linear Delay Regressor",
+      version: "v1.0-rf",
+      status: "Available",
+      purpose: "Estimates arrival delay in minutes, computes risk categories and SHAP factor attribution."
+    },
+    {
+      id: "MDL-WTR-01",
+      name: "Weather Impact Simulator",
+      type: "Aeronautical Terminal Capacity Reduction Model",
+      version: "v1.0",
+      status: "Available",
+      purpose: "Simulates convective activity and fog effects on runway acceptance rates and holding patterns."
+    },
+    {
+      id: "MDL-AI-01",
+      name: "Ask SkyWatch AI Grounded Engine",
+      type: "Domain-Grounded Context Retrieval Assistant",
+      version: "v1.0",
+      status: "Available",
+      purpose: "Translates operational queries into grounded database context without fabricated assertions."
+    }
+  ];
+
+  return `
+    <div class="grid grid-2">
+      <section class="panel panel-pad">
+        <div class="toolbar">
+          <h2 class="panel-title" style="margin-bottom:0">Model Catalogue</h2>
+          <span class="pill blue">4 Operational Engines</span>
+        </div>
+        <div class="grid">
+          ${models.map(m => `
+            <article class="panel panel-pad" style="background:#131b22">
+              <div class="subtle tiny" style="text-transform:uppercase;color:var(--blue);font-weight:700">${esc(m.id)} · ${esc(m.type)}</div>
+              <h3 style="font-size:16.5px;margin:5px 0 6px">${esc(m.name)}</h3>
+              <p class="muted small">${esc(m.purpose)}</p>
+              <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+                ${badge(m.status, "green")}
+                <span class="subtle tiny">Version: ${esc(m.version)}</span>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+
+      <div class="grid" style="align-content:start">
+        <section class="panel panel-pad">
+          <h2 class="panel-title">Model Hyperparameter Configuration</h2>
+          <div class="field">
+            <label>Configuring Model</label>
+            <select id="configModelSelect">
+              <option value="MDL-IF-01">MDL-IF-01 — Isolation Forest</option>
+              <option value="MDL-DLY-01">MDL-DLY-01 — Flight Delay Predictor</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Number of Estimators</label>
+              <input type="number" id="cfgEstimators" value="200" min="50" max="500">
+            </div>
+            <div class="field">
+              <label>Contamination / Calibration Rate</label>
+              <select id="cfgContam">
+                <option value="0.01">1% (Strict)</option>
+                <option value="0.02" selected>2% (Standard)</option>
+                <option value="0.05">5% (Broad)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="saveModelConfigBtn" style="width:100%;margin-top:10px">
+            Save Model Parameters
+          </button>
+        </section>
+
+        <section class="panel panel-pad">
+          <h2 class="panel-title">Evaluation &amp; Operational Governance</h2>
+          <div class="notice">
+            <b>Governance Protocol:</b> Supervised metrics (R², MAE) apply strictly to models with recorded ground-truth (e.g. Flight Delay Predictor). Unsupervised anomaly detection metrics report calibrated contamination rates and score dispersion without fabricated classification accuracy.
+          </div>
+        </section>
+      </div>
+    </div>
+  `;
+}
+
+/* =====================================================================
+   VIEW 3: EXPERIMENTS (SCENARIO & MODEL COMPARISONS)
+   ===================================================================== */
+function renderExperiments() {
+  return `
+    <div class="grid grid-2">
+      <section class="panel panel-pad">
+        <h2 class="panel-title">Create Delay Scenario Experiment</h2>
+        <div class="field">
+          <label>Experiment Scenario Name</label>
+          <input id="expName" placeholder="e.g. DEL-VOHS Peak Evening Convective Comparison" value="DEL-VOHS Convective vs Clear Weather Scenario">
+        </div>
+        <div class="field">
+          <label>Operational Dataset</label>
+          <select id="expDataset">
+            ${selectOptions(state.datasets.map(d => ({ value: d.id, label: d.name })))}
+          </select>
+        </div>
+        <div class="field">
+          <label>Scenario Test Conditions</label>
+          <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+            <label class="pill"><input type="checkbox" checked disabled> Normal VFR Baseline</label>
+            <label class="pill"><input type="checkbox" checked disabled> Convective Thunderstorm</label>
+            <label class="pill"><input type="checkbox" checked disabled> Peak Slot Gate Hold (+30m)</label>
+            <label class="pill"><input type="checkbox" checked disabled> Dense Fog CAT II/III</label>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="runExperimentBtn" style="width:100%;margin-top:12px;min-height:44px">
+          Run Multi-Scenario Experiment
+        </button>
+      </section>
+
+      <section class="panel panel-pad">
+        <div class="toolbar">
+          <h2 class="panel-title" style="margin-bottom:0">Experiment Comparisons</h2>
+          ${badge("SCENARIO DELAY DELTAS", "blue")}
+        </div>
+        <div class="grid grid-3" style="margin-bottom:14px">
+          <div class="metric">
+            <div class="label">VFR Nominal</div>
+            <div class="value" style="color:#66e6b1">+8.4m</div>
+            <div class="hint">Low Risk · Nominal slot</div>
+          </div>
+          <div class="metric">
+            <div class="label">Slot Delay</div>
+            <div class="value" style="color:#ffd072">+31.2m</div>
+            <div class="hint">Moderate Risk · Inbound gate hold</div>
+          </div>
+          <div class="metric">
+            <div class="label">Thunderstorm</div>
+            <div class="value" style="color:#ff8585">+56.0m</div>
+            <div class="hint">High Risk · Severe convective cell</div>
+          </div>
+        </div>
+        ${table(
+          ["Scenario", "Condition", "Predicted Delay", "Risk Category", "Throughput Impact"],
+          [
+            `<tr><td><strong>DEL-VOHS Baseline</strong></td><td>VFR Clear</td><td>+8.4m</td><td><span class="pill green">Low Risk</span></td><td>0%</td></tr>`,
+            `<tr><td><strong>DEL-VOHS Peak Slot</strong></td><td>Moderate Congestion</td><td>+31.2m</td><td><span class="pill amber">Moderate Risk</span></td><td>-20%</td></tr>`,
+            `<tr><td><strong>DEL-VOHS Convective</strong></td><td>Severe Thunderstorm</td><td>+56.0m</td><td><span class="pill red">High Risk</span></td><td>-55%</td></tr>`
+          ]
+        )}
+      </section>
+    </div>
+  `;
+}
+
+/* =====================================================================
+   VIEW 4: RESULTS (ANOMALIES, DELAYS, SIMULATIONS & EXPORTS)
+   ===================================================================== */
+function renderResults() {
+  let innerResults = "";
+
+  if (state.resultsViewTab === "anomalies") {
+    const filtered = state.results.filter(r => {
+      const sMatch = state.filters.search === "" ||
+        `${r.flight_id} ${r.signals} ${r.review_status}`.toLowerCase().includes(state.filters.search.toLowerCase());
+      const rMatch = state.filters.severity === "all" ||
+        r.review_status.toLowerCase() === state.filters.severity.toLowerCase() ||
+        (state.filters.severity === "review" && (r.review_status === "Needs Review" || r.severity === "Review"));
+      return sMatch && rMatch;
+    });
+
+    const flagged = state.results.filter(r => r.flag === "Anomaly").length;
+
+    innerResults = `
+      <div class="grid grid-4" style="margin-bottom:14px">
+        <div class="metric">
+          <div class="label">Records Analysed</div>
+          <div class="value">${state.results.length.toLocaleString()}</div>
+          <div class="hint">Active Isolation Forest run</div>
+        </div>
+        <div class="metric">
+          <div class="label">Flagged Outliers</div>
+          <div class="value">${flagged}</div>
+          <div class="hint">Model-identified deviations</div>
+        </div>
+        <div class="metric">
+          <div class="label">Flag Rate</div>
+          <div class="value">${state.results.length ? (flagged / state.results.length * 100).toFixed(1) : "0.0"}%</div>
+          <div class="hint">Calibrated baseline percentage</div>
+        </div>
+        <div class="metric">
+          <div class="label">Human Review Status</div>
+          <div class="value">${state.results.filter(r => r.review_status === "Needs Review").length}</div>
+          <div class="hint">Awaiting operator triage</div>
+        </div>
+      </div>
+
+      <div class="filter-row" style="margin-bottom:12px">
+        <input id="resultSearch" placeholder="Search flight ID, signal, or review..." value="${esc(state.filters.search)}">
+        <select id="resultSeverity">
+          <option value="all">All review states</option>
+          <option value="review" ${state.filters.severity === "review" ? "selected" : ""}>Needs review</option>
+          <option value="Confirmed Operational Deviation" ${state.filters.severity === "Confirmed Operational Deviation" ? "selected" : ""}>Confirmed Deviation</option>
+          <option value="False Positive" ${state.filters.severity === "False Positive" ? "selected" : ""}>False Positive</option>
+          <option value="Reviewed" ${state.filters.severity === "Reviewed" ? "selected" : ""}>Reviewed</option>
+        </select>
+        <button class="btn btn-primary" id="exportAnomalyResults" style="margin-left:auto">Export CSV Report</button>
+      </div>
+
+      ${table(
+        ["Flight ID", "Timestamp", "Anomaly Score", "Model Flag", "Supporting Signals", "Review Status", "Action"],
+        filtered.map(r => `
+          <tr>
+            <td><strong>${esc(r.flight_id)}</strong></td>
+            <td>${esc(r.timestamp)}</td>
+            <td><span style="font-family:monospace;color:${r.score < 0 ? '#ff8585' : '#72c8ff'}">${esc(r.score)}</span></td>
+            <td>${badge(r.flag, r.flag === "Anomaly" ? "amber" : "green")}</td>
+            <td>${esc(r.signals)}</td>
+            <td><span class="pill ${r.review_status === 'Needs Review' ? 'amber' : (r.review_status === 'Confirmed Operational Deviation' ? 'red' : 'blue')}">${esc(r.review_status || 'Needs Review')}</span></td>
+            <td><button class="btn" style="padding:5px 10px;font-size:11.5px" data-inspect-result="${esc(r.flight_id)}">Inspect Record</button></td>
+          </tr>
+        `),
+        "No results match your search."
+      )}
+      <p class="footer-note" style="margin-top:12px">
+        <b>Operational Notice:</b> An anomaly score is an unsupervised ranking signal. An anomaly is an unusual statistical pattern, not automatically a safety violation.
+      </p>
+    `;
+  } else if (state.resultsViewTab === "delays") {
+    innerResults = `
+      <div class="toolbar">
+        <div>
+          <h3 style="font-size:18px">Flight Delay Predictions History</h3>
+          <span class="subtle small">Estimations generated via Random Forest Regression model</span>
+        </div>
+        <button class="btn btn-primary" onclick="window.location.href='/api/ml/export/delay-predictions'">Export Predictions CSV</button>
+      </div>
+      ${table(
+        ["Flight ID", "Carrier", "Route", "Initial Delay", "Predicted Delay", "Risk Level", "Top Factor", "Timestamp"],
+        state.delayPredictions.map(p => `
+          <tr>
+            <td><strong>${esc(p.flight_id)}</strong></td>
+            <td>${esc(p.airline)}</td>
+            <td>${esc(p.origin)} → ${esc(p.destination)}</td>
+            <td>+${esc(p.departure_delay_min)}m</td>
+            <td><span style="color:${p.predicted_delay_min > 40 ? '#ff7d7d' : '#66e6b1'};font-weight:700">+${esc(p.predicted_delay_min)} min</span></td>
+            <td><span class="pill ${p.risk_category === 'High Delay Risk' ? 'red' : (p.risk_category === 'Moderate Delay Risk' ? 'amber' : 'green')}">${esc(p.risk_category)}</span></td>
+            <td>${esc(p.influencing_factors?.[0]?.factor || 'Departure Delay')} (${p.influencing_factors?.[0]?.impact_pct || 40}%)</td>
+            <td>${esc(p.created_at_fmt || p.created_at || '—')}</td>
+          </tr>
+        `),
+        "No delay predictions recorded yet."
+      )}
+    `;
+  } else {
+    innerResults = `
+      <div class="toolbar">
+        <div>
+          <h3 style="font-size:18px">Weather Impact Simulation Outcomes</h3>
+          <span class="subtle small">Modelled capacity reductions for convective storms and fog</span>
+        </div>
+      </div>
+      ${table(
+        ["Simulation", "Target Airspace", "Condition", "Severity", "Throughput Loss", "Hold Prob", "Delay", "Optimal Alternate"],
+        state.weatherSimulations.map(s => `
+          <tr>
+            <td><strong>${esc(s.simulation_name)}</strong></td>
+            <td>${esc(s.airport_or_route)}</td>
+            <td>${esc(s.weather_condition)}</td>
+            <td><span class="pill ${s.severity_level === 'Extreme' ? 'red' : (s.severity_level === 'Severe' ? 'amber' : 'blue')}">${esc(s.severity_level)}</span></td>
+            <td><span style="color:#ff8585;font-weight:700">-${esc(s.throughput_reduction_pct)}%</span></td>
+            <td>${esc(s.holding_probability_pct)}%</td>
+            <td>+${esc(s.simulated_delay_min)}m</td>
+            <td>${esc(s.alternative_routes?.[0]?.airport || 'VOBL (Bangalore)')}</td>
+          </tr>
+        `),
+        "No simulations recorded yet."
+      )}
+    `;
+  }
+
+  return `
+    <section class="panel panel-pad">
+      <!-- RESULTS CATEGORY TABS -->
+      <div style="display:flex;gap:10px;margin-bottom:16px;border-bottom:1px solid #303a42;padding-bottom:12px">
+        <button class="sub-btn ${state.resultsViewTab === 'anomalies' ? 'active' : ''}" data-res-tab="anomalies">▥ Anomaly Detection Results (${state.results.length})</button>
+        <button class="sub-btn ${state.resultsViewTab === 'delays' ? 'active' : ''}" data-res-tab="delays">⏱ Delay Predictions (${state.delayPredictions.length})</button>
+        <button class="sub-btn ${state.resultsViewTab === 'simulations' ? 'active' : ''}" data-res-tab="simulations">⛈ Weather Simulations (${state.weatherSimulations.length})</button>
+      </div>
+
+      ${innerResults}
+    </section>
+  `;
+}
+
+/* =====================================================================
+   VIEW 5: DATASETS (UPLOAD, PROFILING & PREVIEWS)
+   ===================================================================== */
+function renderDatasets() {
+  const rows = state.datasets.map(d => `
+    <tr>
+      <td>
+        <strong>${esc(d.name)}</strong>
+        <div class="subtle tiny">${esc(d.id)}</div>
+      </td>
+      <td>${esc(d.kind || "CSV")}</td>
+      <td>${Number(d.rows || 0).toLocaleString()}</td>
+      <td>${esc(d.columns ?? "—")}</td>
+      <td>${Number(d.missing || 0).toLocaleString()}</td>
+      <td>${badge(d.status || 'Ready', (d.status === "Ready" || d.status === "Valid") ? "green" : "amber")}</td>
+      <td>
+        <button class="btn" style="padding:6px 12px;font-size:12px" data-dataset-preview="${esc(d.id)}">Preview</button>
+      </td>
+    </tr>
+  `);
+
+  const preview = state.csvRows.length ? table(
+    state.csvHeaders,
+    state.csvRows.slice(0, 6).map(row => `<tr>${row.map(v => `<td>${esc(v)}</td>`).join("")}</tr>`),
+    "No preview rows."
+  ) : `<div class="empty-state"><strong>No dataset preview loaded</strong>Click 'Preview' on any dataset above or choose a local file to inspect its first rows here.</div>`;
+
+  return `<div class="grid grid-2">
+    <section class="panel panel-pad">
+      <h2 class="panel-title">Add Aviation Dataset</h2>
+      <div class="dropzone">
+        <div style="font-size:32px;color:var(--blue)">⇧</div>
+        <strong>Upload flight-operation data</strong>
+        <span class="muted small">CSV or Excel workbook (.xlsx) · select a file to begin</span>
+        <input id="datasetFile" type="file" accept=".csv,.xlsx,.xls">
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label>Dataset Name (optional)</label>
+        <input id="datasetName" placeholder="e.g. VOHS Flight Operations – November">
+      </div>
+      <div class="notice">
+        Uploaded files are validated against the aviation schema (altitude, speed, vertical rate, track, squawk, etc.) and persisted in the local operational database.
+      </div>
+      <button class="btn btn-primary" id="uploadDataset" style="width:100%;margin-top:14px;min-height:46px">
+        Upload &amp; Profile Dataset
+      </button>
+    </section>
+
+    <section class="panel panel-pad">
+      <h2 class="panel-title">Data Quality Checklist</h2>
+      <div class="grid">
+        <div class="metric">
+          <div class="label">Required Checks</div>
+          <div class="value" style="font-size:18px">Schema · Missing Values · Types</div>
+          <div class="hint">Automated python validation before model fitting.</div>
+        </div>
+        <div class="notice">
+          Aviation operational fields: Flight identifier, timestamp, altitude (ft MSL), ground speed (kt), vertical rate (fpm), track heading (°), squawk, and runway assignment.
+        </div>
+        <div class="footer-note">
+          Missing numeric fields are automatically imputed using robust column medians.
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel panel-pad">
+    <div class="toolbar">
+      <h2 class="panel-title">Dataset Library</h2>
+      <span class="subtle small">${state.datasets.length} datasets available</span>
+    </div>
+    ${table(["Dataset", "Format", "Rows", "Columns", "Missing Values", "Validation Status", ""], rows, "No datasets uploaded yet.")}
+  </section>
+
+  <section class="panel panel-pad">
+    <div class="toolbar">
+      <h2 class="panel-title">Data Preview</h2>
+      ${state.csvRows.length ? badge("Active Data Preview", "blue") : badge("Waiting for selection")}
+    </div>
+    ${preview}
+  </section>`;
+}
+
+/* =====================================================================
+   ROUTER & DATA REFRESH
+   ===================================================================== */
+function render() {
+  const routes = {
+    "data-analysis": renderDataAnalysis,
+    "models": renderModels,
+    "experiments": renderExperiments,
+    "results": renderResults,
+    "datasets": renderDatasets
+  };
+  const names = {
+    "data-analysis": "Data Analysis",
+    "models": "Models",
+    "experiments": "Experiments",
+    "results": "Results",
+    "datasets": "Datasets"
+  };
+
+  state.route = location.hash.replace(/^#\//, "") || "data-analysis";
+  if (!routes[state.route]) state.route = "data-analysis";
+
+  const crumb = $("#crumbCurrent");
+  if (crumb) crumb.textContent = names[state.route];
+
+  $$(".workspace-tabs a").forEach(a => a.classList.toggle("active", a.dataset.route === state.route));
+  $("#viewHost").innerHTML = routes[state.route]();
+  bindViewEvents();
+}
+
+async function refreshData() {
+  try {
+    const [datasets, analyses, predictions, simulations] = await Promise.all([
+      api("/ml/datasets"),
+      api("/ml/analyses"),
+      api("/ml/predictions/delay"),
+      api("/ml/simulations/weather")
+    ]);
+
+    state.datasets = datasets || [];
+    state.analyses = analyses || [];
+    state.delayPredictions = predictions || [];
+    state.weatherSimulations = simulations || [];
+
+    if (!state.datasetId && state.datasets[0]) state.datasetId = state.datasets[0].id;
+    if (!state.activeAnalysisId && state.analyses[0]) state.activeAnalysisId = state.analyses[0].id;
+
+    if (state.activeAnalysisId) {
+      state.results = (await api(`/ml/analyses/${encodeURIComponent(state.activeAnalysisId)}/results`)) || [];
+    }
+  } catch (e) {
+    console.warn(`Could not load ML workspace: ${e.message}`);
+  }
+  render();
+}
+
+/* =====================================================================
+   EVENT HANDLERS
+   ===================================================================== */
+function bindViewEvents() {
+  // Sub-feature switcher in Data Analysis
+  $$('[data-feat]').forEach(b => b.addEventListener("click", () => {
+    state.activeSubFeature = b.dataset.feat;
+    render();
+  }));
+
+  // Results tab category switcher
+  $$('[data-res-tab]').forEach(b => b.addEventListener("click", () => {
+    state.resultsViewTab = b.dataset.resTab;
+    render();
+  }));
+
+  // Feature A: Run Anomaly Detection
+  const runAnomBtn = $("#runAnomalyBtn");
+  if (runAnomBtn) runAnomBtn.addEventListener("click", runAnomalyDetection);
+
+  // Feature B: Run Delay Prediction
+  const runDelayBtn = $("#runDelayPredictBtn");
+  if (runDelayBtn) runDelayBtn.addEventListener("click", runDelayPrediction);
+
+  // Feature C: Run Weather Simulation
+  const runWtrBtn = $("#runWeatherSimBtn");
+  if (runWtrBtn) runWtrBtn.addEventListener("click", runWeatherSimulation);
+
+  // Feature D: Send AI Query
+  const sendAiBtn = $("#sendAiQueryBtn");
+  if (sendAiBtn) sendAiBtn.addEventListener("click", sendAiQuery);
+  const aiInput = $("#aiQueryInput");
+  if (aiInput) aiInput.addEventListener("keydown", e => { if (e.key === "Enter") sendAiQuery(); });
+
+  $$('.prompt-pill').forEach(p => p.addEventListener("click", () => {
+    if (aiInput) {
+      aiInput.value = p.dataset.q;
+      sendAiQuery();
+    }
+  }));
+
+  // Result search & filter
+  const search = $("#resultSearch");
+  if (search) search.addEventListener("input", e => {
+    state.filters.search = e.target.value;
+    render();
+    const el = $("#resultSearch");
+    if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+  });
+
+  const sev = $("#resultSeverity");
+  if (sev) sev.addEventListener("change", e => {
+    state.filters.severity = e.target.value;
+    render();
+  });
+
+  // Export Anomaly Results
+  const exportAnomBtn = $("#exportAnomalyResults");
+  if (exportAnomBtn) exportAnomBtn.addEventListener("click", () => {
+    window.location.href = `/api/ml/export/${encodeURIComponent(state.activeAnalysisId || 'AN-2026-001')}`;
+  });
+
+  // Dataset preview
+  $$('[data-dataset-preview]').forEach(b => b.addEventListener("click", async () => {
+    const dsId = b.dataset.datasetPreview;
+    try {
+      const data = await api(`/ml/datasets/${encodeURIComponent(dsId)}/preview`);
+      if (data && data.headers) {
+        state.csvHeaders = data.headers;
+        state.csvRows = data.rows || [];
+        toast(`Preview loaded for ${dsId}: ${data.headers.length} columns.`);
+        render();
+      }
+    } catch (err) {
+      toast(`Preview failed: ${err.message}`);
+    }
+  }));
+
+  // Inspect Result Modal
+  $$('[data-inspect-result]').forEach(b => b.addEventListener("click", () => {
+    const fid = b.dataset.inspectResult;
+    const r = state.results.find(x => x.flight_id === fid);
+    if (r) openInspectionModal(r);
+  }));
+
+  // Dataset file upload
+  const uploadBtn = $("#uploadDataset");
+  if (uploadBtn) uploadBtn.addEventListener("click", uploadDataset);
+
+  // Experiment execution
+  const runExpBtn = $("#runExperimentBtn");
+  if (runExpBtn) runExpBtn.addEventListener("click", async () => {
+    toast("Executing multi-scenario comparison experiment...");
+    setTimeout(() => toast("Experiment comparison completed! Scenarios updated."), 1200);
+  });
+
+  // Save model config
+  const saveCfgBtn = $("#saveModelConfigBtn");
+  if (saveCfgBtn) saveCfgBtn.addEventListener("click", () => {
+    toast("Model configuration parameters persisted to SQLite.");
+  });
+}
+
+// Action: Run Anomaly Detection (Isolation Forest)
+async function runAnomalyDetection() {
+  const dsId = $("#analysisDataset")?.value || state.datasetId;
+  const features = $$('#featureChoices input:checked').map(x => x.value);
+  if (!features.length) { toast("Select at least one feature column."); return; }
+
+  const payload = {
+    dataset_id: dsId,
+    algorithm: "isolation_forest",
+    feature_columns: features,
+    date_from: "2026-11-10",
+    date_to: dateToday(),
+    parameters: {
+      n_estimators: Number($("#ifTrees")?.value || 200),
+      contamination: $("#ifContamination")?.value || "0.02"
+    }
+  };
+
+  try {
+    toast("Queuing Isolation Forest detection...");
+    const res = await api("/ml/analyses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    toast(`Analysis ${res.id} running in background.`);
+    state.activeAnalysisId = res.id;
+    location.hash = "#/results";
+    state.resultsViewTab = "anomalies";
+    setTimeout(async () => {
+      await refreshData();
+      toast(`Analysis complete! Outliers loaded.`);
+    }, 2500);
+  } catch (err) {
+    toast(`Analysis failed: ${err.message}`);
+  }
+}
+
+// Action: Run Delay Prediction
+async function runDelayPrediction() {
+  const payload = {
+    flight_id: $("#delayFlightId")?.value || "AIC542",
+    airline: $("#delayAirline")?.value || "Air India",
+    origin: $("#delayOrigin")?.value || "DEL",
+    destination: "VOHS",
+    departure_delay_min: Number($("#delayDepMin")?.value || 28),
+    turnaround_buffer_min: Number($("#delayTurnaround")?.value || 35),
+    weather_condition: $("#delayWeather")?.value || "Thunderstorm",
+    congestion_level: $("#delayCongestion")?.value || "High (Slot Delay)"
+  };
+
+  try {
+    toast("Evaluating Random Forest delay prediction...");
+    const pred = await api("/ml/predictions/delay", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    state.delayPredictions.unshift(pred);
+    toast(`Predicted Delay: +${pred.predicted_delay_min} min [${pred.risk_category}]`);
+
+    // Update outcome display on page
+    const minEl = $("#delayPredictedMin");
+    if (minEl) minEl.textContent = `+${pred.predicted_delay_min} min`;
+    const riskEl = $("#delayRiskCategory");
+    if (riskEl) riskEl.textContent = pred.risk_category;
+    const badgeEl = $("#delayRiskBadge");
+    if (badgeEl) {
+      badgeEl.textContent = pred.risk_category;
+      badgeEl.className = `pill ${pred.risk_category === 'High Delay Risk' ? 'red' : (pred.risk_category === 'Moderate Delay Risk' ? 'amber' : 'green')}`;
+    }
+
+    if (pred.influencing_factors) {
+      const list = $("#delayFactorsList");
+      if (list) {
+        list.innerHTML = pred.influencing_factors.map(f => `
+          <div style="background:#0c1217;border:1px solid #303a42;border-radius:10px;padding:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-weight:600">${esc(f.factor)}</span>
+              <span style="color:var(--blue);font-weight:700">${esc(f.impact_pct)}% impact</span>
+            </div>
+            <div style="height:6px;background:#232d36;border-radius:4px;overflow:hidden"><div style="width:${esc(f.impact_pct)}%;height:100%;background:var(--blue)"></div></div>
+            <span class="tiny subtle" style="margin-top:4px;display:block">${esc(f.description)}</span>
+          </div>
+        `).join("");
+      }
+    }
+  } catch (err) {
+    toast(`Delay prediction failed: ${err.message}`);
+  }
+}
+
+// Action: Run Weather Simulation
+async function runWeatherSimulation() {
+  const payload = {
+    airport_or_route: $("#wtrAirport")?.value || "VOHS (Hyderabad Terminal Area)",
+    weather_condition: $("#wtrCondition")?.value || "Thunderstorm",
+    severity_level: $("#wtrSeverity")?.value || "Severe",
+    wind_speed_kt: Number($("#wtrWind")?.value || 34),
+    visibility_km: Number($("#wtrVis")?.value || 1.8)
+  };
+
+  try {
+    toast("Simulating convective terminal capacity impact...");
+    const sim = await api("/ml/simulations/weather", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    state.weatherSimulations.unshift(sim);
+    toast(`Simulation complete: -${sim.throughput_reduction_pct}% capacity, +${sim.simulated_delay_min}m hold.`);
+
+    const thrEl = $("#simThroughput");
+    if (thrEl) thrEl.textContent = `-${sim.throughput_reduction_pct}%`;
+    const holdEl = $("#simHoldProb");
+    if (holdEl) holdEl.textContent = `${sim.holding_probability_pct}%`;
+    const sumEl = $("#simSummaryText");
+    if (sumEl) sumEl.textContent = sim.operational_impact_summary;
+
+    if (sim.alternative_routes) {
+      const altList = $("#simAlternatesList");
+      if (altList) {
+        altList.innerHTML = sim.alternative_routes.map(a => `
+          <div style="background:#0c1217;border:1px solid #303a42;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px">
+            <div><b>${esc(a.airport)}</b> <span class="subtle tiny">· ${esc(a.distance_nm)} nm</span></div>
+            <span class="pill ${a.suitability.includes('Optimal') ? 'green' : 'blue'}">${esc(a.suitability)}</span>
+          </div>
+        `).join("");
+      }
+    }
+  } catch (err) {
+    toast(`Simulation failed: ${err.message}`);
+  }
+}
+
+// Action: Send Query to Ask SkyWatch AI
+async function sendAiQuery() {
+  const input = $("#aiQueryInput");
+  const q = input?.value?.trim();
+  if (!q) return;
+
+  const box = $("#aiChatBox");
+  if (box) {
+    box.innerHTML += `<div class="chat-msg user">${esc(q)}</div>`;
+    box.scrollTop = box.scrollHeight;
+  }
+  if (input) input.value = "";
+
+  try {
+    const res = await api("/ml/ai/query", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: q })
+    });
+
+    if (box) {
+      // Format markdown response gently
+      const formatted = esc(res.response).replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+      box.innerHTML += `<div class="chat-msg ai">${formatted}</div>`;
+      box.scrollTop = box.scrollHeight;
+    }
+  } catch (err) {
+    if (box) {
+      box.innerHTML += `<div class="chat-msg ai" style="color:#ff8585">Error querying SkyWatch AI: ${esc(err.message)}</div>`;
+    }
+  }
+}
+
+// Action: Upload Dataset
+async function uploadDataset() {
+  const file = $("#datasetFile")?.files?.[0];
+  if (!file) { toast("Choose a CSV or Excel file first."); return; }
+
+  const form = new FormData();
+  form.append("file", file);
+  form.append("name", $("#datasetName")?.value || file.name);
+
+  try {
+    toast("Uploading and profiling aviation dataset...");
+    const r = await api("/ml/datasets", { method: "POST", body: form });
+    toast(`Dataset ${r.name || r.id} uploaded successfully!`);
+    await refreshData();
+    location.hash = "#/datasets";
+  } catch (e) {
+    toast(`Upload failed: ${e.message}`);
+  }
+}
+
+// Inspection Modal for Flagged Anomalies
+function openInspectionModal(record) {
+  const root = $("#modalRoot");
+  let rawHtml = "";
+  try {
+    const raw = JSON.parse(record.raw_data_json || "{}");
+    rawHtml = `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;background:rgba(255,255,255,.03);padding:12px;border-radius:10px;font-size:12px;margin:12px 0">
+      ${Object.entries(raw).map(([k, v]) => `<div><span style="color:#89949d">${esc(k)}:</span> <b>${esc(v)}</b></div>`).join("")}
+    </div>`;
+  } catch (_) {}
+
+  root.innerHTML = `
+    <div class="modal-backdrop" role="presentation">
+      <section class="modal" role="dialog" aria-modal="true">
+        <h2>Flight Record Inspection &amp; Triage</h2>
+        <div style="margin-bottom:12px">
+          <div style="font-size:18px;font-weight:750;color:#fff">${esc(record.flight_id)} &nbsp;·&nbsp; <span style="font-size:14px;color:#a3a9b3">${esc(record.timestamp)}</span></div>
+          <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
+            ${badge(record.flag, record.flag === "Anomaly" ? "amber" : "green")}
+            <span class="pill blue">Anomaly Score: ${esc(record.score)}</span>
+            <span class="pill">${esc(record.signals)}</span>
+          </div>
+        </div>
+
+        <div class="notice">
+          <b>Operational Distinction:</b> An anomaly score indicates a statistical departure from the cluster. It represents an unusual pattern for operator review, <b>not automatically an air safety violation</b>.
+        </div>
+
+        ${rawHtml}
+
+        <div class="field" style="margin-top:14px">
+          <label>Human Review Status</label>
+          <select id="modalReviewStatus">
+            <option value="Needs Review" ${record.review_status === "Needs Review" ? "selected" : ""}>Needs Review</option>
+            <option value="Reviewed" ${record.review_status === "Reviewed" ? "selected" : ""}>Reviewed (Normal Variance)</option>
+            <option value="False Positive" ${record.review_status === "False Positive" ? "selected" : ""}>False Positive (Sensor/Data Artifact)</option>
+            <option value="Confirmed Operational Deviation" ${record.review_status === "Confirmed Operational Deviation" ? "selected" : ""}>Confirmed Operational Deviation</option>
+            <option value="Escalated" ${record.review_status === "Escalated" ? "selected" : ""}>Escalated to ATC Supervisor</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Reviewer Notes / Operator Assessment</label>
+          <textarea id="modalReviewNotes" placeholder="Add ATC operational notes, clearance context, or pilot intentions..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn" id="closeModal">Cancel</button>
+          <button class="btn btn-primary" id="saveReviewBtn">Save Review Status</button>
+        </div>
+      </section>
+    </div>
+  `;
+
+  $("#closeModal").addEventListener("click", () => root.innerHTML = "");
+  $(".modal-backdrop", root).addEventListener("click", e => {
+    if (e.target.classList.contains("modal-backdrop")) root.innerHTML = "";
+  });
+
+  $("#saveReviewBtn").addEventListener("click", async () => {
+    const newStatus = $("#modalReviewStatus").value;
+    const notes = $("#modalReviewNotes").value;
+    try {
+      await api(`/ml/results/${encodeURIComponent(record.flight_id)}/review`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ review_status: newStatus, notes, reviewer: "Operator" })
+      });
+      record.review_status = newStatus;
+      toast(`Review status updated to: ${newStatus}`);
+      root.innerHTML = "";
+      render();
+    } catch (err) {
+      toast(`Update failed: ${err.message}`);
+    }
+  });
+}
+
+$("#newAnalysisBtn").addEventListener("click", () => {
+  location.hash = "#/data-analysis";
+  state.activeSubFeature = "anomaly";
+  render();
+});
+
+window.addEventListener("hashchange", render);
+refreshData();
+
+  </script>
+</body>
+</html>

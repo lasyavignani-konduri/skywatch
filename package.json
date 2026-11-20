@@ -1,0 +1,28 @@
+{
+  "name": "skywatch-radar",
+  "version": "1.0.0",
+  "description": "SkyWatch - Real-Time Flight Anomaly Radar for Rajiv Gandhi International Airport (VOHS / HYD)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/test.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "aviation",
+    "ads-b",
+    "radar",
+    "anomaly-detection",
+    "vohs",
+    "hyderabad"
+  ],
+  "author": "SkyWatch Team",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^2.5.0"
+  }
+}

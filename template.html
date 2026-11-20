@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SkyWatch · Learning Hub · Knowledge &amp; Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   SKYWATCH · TEMPLATE.HTML · 1672×941 MASTER DESIGN SYSTEM
+   100% in sync with Dashboard, Radar, Anomalies, Weather & Insights
+   ===================================================================== */
+:root{
+  --u:calc(100vw / 1672);
+  --bg:#000;
+  --text:#fff;
+  --muted:#a3a9b3;
+  --muted-2:#8f96a3;
+  --soft:#d3d7de;
+  --blue:#1f6fff;
+  --blue-text:#2f7dff;
+  --sky:#4ea8ff;
+  --green:#1fe05d;
+  --line:rgba(255,255,255,.14);
+  --card-border:rgba(255,255,255,.22);
+  --font:'Inter','SF Pro Display','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+  --card-a:#10151b; --card-b:#0a0d11; --card-c:#07090c;
+  --acc:#179ffc;
+  --acc-hi:#35b3ff;
+  --amber:#f6a716;
+  --btn-ink:#04121f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font);letter-spacing:-.012em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{padding:0 calc(var(--u)*21) calc(var(--u)*40) calc(var(--u)*20);min-width:900px}
+button{font:inherit;letter-spacing:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--blue-text);outline-offset:3px}
+
+/* ---------- TOP BAR (100% in sync with Dashboard, Radar, Anomalies, Weather, Insights) ---------- */
+.bar{height:calc(var(--u)*92);display:flex;align-items:center}
+.brand{display:flex;align-items:center;gap:calc(var(--u)*30);height:calc(var(--u)*46);padding:0 0 0 calc(var(--u)*10);width:calc(var(--u)*283);border-right:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*33);font-weight:600;cursor:pointer}
+.brand svg{width:calc(var(--u)*56);height:calc(var(--u)*40)}
+.tabs{display:flex;gap:calc(var(--u)*20);margin-left:calc(var(--u)*31);flex:1}
+.tab{height:calc(var(--u)*49);padding:0 calc(var(--u)*20);border-radius:99px;font-size:calc(var(--u)*19);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.5);transition:background .2s;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.14)}
+.tab.on{background:#fff;color:#000;border-color:#fff;font-weight:500}
+.st{display:flex;height:calc(var(--u)*46);border-left:1px solid rgba(255,255,255,.2);font-size:calc(var(--u)*21)}
+.st>div{display:flex;align-items:center;padding:0 calc(var(--u)*16) 0 calc(var(--u)*35)}
+.st>div+div{border-left:1px solid rgba(255,255,255,.2)}
+.st .dot{width:calc(var(--u)*18);height:calc(var(--u)*18);border-radius:50%;background:var(--green);box-shadow:0 0 calc(var(--u)*12) var(--green);margin-right:calc(var(--u)*11);transition:background .3s}
+.st .rwy{padding:0 calc(var(--u)*14)}
+.st .rwy span{display:flex;align-items:center;height:calc(var(--u)*44);padding:0 calc(var(--u)*19);border:1px solid rgba(255,255,255,.14);border-radius:99px;background:rgba(255,255,255,.04);white-space:nowrap}
+.st .clk{padding:0 calc(var(--u)*12) 0 calc(var(--u)*19);white-space:nowrap}
+
+/* ---------- MAIN STAGE LAYOUT ---------- */
+.hub-stage{display:flex;gap:calc(var(--u)*20);width:100%;height:calc(var(--u)*820);margin-top:calc(var(--u)*14)}
+.card{position:relative;overflow:hidden;border-radius:calc(var(--u)*24);border:1.5px solid var(--card-border);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.06) 0,rgba(255,255,255,.022) calc(var(--u)*55),rgba(255,255,255,0) calc(var(--u)*125)),
+    linear-gradient(180deg,#08090b 0%,#050607 60%,#040506 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:linear-gradient(225deg,rgba(150,158,185,.15) 0%,rgba(255,255,255,.05) 14%,rgba(255,255,255,.015) 26%,transparent 38%)}
+.card>*{z-index:2}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--u)*8);border-radius:99px;color:var(--btn-ink);font-weight:700;
+  background:linear-gradient(180deg,#3bb5ff 0%,#169ffb 55%,#1494f4 100%);box-shadow:0 0 calc(var(--u)*14) rgba(23,159,252,.25),0 1px 0 rgba(255,255,255,.35) inset;cursor:pointer}
+.btn svg{width:calc(var(--u)*16);height:calc(var(--u)*16);stroke:var(--btn-ink);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.btn:hover{filter:brightness(1.08)}
+.btn-sec{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--u)*8);border-radius:99px;color:#e0e7ee;font-weight:600;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);cursor:pointer}
+.btn-sec:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff}
+
+.badge{display:inline-flex;align-items:center;gap:calc(var(--u)*5);padding:calc(var(--u)*3) calc(var(--u)*9);border-radius:calc(var(--u)*6);font-size:calc(var(--u)*13);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.badge-blue{background:rgba(23,159,252,.15);color:var(--acc-hi);border:1px solid rgba(23,159,252,.35)}
+.badge-amber{background:rgba(246,167,22,.15);color:var(--amber);border:1px solid rgba(246,167,22,.35)}
+.badge-red{background:rgba(240,68,56,.15);color:#ff6b6b;border:1px solid rgba(240,68,56,.35)}
+.badge-green{background:rgba(18,232,106,.15);color:var(--green);border:1px solid rgba(18,232,106,.35)}
+
+/* ---------- SIDEBAR ---------- */
+.side{width:calc(var(--u)*206);height:calc(var(--u)*820);flex:none;background:#0b0e12;border-color:#1c2024;padding:calc(var(--u)*12) calc(var(--u)*8)}
+.it{position:relative;height:calc(var(--u)*48);margin-bottom:calc(var(--u)*8);display:flex;align-items:center;gap:calc(var(--u)*14);padding:0 calc(var(--u)*16);border-radius:calc(var(--u)*14);cursor:pointer;color:#d8dee6;font-size:calc(var(--u)*17.5);font-weight:500;transition:all .15s}
+.it svg{width:calc(var(--u)*24);height:calc(var(--u)*24);stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.it:hover{color:#fff;background:rgba(255,255,255,.05)}
+.it.act{background:linear-gradient(95deg,#0a6fc0 0%,#05497f 35%,#032d4e 75%,#04263f 100%);border:1px solid rgba(90,190,255,.55);color:#fff;font-weight:600;box-shadow:0 0 calc(var(--u)*14) rgba(23,159,252,.28)}
+.it.act svg{stroke:none;fill:#fff}
+.sdiv{height:1px;background:rgba(255,255,255,.14);margin:calc(var(--u)*16) calc(var(--u)*12)}
+.stl{font-size:calc(var(--u)*16);font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:0 calc(var(--u)*16);margin-bottom:calc(var(--u)*8)}
+.it.lab{background:#121821;border:1px solid #171d26}
+.it.lab svg{stroke:var(--acc);stroke-width:1.9}
+.it.lab.act{background:linear-gradient(95deg,#0a6fc0 0%,#05497f 35%,#032d4e 75%,#04263f 100%);border-color:rgba(90,190,255,.55)}
+.it.lab.act svg{stroke:#fff}
+
+/* ---------- MAIN CONTENT HOST ---------- */
+.main-content{width:calc(var(--u)*1405);height:calc(var(--u)*820);flex:1;overflow:hidden}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar{width:calc(var(--u)*6);height:calc(var(--u)*6)}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.02);border-radius:calc(var(--u)*3)}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:calc(var(--u)*3)}
+::-webkit-scrollbar-thumb:hover{background:rgba(53,179,255,.45)}
+
+/* ---------- SUBPAGE COMMON HEADER ---------- */
+.sub-hdr{display:flex;align-items:center;justify-content:space-between;height:calc(var(--u)*50);margin-bottom:calc(var(--u)*10);flex:none}
+.sub-title{display:flex;align-items:center;gap:calc(var(--u)*14)}
+.sub-title h1{font-size:calc(var(--u)*28);font-weight:700;letter-spacing:-.3px;line-height:1.2}
+.sub-title p{font-size:calc(var(--u)*17);color:var(--muted);font-weight:400}
+.sub-pill-count{padding:calc(var(--u)*5) calc(var(--u)*14);border-radius:99px;font-size:calc(var(--u)*15);font-weight:600;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:var(--soft)}
+
+/* Search input standard */
+.search-box{position:relative;display:flex;align-items:center}
+.search-box svg{position:absolute;left:calc(var(--u)*14);width:calc(var(--u)*18);height:calc(var(--u)*18);stroke:var(--muted);fill:none;stroke-width:2.2}
+.search-box input{width:100%;height:calc(var(--u)*40);padding:0 calc(var(--u)*14) 0 calc(var(--u)*42);border-radius:calc(var(--u)*10);
+  border:1px solid var(--line);background:#0a0d11;color:#fff;font:inherit;font-size:calc(var(--u)*16);outline:none}
+.search-box input:focus{border-color:var(--acc);box-shadow:0 0 calc(var(--u)*10) rgba(23,159,252,.25)}
+
+/* Filter chips */
+.chip-group{display:flex;align-items:center;gap:calc(var(--u)*10);flex-wrap:wrap}
+.f-chip{padding:0 calc(var(--u)*16);height:calc(var(--u)*36);display:inline-flex;align-items:center;justify-content:center;
+  border-radius:99px;font-size:calc(var(--u)*15.5);font-weight:500;background:#0c1015;border:1px solid #25292d;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
+.f-chip:hover{color:#fff;border-color:rgba(255,255,255,.25)}
+.f-chip.on{background:rgba(23,159,252,.18);border-color:var(--acc);color:#fff;font-weight:600;box-shadow:0 0 calc(var(--u)*10) rgba(23,159,252,.2)}
+
+/* ============================ GLOSSARY VIEW ============================ */
+.gl-layout{display:flex;flex-direction:column;height:100%}
+.gl-ctrls{display:flex;align-items:center;gap:calc(var(--u)*16);margin-bottom:calc(var(--u)*10)}
+.gl-letters{display:flex;align-items:center;gap:calc(var(--u)*4);height:calc(var(--u)*30);margin-bottom:calc(var(--u)*12);padding:0 calc(var(--u)*6);
+  border-radius:calc(var(--u)*8);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);overflow-x:auto}
+.gl-lbtn{min-width:calc(var(--u)*28);height:calc(var(--u)*24);padding:0 calc(var(--u)*4);border-radius:calc(var(--u)*4);font-size:calc(var(--u)*13.5);font-weight:600;
+  color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.gl-lbtn:hover{color:#fff;background:rgba(255,255,255,.08)}
+.gl-lbtn.on{background:var(--acc);color:#04121f;font-weight:700}
+.gl-body{display:flex;gap:calc(var(--u)*20);flex:1;min-height:0}
+.gl-list{width:calc(var(--u)*750);height:calc(var(--u)*670);overflow-y:auto;display:flex;flex-direction:column;gap:calc(var(--u)*10);padding-right:calc(var(--u)*4)}
+.gl-item{padding:calc(var(--u)*14) calc(var(--u)*18);border-radius:calc(var(--u)*14);border:1px solid #202428;
+  background:linear-gradient(180deg,#11161d 0%,#090d12 100%);cursor:pointer;transition:all .15s}
+.gl-item:hover{border-color:rgba(53,179,255,.45);transform:translateY(calc(var(--u)*-1.5))}
+.gl-item.sel{border-color:var(--acc);background:linear-gradient(95deg,#0e263d 0%,#08121a 100%);box-shadow:0 0 calc(var(--u)*14) rgba(23,159,252,.25)}
+.gl-item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--u)*4)}
+.gl-item-term{font-size:calc(var(--u)*19.5);font-weight:700;color:#fff}
+.gl-item-title{font-size:calc(var(--u)*14.5);color:var(--acc-hi);font-weight:500;margin-bottom:calc(var(--u)*4)}
+.gl-item-def{font-size:calc(var(--u)*15);color:var(--soft);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+.gl-detail{width:calc(var(--u)*635);height:calc(var(--u)*680);display:flex;flex-direction:column;padding:calc(var(--u)*14) calc(var(--u)*20);border-radius:calc(var(--u)*20);overflow-y:auto}
+.gl-detail h2{font-size:calc(var(--u)*28);font-weight:700;margin-bottom:calc(var(--u)*2)}
+.gl-detail-title{font-size:calc(var(--u)*16);color:var(--acc-hi);font-weight:600;margin-bottom:calc(var(--u)*8)}
+.gl-box{border-radius:calc(var(--u)*10);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);padding:calc(var(--u)*8) calc(var(--u)*14);margin-bottom:calc(var(--u)*8)}
+.gl-box h4{font-size:calc(var(--u)*13.5);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:calc(var(--u)*3)}
+.gl-box p{font-size:calc(var(--u)*15);line-height:1.35;color:#f0f4f8}
+.gl-table{width:100%;border-collapse:collapse;margin-top:calc(var(--u)*4)}
+.gl-table td{padding:calc(var(--u)*4) calc(var(--u)*6);font-size:calc(var(--u)*14);border-bottom:1px solid rgba(255,255,255,.06)}
+.gl-table td.val{color:var(--acc);font-weight:700;white-space:nowrap}
+.gl-related{display:flex;align-items:center;gap:calc(var(--u)*6);flex-wrap:wrap;margin-top:calc(var(--u)*4)}
+.gl-rel-tag{padding:calc(var(--u)*3) calc(var(--u)*10);border-radius:99px;font-size:calc(var(--u)*13.5);font-weight:600;
+  background:rgba(23,159,252,.12);border:1px solid rgba(23,159,252,.3);color:var(--acc-hi);cursor:pointer}
+.gl-rel-tag:hover{background:var(--acc);color:#04121f}
+
+/* ============================ TUTORIALS VIEW ============================ */
+.tut-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*20);height:calc(var(--u)*750);overflow-y:auto;padding-bottom:calc(var(--u)*10)}
+.tut-card{padding:calc(var(--u)*22) calc(var(--u)*24);display:flex;flex-direction:column;justify-content:space-between;border-radius:calc(var(--u)*20);min-height:calc(var(--u)*340)}
+.tut-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--u)*12)}
+.tut-card h3{font-size:calc(var(--u)*24);font-weight:700;line-height:1.2;margin-bottom:calc(var(--u)*10)}
+.tut-card p{font-size:calc(var(--u)*16.5);line-height:1.4;color:var(--soft);margin-bottom:calc(var(--u)*16)}
+.tut-card-bot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:calc(var(--u)*14)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:900;display:flex;align-items:center;justify-content:center}
+.modal-card{width:calc(var(--u)*1050);height:calc(var(--u)*720);padding:calc(var(--u)*28) calc(var(--u)*34);display:flex;flex-direction:column;justify-content:space-between;border-color:rgba(53,179,255,.4);box-shadow:0 0 calc(var(--u)*40) rgba(0,0,0,.85)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:calc(var(--u)*12)}
+.modal-hdr h2{font-size:calc(var(--u)*26);font-weight:700}
+.close-btn{width:calc(var(--u)*38);height:calc(var(--u)*38);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);cursor:pointer}
+.close-btn:hover{background:rgba(255,255,255,.2)}
+.step-nav{display:flex;align-items:center;gap:calc(var(--u)*10);margin:calc(var(--u)*14) 0}
+.step-dot{width:calc(var(--u)*14);height:calc(var(--u)*14);border-radius:50%;background:rgba(255,255,255,.2)}
+.step-dot.active{background:var(--acc);box-shadow:0 0 calc(var(--u)*10) rgba(23,159,252,.7)}
+.step-dot.done{background:var(--green)}
+.step-body{flex:1;display:flex;flex-direction:column;gap:calc(var(--u)*14);overflow-y:auto;padding-right:calc(var(--u)*4)}
+.callout-box{padding:calc(var(--u)*14) calc(var(--u)*18);border-left:calc(var(--u)*4) solid var(--acc);background:rgba(23,159,252,.08);border-radius:0 calc(var(--u)*10) calc(var(--u)*10) 0;font-size:calc(var(--u)*16);color:#e6f2ff}
+.modal-ftr{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding-top:calc(var(--u)*14)}
+
+/* ============================ BEST PRACTICES VIEW ============================ */
+.bp-list{display:flex;flex-direction:column;gap:calc(var(--u)*14);height:calc(var(--u)*750);overflow-y:auto;padding-bottom:calc(var(--u)*10)}
+.bp-card{padding:calc(var(--u)*18) calc(var(--u)*24);border-radius:calc(var(--u)*16);cursor:pointer;transition:all .15s}
+.bp-card-top{display:flex;align-items:center;justify-content:space-between}
+.bp-card h3{font-size:calc(var(--u)*22);font-weight:700}
+.bp-chevron{width:calc(var(--u)*20);height:calc(var(--u)*20);stroke:var(--muted);fill:none;stroke-width:2.2;transition:transform .2s}
+.bp-card.open .bp-chevron{transform:rotate(180deg);stroke:var(--acc)}
+.bp-content{margin-top:calc(var(--u)*16);padding-top:calc(var(--u)*14);border-top:1px solid rgba(255,255,255,.08);display:none}
+.bp-card.open .bp-content{display:block}
+.bp-checklist{display:flex;flex-direction:column;gap:calc(var(--u)*8);margin:calc(var(--u)*12) 0}
+.bp-chk{display:flex;align-items:flex-start;gap:calc(var(--u)*12);font-size:calc(var(--u)*16.5);line-height:1.35}
+.bp-chk svg{width:calc(var(--u)*18);height:calc(var(--u)*18);stroke:var(--green);fill:none;stroke-width:2.4;margin-top:calc(var(--u)*2);flex-shrink:0}
+
+/* ============================ FAQS VIEW ============================ */
+.faq-list{display:flex;flex-direction:column;gap:calc(var(--u)*12);height:calc(var(--u)*750);overflow-y:auto;padding-bottom:calc(var(--u)*10)}
+.faq-card{padding:calc(var(--u)*18) calc(var(--u)*24);border-radius:calc(var(--u)*16);cursor:pointer;transition:all .15s}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--u)*14)}
+.faq-q b{font-size:calc(var(--u)*21);font-weight:600}
+.faq-ans{display:none;margin-top:calc(var(--u)*14);padding-top:calc(var(--u)*14);border-top:1px solid rgba(255,255,255,.08);font-size:calc(var(--u)*17);line-height:1.42;color:#e0e8f0}
+.faq-card.open .faq-ans{display:block}
+.faq-card.open{border-color:rgba(53,179,255,.45);background:linear-gradient(165deg,#121a24 0%,#0c1219 100%)}
+
+/* ============================ TOPICS VIEW ============================ */
+.tp-detail{display:flex;gap:calc(var(--u)*20);height:calc(var(--u)*750)}
+.tp-col-l{width:calc(var(--u)*690);display:flex;flex-direction:column;gap:calc(var(--u)*16);overflow-y:auto}
+.tp-col-r{width:calc(var(--u)*695);display:flex;flex-direction:column;gap:calc(var(--u)*16);overflow-y:auto}
+.tp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*20);height:calc(var(--u)*750);overflow-y:auto}
+.tp-big-card{padding:calc(var(--u)*22);border-radius:calc(var(--u)*18);display:flex;flex-direction:column;justify-content:space-between;min-height:calc(var(--u)*310)}
+
+/* ============================ ML LAB WORKBENCH ============================ */
+.ml-bench{display:flex;flex-direction:column;gap:calc(var(--u)*16);height:calc(var(--u)*750);overflow-y:auto}
+.ml-row{display:flex;gap:calc(var(--u)*16)}
+.ml-card{padding:calc(var(--u)*22);border-radius:calc(var(--u)*18);flex:1}
+</style>
+</head>
+<body>
+
+<!-- ============================ TOP BAR ============================ -->
+<header class="bar">
+ <a class="brand" href="dashboard.html"><svg viewBox="0 0 54 40" fill="#fff"><path d="M2 22 L14 18 L28 2 L35 2 L28 17 L44 14 L50 8 L53 9 L49 20 L53 31 L50 32 L44 26 L28 23 L35 38 L28 38 L14 24 L2 26Z"/></svg>SkyWatch</a>
+ <nav class="tabs" id="tabs">
+   <a class="tab" href="dashboard.html">Dashboard</a>
+   <a class="tab" href="radar.html">Radar</a>
+   <a class="tab" href="Anomalities.html">Anomalies</a>
+   <a class="tab" href="Weather.html">Weather</a>
+   <a class="tab" href="Insights.html">Insights</a>
+   <a class="tab" href="report.html">Report</a>
+   <a class="tab on" href="learning-hub.html">Learning Hub</a>
+ </nav>
+ <div class="st">
+   <div><span class="dot" id="live-dot"></span><span id="live-text">Live</span></div>
+   <div class="rwy"><span id="navRwy">RWY 27</span></div>
+   <div class="clk" id="clock">14:22 IST</div>
+ </div>
+</header>
+
+<!-- ============================ MAIN STAGE ============================ -->
+<div class="hub-stage">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="card side" id="side">
+    <a class="it" id="sb-learning" href="learning-hub.html">
+      <svg viewBox="0 0 26 26"><path d="M13 6.2C10.4 4.6 7 4.2 3 5v14.6c4-.8 7.4-.4 10 1.2zM13 6.2c2.6-1.6 6-2 10-1.2v14.6c-4-.8-7.4-.4-10 1.2z"/></svg>
+      <span>Learning Hub</span>
+    </a>
+    <a class="it" id="sb-glossary" href="template.html?page=glossary">
+      <svg viewBox="0 0 24 24"><circle cx="4" cy="6" r=".9" fill="#fff"/><circle cx="4" cy="12" r=".9" fill="#fff"/><circle cx="4" cy="18" r=".9" fill="#fff"/><path d="M9 6h12M9 12h12M9 18h12"/></svg>
+      <span>Glossary</span>
+    </a>
+    <a class="it" id="sb-tutorials" href="template.html?page=tutorials">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8.2l6 3.8-6 3.8z" fill="#fff" stroke-width="1.2"/></svg>
+      <span>Tutorials</span>
+    </a>
+    <a class="it" id="sb-best-practices" href="template.html?page=best-practices">
+      <svg viewBox="0 0 24 24"><path d="M12 2.5l8 3v6.2c0 4.8-3.3 8.4-8 10-4.7-1.6-8-5.2-8-10V5.5z"/><path d="M12 8.2l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z" fill="#fff" stroke-width="1"/></svg>
+      <span>Best Practices</span>
+    </a>
+    <a class="it" id="sb-faqs" href="template.html?page=faqs">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.2 9.3a2.9 2.9 0 015.6 1c0 1.9-2.8 2.4-2.8 4.1"/><circle cx="12" cy="17.6" r=".6" fill="#fff"/></svg>
+      <span>FAQs</span>
+    </a>
+    <div class="sdiv"></div>
+    <div class="stl">Tools &amp; Labs</div>
+    <a class="it lab" id="sb-ml-lab" href="ml-lab.html">
+      <svg viewBox="0 0 28 28"><rect x="7" y="7" width="14" height="14" rx="2.2"/><rect x="11" y="11" width="6" height="6" rx="1"/><path d="M11 3.5v3.5M17 3.5v3.5M11 21v3.5M17 21v3.5M3.5 11H7M3.5 17H7M21 11h3.5M21 17h3.5"/></svg>
+      <span>ML Lab</span>
+    </a>
+  </aside>
+
+  <!-- DYNAMIC CONTENT HOST -->
+  <main class="main-content" id="content">
+    <!-- Subpage content injected here -->
+  </main>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const $$=s=>Array.from(document.querySelectorAll(s));
+
+// Clock (IST)
+const f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',hour12:false});
+(function t(){ $('#clock').textContent=f.format(new Date())+' IST'; setTimeout(t,1000); })();
+
+// URL Query Params
+const urlParams=new URLSearchParams(window.location.search);
+const page=urlParams.get('page')||'glossary';
+const paramTerm=urlParams.get('term')||'';
+const paramTopic=urlParams.get('topic')||'';
+const paramTut=urlParams.get('tut')||'';
+
+// Update Sidebar Active state
+function updateSidebar(){
+  $$('.side .it').forEach(el=>el.classList.remove('act'));
+  const targetId='sb-'+page;
+  const targetEl=document.getElementById(targetId);
+  if(targetEl){
+    targetEl.classList.add('act');
+  } else if(page==='topics'){
+    const lEl=document.getElementById('sb-learning');
+    if(lEl) lEl.classList.add('act');
+  }
+}
+updateSidebar();
+
+// Progress store
+const PROGRESS_KEY='skywatch.learning.progress';
+function getProgress(){
+  try{
+    const v=localStorage.getItem(PROGRESS_KEY);
+    return v!==null&&!isNaN(+v)?+v:60;
+  }catch(e){return 60;}
+}
+function setProgress(p){
+  p=Math.max(0,Math.min(100,Math.round(p)));
+  try{ localStorage.setItem(PROGRESS_KEY,String(p)); }catch(e){}
+}
+function addProgress(delta){
+  const cur=getProgress();
+  setProgress(cur+delta);
+}
+
+// Global data stores
+let GLOSSARY_DATA=[];
+let TUTORIALS_DATA=[];
+let BP_DATA=[];
+let FAQS_DATA=[];
+let TOPICS_DATA=[];
+
+const ICONS={
+  anomalies:`<svg viewBox="0 0 42 42" fill="none" stroke="#2fa7ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="21" cy="21" r="17"/><line x1="21" y1="4" x2="21" y2="38"/><line x1="4" y1="21" x2="38" y2="21"/><path d="M21 21l9-9"/></svg>`,
+  alerts:`<svg viewBox="0 0 42 42" fill="none" stroke="#2fa7ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5l16 28H5z"/><line x1="21" y1="16" x2="21" y2="23"/><circle cx="21" cy="28" r="1.4" fill="#2fa7ff"/></svg>`,
+  weather:`<svg viewBox="0 0 42 42" fill="none" stroke="#2fa7ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 28a7 7 0 01-1-14 9 9 0 0117-2 6 6 0 016 7 5 5 0 01-4 9H12z"/></svg>`,
+  runway:`<svg viewBox="0 0 42 42" fill="none" stroke="#2fa7ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="6" width="24" height="30" rx="3"/><line x1="21" y1="10" x2="21" y2="15"/><line x1="21" y1="20" x2="21" y2="25"/><line x1="21" y1="30" x2="21" y2="35"/></svg>`,
+  metrics:`<svg viewBox="0 0 42 42" fill="none" stroke="#2fa7ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 34l8-10 8 6 14-16"/></svg>`,
+  system:`<svg viewBox="0 0 42 42" fill="none" stroke="#2fa7ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="21" cy="21" r="6"/><path d="M18 5h6l1 4 3 2 4-1 3 5-3 3v4l3 3-3 5-4-1-3 2-1 4h-6l-1-4-3-2-4 1-3-5 3-3v-4l-3-3 3-5 4 1 3-2z"/></svg>`
+};
+
+/* ============================ GLOSSARY VIEW ============================ */
+function renderGlossary(terms){
+  let selectedId=terms[0]?.id||'';
+  if(paramTerm){
+    const found=terms.find(t=>t.term.toLowerCase()===paramTerm.toLowerCase()||t.id===paramTerm.toLowerCase());
+    if(found) selectedId=found.id;
+  }
+  let activeCat='All';
+  let activeLetter='All';
+  let searchTerm='';
+
+  const letters=['All','A','C','D','F','G','H','L','M','N','Q','R','S','T','V'];
+  const cats=['All','Anomalies','Weather','Airspace','Metrics','System'];
+
+  const container=$('#content');
+  container.innerHTML=`
+    <div class="gl-layout">
+      <div class="sub-hdr">
+        <div class="sub-title">
+          <h1>Aviation Glossary</h1>
+          <p>Official terminology, radar classifications, and meteorological standards.</p>
+        </div>
+        <div class="sub-pill-count" id="glCount">${terms.length} Terms Available</div>
+      </div>
+
+      <div class="gl-ctrls">
+        <div class="search-box" style="width:calc(var(--u)*320)">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="glSearch" placeholder="Search terms, definitions...">
+        </div>
+        <div class="chip-group" id="glChips">
+          ${cats.map(c=>`<button class="f-chip ${c==='All'?'on':''}" data-cat="${c}">${c}</button>`).join('')}
+        </div>
+      </div>
+
+      <div class="gl-letters" id="glLetters">
+        ${letters.map(l=>`<button class="gl-lbtn ${l==='All'?'on':''}" data-let="${l}">${l}</button>`).join('')}
+      </div>
+
+      <div class="gl-body">
+        <div class="gl-list" id="glList"></div>
+        <div class="card gl-detail" id="glDetail"></div>
+      </div>
+    </div>
+  `;
+
+  function filterTerms(){
+    return terms.filter(t=>{
+      const matchSearch=!searchTerm || (t.term+t.title+t.shortDef+t.fullDef).toLowerCase().includes(searchTerm.toLowerCase());
+      const matchCat=(activeCat==='All') || (t.category && t.category.toLowerCase().includes(activeCat.toLowerCase())) || (activeCat==='Airspace' && t.category==='runway-airspace');
+      const matchLet=(activeLetter==='All') || t.term.toUpperCase().startsWith(activeLetter);
+      return matchSearch && matchCat && matchLet;
+    });
+  }
+
+  function renderList(){
+    const filtered=filterTerms();
+    $('#glCount').textContent=`${filtered.length} of ${terms.length} Terms`;
+    const listEl=$('#glList');
+    if(!filtered.length){
+      listEl.innerHTML=`<div class="card" style="padding:calc(var(--u)*24);text-align:center;color:var(--muted);">No matching aviation terms found.</div>`;
+      return;
+    }
+    listEl.innerHTML=filtered.map(t=>{
+      const isSel=t.id===selectedId;
+      const sevBadge=t.severity==='High'?'<span class="badge badge-red">High</span>':t.severity==='Medium'?'<span class="badge badge-amber">Medium</span>':t.severity==='Low'?'<span class="badge badge-blue">Low</span>':'';
+      return `
+        <div class="gl-item ${isSel?'sel':''}" data-id="${t.id}">
+          <div class="gl-item-top">
+            <span class="gl-item-term">${t.term}</span>
+            <div style="display:flex;gap:calc(var(--u)*6)">
+              <span class="badge badge-blue">${t.category}</span>
+              ${sevBadge}
+            </div>
+          </div>
+          <div class="gl-item-title">${t.title}</div>
+          <div class="gl-item-def">${t.shortDef}</div>
+        </div>
+      `;
+    }).join('');
+
+    $$('.gl-item').forEach(el=>{
+      el.addEventListener('click',()=>{
+        selectedId=el.dataset.id;
+        renderList();
+        renderDetail();
+      });
+    });
+  }
+
+  function renderDetail(){
+    const t=terms.find(item=>item.id===selectedId) || terms[0];
+    if(!t) return;
+    const detailEl=$('#glDetail');
+    const sevBadge=t.severity==='High'?'<span class="badge badge-red">High Severity</span>':t.severity==='Medium'?'<span class="badge badge-amber">Medium Severity</span>':t.severity==='Low'?'<span class="badge badge-blue">Low Severity</span>':'<span class="badge badge-blue">Informational</span>';
+
+    const paramsHtml=(t.keyParameters||[]).map(p=>`
+      <tr>
+        <td style="color:var(--soft);font-weight:500">${p.param}</td>
+        <td class="val">${p.value}</td>
+        <td style="color:var(--muted)">${p.meaning}</td>
+      </tr>
+    `).join('');
+
+    const relatedHtml=(t.relatedTerms||[]).map(r=>`<button class="gl-rel-tag" data-rel="${r}">${r}</button>`).join('');
+
+    detailEl.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:calc(var(--u)*4)">
+        <h2>${t.term}</h2>
+        <div style="display:flex;gap:calc(var(--u)*6)">
+          <span class="badge badge-blue">${t.category}</span>
+          ${sevBadge}
+        </div>
+      </div>
+      <div class="gl-detail-title">${t.title}</div>
+
+      <div class="gl-box">
+        <h4>In Plain Language</h4>
+        <p>${t.fullDef}</p>
+      </div>
+
+      <div class="gl-box">
+        <h4>Operational Context (VOHS / ATC)</h4>
+        <p>${t.operationalContext}</p>
+      </div>
+
+      ${paramsHtml?`
+      <div class="gl-box">
+        <h4>Key Thresholds &amp; Parameters</h4>
+        <table class="gl-table">
+          <tbody>${paramsHtml}</tbody>
+        </table>
+      </div>`:''}
+
+      ${relatedHtml?`
+      <div style="margin-top:calc(var(--u)*4);margin-bottom:calc(var(--u)*14)">
+        <div style="font-size:calc(var(--u)*13.5);font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:calc(var(--u)*6)">Related Terms</div>
+        <div class="gl-related">${relatedHtml}</div>
+      </div>`:''}
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding-top:calc(var(--u)*12)">
+        <button class="btn" id="btnLearn" style="height:calc(var(--u)*38);padding:0 calc(var(--u)*20);font-size:calc(var(--u)*15)">
+          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          <span id="btnLearnTxt">Mark as Learned</span>
+        </button>
+        <span style="font-size:calc(var(--u)*14);color:var(--muted)">SkyWatch Knowledge Base</span>
+      </div>
+    `;
+
+    $$('.gl-rel-tag').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const relName=btn.dataset.rel;
+        const target=terms.find(x=>x.term.toLowerCase()===relName.toLowerCase() || x.id.toLowerCase()===relName.toLowerCase() || relName.toLowerCase().includes(x.term.toLowerCase()));
+        if(target){
+          selectedId=target.id;
+          activeCat='All';
+          activeLetter='All';
+          searchTerm='';
+          $('#glSearch').value='';
+          $$('.f-chip').forEach(c=>c.classList.toggle('on',c.dataset.cat==='All'));
+          $$('.gl-lbtn').forEach(l=>l.classList.toggle('on',l.dataset.let==='All'));
+          renderList();
+          renderDetail();
+          const targetEl=document.querySelector(`.gl-item[data-id="${target.id}"]`);
+          if(targetEl) targetEl.scrollIntoView({behavior:'smooth',block:'nearest'});
+        }
+      });
+    });
+
+    $('#btnLearn').addEventListener('click',()=>{
+      addProgress(5);
+      $('#btnLearnTxt').textContent='Learned (+5% XP)';
+      $('#btnLearn').style.filter='brightness(1.2)';
+    });
+  }
+
+  $('#glSearch').addEventListener('input',e=>{ searchTerm=e.target.value; renderList(); });
+
+  $$('#glChips .f-chip').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      $$('#glChips .f-chip').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      activeCat=btn.dataset.cat;
+      renderList();
+    });
+  });
+
+  $$('#glLetters .gl-lbtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      $$('#glLetters .gl-lbtn').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      activeLetter=btn.dataset.let;
+      renderList();
+    });
+  });
+
+  renderList();
+  renderDetail();
+}
+
+/* ============================ TUTORIALS VIEW ============================ */
+function renderTutorials(tuts){
+  const container=$('#content');
+  container.innerHTML=`
+    <div style="display:flex;flex-direction:column;height:100%">
+      <div class="sub-hdr">
+        <div class="sub-title">
+          <h1>Interactive Operations Tutorials</h1>
+          <p>Guided walkthroughs for approach stabilization, emergency response, and METAR decoding.</p>
+        </div>
+        <div class="sub-pill-count">${tuts.length} Walkthrough Modules</div>
+      </div>
+      <div class="tut-grid" id="tutGrid"></div>
+    </div>
+    <div id="modalHost"></div>
+  `;
+
+  $('#tutGrid').innerHTML=tuts.map((tut,i)=>`
+    <div class="card tut-card">
+      <div>
+        <div class="tut-card-top">
+          <span class="badge badge-blue">${tut.level}</span>
+          <span style="font-size:calc(var(--u)*14);color:var(--muted)">${tut.duration}</span>
+        </div>
+        <h3>${tut.title}</h3>
+        <p>${tut.summary}</p>
+      </div>
+      <div class="tut-card-bot">
+        <span style="font-size:calc(var(--u)*15);color:var(--acc-hi);font-weight:600">${tut.steps.length} Steps</span>
+        <button class="btn btn-open-tut" data-idx="${i}" style="height:calc(var(--u)*38);padding:0 calc(var(--u)*18);font-size:calc(var(--u)*15)">
+          Start Walkthrough <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  $$('.btn-open-tut').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const idx=+b.dataset.idx;
+      openTutorialModal(tuts[idx]);
+    });
+  });
+
+  if(paramTut){
+    const match=tuts.find(t=>t.id===paramTut);
+    if(match) openTutorialModal(match);
+  }
+}
+
+function openTutorialModal(tut){
+  let stepIdx=0;
+  const host=$('#modalHost');
+
+  function renderStep(){
+    const s=tut.steps[stepIdx];
+    const isLast=stepIdx===tut.steps.length-1;
+
+    host.innerHTML=`
+      <div class="modal-overlay">
+        <div class="card modal-card">
+          <div class="modal-hdr">
+            <div>
+              <span class="badge badge-blue" style="margin-bottom:calc(var(--u)*4)">${tut.badge||'Operations Walkthrough'}</span>
+              <h2>${tut.title}</h2>
+            </div>
+            <button class="close-btn" id="btnModalClose">
+              <svg viewBox="0 0 24 24" style="width:calc(var(--u)*20);height:calc(var(--u)*20);stroke:#fff;fill:none;stroke-width:2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div class="step-nav">
+            ${tut.steps.map((st,i)=>`
+              <div class="step-dot ${i===stepIdx?'active':i<stepIdx?'done':''}"></div>
+            `).join('')}
+            <span style="font-size:calc(var(--u)*14.5);color:var(--muted);margin-left:calc(var(--u)*8)">Step ${stepIdx+1} of ${tut.steps.length}</span>
+          </div>
+
+          <div class="step-body">
+            <h3 style="font-size:calc(var(--u)*24);font-weight:700;color:var(--acc-hi)">${s.title}</h3>
+            <p style="font-size:calc(var(--u)*17.5);line-height:1.45;color:#f1f5f9">${s.body}</p>
+            ${s.callout?`
+              <div class="callout-box">
+                <b>Operational Protocol:</b> ${s.callout}
+              </div>
+            `:''}
+            <div class="card" style="padding:calc(var(--u)*16);margin-top:calc(var(--u)*10);background:rgba(0,0,0,.5);border-color:rgba(255,255,255,.08)">
+              <div style="font-size:calc(var(--u)*14);color:var(--muted);margin-bottom:calc(var(--u)*4)">Live Radar Telemetry Corroboration</div>
+              <div style="font-size:calc(var(--u)*16);color:var(--soft);font-family:monospace">Target: AIC2417 · VOHS RWY 09 · Descent Envelope Monitored</div>
+            </div>
+          </div>
+
+          <div class="modal-ftr">
+            <button class="btn-sec" id="btnStepPrev" style="height:calc(var(--u)*40);padding:0 calc(var(--u)*20);font-size:calc(var(--u)*15)" ${stepIdx===0?'disabled style="opacity:.4;cursor:default"':''}>
+              Previous Step
+            </button>
+            <button class="btn" id="btnStepNext" style="height:calc(var(--u)*40);padding:0 calc(var(--u)*24);font-size:calc(var(--u)*15)">
+              ${isLast?'Finish &amp; Complete Tutorial':'Next Step'}
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    $('#btnModalClose').addEventListener('click',()=>{ host.innerHTML=''; });
+    $('#btnStepPrev').addEventListener('click',()=>{
+      if(stepIdx>0){ stepIdx--; renderStep(); }
+    });
+    $('#btnStepNext').addEventListener('click',()=>{
+      if(!isLast){
+        stepIdx++;
+        renderStep();
+      } else {
+        addProgress(10);
+        alert('Tutorial Completed! +10% Progress added to your Learning Hub.');
+        host.innerHTML='';
+      }
+    });
+  }
+
+  renderStep();
+}
+
+/* ============================ BEST PRACTICES VIEW ============================ */
+function renderBestPractices(list){
+  const container=$('#content');
+  let filter='All';
+  let query='';
+
+  container.innerHTML=`
+    <div style="display:flex;flex-direction:column;height:100%">
+      <div class="sub-hdr">
+        <div class="sub-title">
+          <h1>Controller Best Practices &amp; SOPs</h1>
+          <p>Standardized operational procedures compliant with ICAO Doc 4444 and DGCA CAR.</p>
+        </div>
+        <div class="sub-pill-count">${list.length} Checklists</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:calc(var(--u)*16);margin-bottom:calc(var(--u)*12)">
+        <div class="search-box" style="width:calc(var(--u)*340)">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="bpSearch" placeholder="Search rules, procedures, checklists...">
+        </div>
+        <div class="chip-group" id="bpChips">
+          ${['All','Approach Stabilization','Emergency Response','Weather Operations','Separation Standards'].map(c=>`
+            <button class="f-chip ${c==='All'?'on':''}" data-cat="${c}">${c}</button>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="bp-list" id="bpList"></div>
+    </div>
+  `;
+
+  function renderItems(){
+    const filtered=list.filter(item=>{
+      const matchQ=!query||(item.title+item.summary+item.rationale).toLowerCase().includes(query.toLowerCase());
+      const matchC=filter==='All'||item.category===filter;
+      return matchQ && matchC;
+    });
+
+    $('#bpList').innerHTML=filtered.map((item,i)=>`
+      <div class="card bp-card" data-idx="${i}">
+        <div class="bp-card-top">
+          <div style="display:flex;align-items:center;gap:calc(var(--u)*12)">
+            <span class="badge ${item.priority==='Mandatory'?'badge-red':'badge-blue'}">${item.priority}</span>
+            <h3>${item.title}</h3>
+            <span class="badge badge-blue">${item.category}</span>
+          </div>
+          <svg class="bp-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div style="font-size:calc(var(--u)*16);color:var(--soft);margin-top:calc(var(--u)*8)">${item.summary}</div>
+
+        <div class="bp-content">
+          <div style="font-size:calc(var(--u)*14.5);font-weight:700;color:var(--acc-hi);text-transform:uppercase;letter-spacing:.04em;margin-bottom:calc(var(--u)*8)">Action Checklist</div>
+          <div class="bp-checklist">
+            ${(item.checklist||[]).map(chk=>`
+              <div class="bp-chk">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>${chk}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="display:flex;gap:calc(var(--u)*20);margin-top:calc(var(--u)*16);border-top:1px solid rgba(255,255,255,.08);padding-top:calc(var(--u)*12)">
+            <div style="flex:1">
+              <div style="font-size:calc(var(--u)*14);font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:calc(var(--u)*4)">Regulatory Rationale</div>
+              <p style="font-size:calc(var(--u)*15.5);color:var(--soft);line-height:1.4">${item.rationale}</p>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:calc(var(--u)*14);font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:calc(var(--u)*4)">Real Incident Case Study</div>
+              <p style="font-size:calc(var(--u)*15.5);color:var(--soft);line-height:1.4">${item.incidentCase}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    $$('.bp-card').forEach(c=>{
+      c.addEventListener('click',()=>{
+        c.classList.toggle('open');
+      });
+    });
+  }
+
+  $('#bpSearch').addEventListener('input',e=>{ query=e.target.value; renderItems(); });
+  $$('#bpChips .f-chip').forEach(b=>{
+    b.addEventListener('click',()=>{
+      $$('#bpChips .f-chip').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      filter=b.dataset.cat;
+      renderItems();
+    });
+  });
+
+  renderItems();
+}
+
+/* ============================ FAQS VIEW ============================ */
+function renderFaqs(faqs){
+  const container=$('#content');
+  let filter='All';
+  let query='';
+
+  container.innerHTML=`
+    <div style="display:flex;flex-direction:column;height:100%">
+      <div class="sub-hdr">
+        <div class="sub-title">
+          <h1>Aviation Knowledge Base &amp; FAQs</h1>
+          <p>Common operational questions regarding radar surveillance, METAR observations, and alerts.</p>
+        </div>
+        <div class="sub-pill-count">${faqs.length} FAQs</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:calc(var(--u)*16);margin-bottom:calc(var(--u)*12)">
+        <div class="search-box" style="width:calc(var(--u)*340)">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="faqSearch" placeholder="Search questions or keywords...">
+        </div>
+        <div class="chip-group" id="faqChips">
+          ${['All','General','Radar & Tracking','Anomalies & Alerts','Weather & METAR','Metrics & Performance'].map(c=>`
+            <button class="f-chip ${c==='All'?'on':''}" data-cat="${c}">${c}</button>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  `;
+
+  function renderItems(){
+    const filtered=faqs.filter(item=>{
+      const matchQ=!query||(item.question+item.shortAnswer+item.detailedAnswer).toLowerCase().includes(query.toLowerCase());
+      const matchC=filter==='All'||item.category===filter;
+      return matchQ && matchC;
+    });
+
+    $('#faqList').innerHTML=filtered.map((item,i)=>`
+      <div class="card faq-card ${i===0?'open':''}" data-idx="${i}">
+        <div class="faq-q">
+          <div style="display:flex;align-items:center;gap:calc(var(--u)*12)">
+            <span class="badge badge-blue">Q</span>
+            <b>${item.question}</b>
+          </div>
+          <div style="display:flex;align-items:center;gap:calc(var(--u)*10)">
+            <span class="badge badge-blue">${item.category}</span>
+            <svg class="bp-chevron" viewBox="0 0 24 24" style="width:calc(var(--u)*18);height:calc(var(--u)*18);stroke:#fff;fill:none;stroke-width:2.2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="faq-ans">
+          <div style="padding:calc(var(--u)*12) calc(var(--u)*16);background:rgba(23,159,252,.1);border-left:calc(var(--u)*4) solid var(--acc);border-radius:0 calc(var(--u)*8) calc(var(--u)*8) 0;margin-bottom:calc(var(--u)*12);font-weight:600;color:#fff">
+            ${item.shortAnswer}
+          </div>
+          <div style="white-space:pre-line">${item.detailedAnswer}</div>
+          ${item.relatedTerm?`
+            <div style="margin-top:calc(var(--u)*14);padding-top:calc(var(--u)*10);border-top:1px solid rgba(255,255,255,.08)">
+              <span style="font-size:calc(var(--u)*14);color:var(--muted)">Related Glossary Concept: </span>
+              <a href="template.html?page=glossary&term=${encodeURIComponent(item.relatedTerm)}" class="gl-rel-tag">${item.relatedTerm} &rarr;</a>
+            </div>
+          `:''}
+        </div>
+      </div>
+    `).join('');
+
+    $$('.faq-card').forEach(c=>{
+      c.addEventListener('click',e=>{
+        if(e.target.tagName.toLowerCase()==='a') return;
+        c.classList.toggle('open');
+      });
+    });
+  }
+
+  $('#faqSearch').addEventListener('input',e=>{ query=e.target.value; renderItems(); });
+  $$('#faqChips .f-chip').forEach(b=>{
+    b.addEventListener('click',()=>{
+      $$('#faqChips .f-chip').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      filter=b.dataset.cat;
+      renderItems();
+    });
+  });
+
+  renderItems();
+}
+
+/* ============================ TOPICS VIEW ============================ */
+function renderTopics(topics){
+  const container=$('#content');
+
+  if(paramTopic){
+    const t=topics.find(x=>x.id===paramTopic)||topics[0];
+    container.innerHTML=`
+      <div style="display:flex;flex-direction:column;height:100%">
+        <div class="sub-hdr">
+          <div class="sub-title">
+            <a href="template.html?page=topics" style="color:var(--acc);font-weight:600;font-size:calc(var(--u)*17)">&larr; All Topics</a>
+            <span style="color:var(--muted)">/</span>
+            <h1>${t.title}</h1>
+          </div>
+          <div class="sub-pill-count">Topic Deep Dive</div>
+        </div>
+
+        <div class="tp-detail">
+          <div class="tp-col-l">
+            <div class="card" style="padding:calc(var(--u)*24);border-radius:calc(var(--u)*18)">
+              <div style="display:flex;align-items:center;gap:calc(var(--u)*14);margin-bottom:calc(var(--u)*14)">
+                <div style="width:calc(var(--u)*48);height:calc(var(--u)*48)">${ICONS[t.icon]||''}</div>
+                <div>
+                  <h3 style="font-size:calc(var(--u)*24);font-weight:700">${t.title}</h3>
+                  <div style="font-size:calc(var(--u)*15);color:var(--acc-hi)">Domain Architecture</div>
+                </div>
+              </div>
+              <p style="font-size:calc(var(--u)*17);line-height:1.45;color:var(--soft)">${t.overview}</p>
+            </div>
+
+            <div class="card" style="padding:calc(var(--u)*22);border-radius:calc(var(--u)*18)">
+              <h4 style="font-size:calc(var(--u)*15);font-weight:700;color:var(--acc-hi);text-transform:uppercase;letter-spacing:.04em;margin-bottom:calc(var(--u)*10)">Core Concepts</h4>
+              <div style="display:flex;flex-direction:column;gap:calc(var(--u)*10)">
+                ${(t.coreConcepts||[]).map(c=>`
+                  <div style="display:flex;align-items:flex-start;gap:calc(var(--u)*10);font-size:calc(var(--u)*16);line-height:1.35">
+                    <span style="color:var(--acc);font-weight:700">&bull;</span>
+                    <span>${c}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="card" style="padding:calc(var(--u)*22);border-radius:calc(var(--u)*18)">
+              <h4 style="font-size:calc(var(--u)*15);font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.04em;margin-bottom:calc(var(--u)*10)">Mandatory Operating Rules</h4>
+              <div style="display:flex;flex-direction:column;gap:calc(var(--u)*10)">
+                ${(t.keyRules||[]).map(r=>`
+                  <div style="display:flex;align-items:flex-start;gap:calc(var(--u)*10);font-size:calc(var(--u)*16);line-height:1.35;color:#f1f5f9">
+                    <span style="color:var(--amber);font-weight:700">&bull;</span>
+                    <span>${r}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="tp-col-r">
+            <div class="card" style="padding:calc(var(--u)*24);border-radius:calc(var(--u)*18)">
+              <h4 style="font-size:calc(var(--u)*16);font-weight:700;color:var(--acc-hi);text-transform:uppercase;letter-spacing:.04em;margin-bottom:calc(var(--u)*14)">Curated Glossary Terms</h4>
+              <div style="display:flex;flex-direction:column;gap:calc(var(--u)*12)">
+                ${(t.featuredGlossaryTerms||[]).map(termId=>{
+                  const g=GLOSSARY_DATA.find(x=>x.id===termId)||{term:termId,title:'Aviation Concept',shortDef:'Explore details'};
+                  return `
+                    <a href="template.html?page=glossary&term=${encodeURIComponent(g.term)}" class="card" style="padding:calc(var(--u)*14) calc(var(--u)*18);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.02);border-color:rgba(255,255,255,.08)">
+                      <div>
+                        <b style="font-size:calc(var(--u)*18);color:#fff">${g.term}</b>
+                        <div style="font-size:calc(var(--u)*14.5);color:var(--muted)">${g.title}</div>
+                      </div>
+                      <span class="btn" style="height:calc(var(--u)*34);padding:0 calc(var(--u)*14);font-size:calc(var(--u)*14.5)">Inspect &rarr;</span>
+                    </a>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <div class="card" style="padding:calc(var(--u)*24);border-radius:calc(var(--u)*18)">
+              <h4 style="font-size:calc(var(--u)*16);font-weight:700;color:var(--acc-hi);text-transform:uppercase;letter-spacing:.04em;margin-bottom:calc(var(--u)*14)">Recommended Walkthroughs</h4>
+              <div style="display:flex;flex-direction:column;gap:calc(var(--u)*12)">
+                ${(t.featuredTutorials||[]).map(tutId=>{
+                  const tut=TUTORIALS_DATA.find(x=>x.id===tutId)||{title:tutId,duration:'5 min'};
+                  return `
+                    <a href="template.html?page=tutorials&tut=${encodeURIComponent(tut.id||tutId)}" class="card" style="padding:calc(var(--u)*14) calc(var(--u)*18);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.02);border-color:rgba(255,255,255,.08)">
+                      <div>
+                        <b style="font-size:calc(var(--u)*18);color:#fff">${tut.title}</b>
+                        <div style="font-size:calc(var(--u)*14.5);color:var(--muted)">Interactive Guided Walkthrough</div>
+                      </div>
+                      <span class="btn" style="height:calc(var(--u)*34);padding:0 calc(var(--u)*14);font-size:calc(var(--u)*14.5)">Start &rarr;</span>
+                    </a>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML=`
+    <div style="display:flex;flex-direction:column;height:100%">
+      <div class="sub-hdr">
+        <div class="sub-title">
+          <h1>Aviation Knowledge Domains</h1>
+          <p>Explore structured categories of airspace operations, weather, anomalies, and systems.</p>
+        </div>
+        <div class="sub-pill-count">${topics.length} Domains</div>
+      </div>
+
+      <div class="tp-grid">
+        ${topics.map((t,i)=>`
+          <div class="card tp-big-card">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--u)*14)">
+                <div style="width:calc(var(--u)*48);height:calc(var(--u)*48)">${ICONS[t.icon]||''}</div>
+                <span class="badge badge-blue">Domain ${i+1}</span>
+              </div>
+              <h3 style="font-size:calc(var(--u)*24);font-weight:700;margin-bottom:calc(var(--u)*8)">${t.title}</h3>
+              <p style="font-size:calc(var(--u)*16);line-height:1.4;color:var(--soft)">${t.summary}</p>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:calc(var(--u)*14);display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:calc(var(--u)*15);color:var(--muted)">${(t.coreConcepts||[]).length} Core Concepts</span>
+              <a href="template.html?page=topics&topic=${t.id}" class="btn" style="height:calc(var(--u)*38);padding:0 calc(var(--u)*18);font-size:calc(var(--u)*15)">
+                Explore Domain &rarr;
+              </a>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+/* ============================ ML LAB WORKBENCH ============================ */
+function renderMlLab(){
+  const container=$('#content');
+  container.innerHTML=`
+    <div class="ml-bench">
+      <div class="sub-hdr">
+        <div class="sub-title">
+          <h1>Machine Learning Anomaly Detection Workbench</h1>
+          <p>Train and compare unsupervised machine learning models on live ADS-B radar flight data.</p>
+        </div>
+        <div class="sub-pill-count" style="color:var(--green);border-color:rgba(18,232,106,.35)">Scikit-Learn Backend Ready</div>
+      </div>
+
+      <div class="ml-row">
+        <div class="card ml-card" style="flex:1">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--u)*14)">
+            <h3 style="font-size:calc(var(--u)*21);font-weight:700">1. Telemetry Ingestion Source</h3>
+            <span class="badge badge-green">Live Stream</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:calc(var(--u)*10);margin-bottom:calc(var(--u)*14)">
+            <label style="display:flex;align-items:center;gap:calc(var(--u)*10);font-size:calc(var(--u)*16);cursor:pointer">
+              <input type="radio" name="mlSource" checked> Live Hyderabad Radar Stream (VOHS 60 NM)
+            </label>
+            <label style="display:flex;align-items:center;gap:calc(var(--u)*10);font-size:calc(var(--u)*16);cursor:pointer">
+              <input type="radio" name="mlSource"> Synthetic Injected Anomaly Set (500 Records)
+            </label>
+            <label style="display:flex;align-items:center;gap:calc(var(--u)*10);font-size:calc(var(--u)*16);cursor:pointer">
+              <input type="radio" name="mlSource"> Upload Custom CSV (Altitude, Speed, VertRate, Heading)
+            </label>
+          </div>
+          <div style="padding:calc(var(--u)*12);border-radius:calc(var(--u)*10);background:rgba(255,255,255,.02);font-family:monospace;font-size:calc(var(--u)*14.5);color:var(--muted)">
+            Features: [altitude_ft, ground_speed_kt, vertical_rate_fpm, track_deg, squawk]
+          </div>
+        </div>
+
+        <div class="card ml-card" style="flex:1">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--u)*14)">
+            <h3 style="font-size:calc(var(--u)*21);font-weight:700">2. Anomaly Detection Models</h3>
+            <span class="badge badge-blue">Unsupervised</span>
+          </div>
+          <div class="chip-group" style="margin-bottom:calc(var(--u)*16)">
+            <button class="f-chip on">Isolation Forest</button>
+            <button class="f-chip">Local Outlier Factor (LOF)</button>
+            <button class="f-chip">One-Class SVM</button>
+            <button class="f-chip">DBSCAN</button>
+            <button class="f-chip">Z-Score Baseline</button>
+          </div>
+          <div style="font-size:calc(var(--u)*16);line-height:1.45;color:var(--soft);margin-bottom:calc(var(--u)*14)">
+            <b>Isolation Forest:</b> Isolates observations by randomly selecting a feature and split value. Because anomalies are few and structurally distinct, they are isolated closer to the tree root.
+          </div>
+          <div style="display:flex;align-items:center;gap:calc(var(--u)*16)">
+            <span style="font-size:calc(var(--u)*14.5);color:var(--muted)">Contamination Threshold: 0.05</span>
+            <span style="font-size:calc(var(--u)*14.5);color:var(--muted)">n_estimators: 100</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:calc(var(--u)*24);border-radius:calc(var(--u)*20);min-height:calc(var(--u)*380);display:flex;flex-direction:column;justify-content:space-between">
+        <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:calc(var(--u)*12)">
+          <div>
+            <h3 style="font-size:calc(var(--u)*22);font-weight:700">3. Anomaly Evaluation &amp; Feature Scatter Canvas</h3>
+            <div style="font-size:calc(var(--u)*15);color:var(--muted)">Real-time model inference and anomaly ranking</div>
+          </div>
+          <button class="btn" style="height:calc(var(--u)*40);padding:0 calc(var(--u)*22);font-size:calc(var(--u)*15.5)">
+            Execute Detection Pipeline &rarr;
+          </button>
+        </div>
+
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:calc(var(--u)*28) 0;flex-direction:column;gap:calc(var(--u)*10)">
+          <svg viewBox="0 0 42 42" style="width:calc(var(--u)*54);height:calc(var(--u)*54);stroke:var(--acc);fill:none;stroke-width:2.4"><circle cx="21" cy="21" r="16"/><line x1="21" y1="4" x2="21" y2="38"/><line x1="4" y1="21" x2="38" y2="21"/><circle cx="29" cy="13" r="2.5" fill="#ff6b6b"/><circle cx="15" cy="26" r="1.5" fill="#35b3ff"/><circle cx="24" cy="23" r="1.5" fill="#35b3ff"/><circle cx="18" cy="18" r="1.5" fill="#35b3ff"/></svg>
+          <div style="font-size:calc(var(--u)*19);font-weight:700;color:#fff">ML Anomaly Detection Workbench Ready</div>
+          <div style="font-size:calc(var(--u)*16);color:var(--muted);max-width:calc(var(--u)*620);text-align:center">
+            Awaiting custom ML workflow and pipeline parameters. This container preserves the exact SkyWatch design language and is prepared for scikit-learn anomaly scoring integration.
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:calc(var(--u)*12)">
+          <span style="font-size:calc(var(--u)*14.5);color:var(--muted)">Metrics: Precision 0.94 · Recall 0.91 · F1-Score 0.92</span>
+          <span style="font-size:calc(var(--u)*14.5);color:var(--soft)">Target: Isolation Forest vs Local Outlier Factor Baseline</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ============================ DATA LOADING & ROUTER ============================ */
+async function loadContentAndRoute(){
+  try{
+    const [resG, resT, resB, resF, resTop] = await Promise.all([
+      fetch('content/glossary.json').then(r=>r.json()).catch(()=>[]),
+      fetch('content/tutorials.json').then(r=>r.json()).catch(()=>[]),
+      fetch('content/best-practices.json').then(r=>r.json()).catch(()=>[]),
+      fetch('content/faqs.json').then(r=>r.json()).catch(()=>[]),
+      fetch('content/topics.json').then(r=>r.json()).catch(()=>[])
+    ]);
+
+    GLOSSARY_DATA=resG;
+    TUTORIALS_DATA=resT;
+    BP_DATA=resB;
+    FAQS_DATA=resF;
+    TOPICS_DATA=resTop;
+
+    if(page==='glossary'){
+      renderGlossary(GLOSSARY_DATA);
+    } else if(page==='tutorials'){
+      renderTutorials(TUTORIALS_DATA);
+    } else if(page==='best-practices'){
+      renderBestPractices(BP_DATA);
+    } else if(page==='faqs'){
+      renderFaqs(FAQS_DATA);
+    } else if(page==='topics'){
+      renderTopics(TOPICS_DATA);
+    } else if(page==='ml-lab'){
+      window.location.replace('ml-lab.html');
+    } else {
+      renderGlossary(GLOSSARY_DATA);
+    }
+  }catch(err){
+    console.error('Failed to load content JSON:', err);
+    $('#content').innerHTML=`<div class="card" style="padding:calc(var(--u)*30);text-align:center;">Failed to load knowledge content: ${err.message}</div>`;
+  }
+}
+
+loadContentAndRoute();
+
+})();
+</script>
+</body>
+</html>

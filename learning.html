@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkyWatch – Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000; --text:#fff; --muted:#a3a9b3; --soft:#d3d7de;
+    --blue:#1f6fff; --blue-text:#2f7dff; --sky:#4ea8ff; --green:#1fe05d;
+    --line:rgba(255,255,255,.14); --card-border:rgba(255,255,255,.22);
+    --font:'Inter','SF Pro Display','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    --mono:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);overflow:hidden}
+  body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  #stage{position:absolute;left:0;top:0;width:1672px;height:941px;transform-origin:0 0;background:var(--bg)}
+  .a{position:absolute}.nw{white-space:nowrap}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- NAV ---------- */
+  .brand{position:absolute;left:28px;top:20px;display:flex;align-items:center;gap:22px;color:#fff;text-decoration:none;cursor:pointer}
+  .brand svg{width:62px;height:40px}
+  .brand span{font-size:32px;font-weight:600;letter-spacing:-.4px}
+  .sep{position:absolute;top:16px;width:2px;height:50px;background:rgba(255,255,255,.2)}
+  .pill{position:absolute;top:16px;height:50px;border-radius:25px;display:flex;align-items:center;justify-content:center;
+        font-size:18px;font-weight:500;letter-spacing:-.2px;background:#0e0f11;border:1px solid rgba(255,255,255,.14);color:#e9ecf1;cursor:pointer;transition:background .2s;text-decoration:none}
+  .pill:hover{background:#12151a}
+  .pill.active{background:#fff;color:#000;border-color:#fff;font-weight:600}
+  .live-dot{position:absolute;left:1320px;top:33px;width:17px;height:17px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(31,224,93,.6)}
+  .live-txt{position:absolute;left:1349px;top:29px;font-size:20px;font-weight:500}
+  .clock{position:absolute;left:1549px;top:28px;font-size:21px;font-weight:600;letter-spacing:-.2px}
+
+  /* ---------- CARDS ---------- */
+  .card{position:absolute;border-radius:26px;border:1.5px solid var(--card-border);overflow:hidden;
+        background:
+          linear-gradient(180deg,rgba(255,255,255,.06) 0,rgba(255,255,255,.022) 55px,rgba(255,255,255,0) 125px),
+          linear-gradient(180deg,#08090b 0%,#050607 60%,#040506 100%);
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+  .card::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+        background:linear-gradient(225deg,rgba(150,158,185,.15) 0%,rgba(255,255,255,.05) 14%,rgba(255,255,255,.015) 26%,transparent 38%)}
+  .card.r24{border-radius:24px}
+  .card > *{z-index:2}
+  .ttl{position:absolute;font-weight:600;white-space:nowrap;letter-spacing:-.4px}
+  .ic{position:absolute;fill:none;stroke:#eef0f4;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .muted{color:var(--muted)}
+
+  /* GRID POSITIONS */
+  #c1{left:20px;top:102px;width:870px;height:435px}
+  #c2{left:912px;top:102px;width:742px;height:435px}
+  #c3{left:20px;top:559px;width:870px;height:360px}
+  #c4{left:912px;top:559px;width:742px;height:360px}
+
+  .rule-box{background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+  .rule-title{font-size:18px;font-weight:600;color:#fff;display:flex;align-items:center;justify-content:space-between}
+  .rule-badge{font-size:13px;font-weight:600;padding:4px 10px;border-radius:99px}
+  .b-high{background:rgba(255,69,69,.2);border:1px solid #ff4545;color:#ff6b6b}
+  .b-med{background:rgba(47,134,255,.2);border:1px solid #2f86ff;color:#7cc0ff}
+  .b-low{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#cfd4dc}
+  .rule-desc{font-size:15px;color:var(--muted);margin-top:6px;line-height:1.4}
+  .rule-code{font-family:var(--mono);font-size:13px;color:#a5c3f1;margin-top:4px}
+
+  .spec-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .spec-row:last-child{border-bottom:none}
+  .spec-k{color:var(--muted);font-weight:500}
+  .spec-v{color:#fff;font-weight:600}
+
+  .sandbox-input{background:#0d1117;border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:8px 12px;color:#fff;font-family:var(--mono);font-size:16px;width:100%}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <!-- NAV -->
+  <a class="brand" href="dashboard.html">
+    <svg viewBox="0 0 60 40" fill="#fff"><path d="M58.500 3.200c-1.300-1.400-4.600-.9-7.600.5L38.600 9.600 14.400 3.500c-1-.3-2 0-2.700.7L9.500 6.400c-.6.600-.4 1.600.4 2l16.100 6.900-8.300 5.600-9-1.200c-.8-.1-1.500.2-2 .8L4.600 22.200c-.5.600-.3 1.500.4 1.900l8.400 4.600 4.600 8.400c.4.700 1.300.9 1.900.4l1.900-1.600c.6-.5.900-1.300.8-2l-1.200-9 5.600-8.300 6.900 16.100c.4.800 1.400 1 2 .4l2.200-2.200c.7-.7 1-1.700.7-2.700L35.400 21.400l12.600-12.600c3.300-1.500 11.300-4 10.500-5.600z"/></svg>
+    <span>SkyWatch</span>
+  </a>
+  <div class="sep" style="left:311px"></div>
+  <a class="pill" href="radar.html" style="left:338px;width:89px">Radar</a>
+  <a class="pill" href="dashboard.html" style="left:445px;width:128px">Dashboard</a>
+  <a class="pill" href="anomalies.html" style="left:590px;width:126px">Anomalies</a>
+  <a class="pill" href="weather.html" style="left:733px;width:111px">Weather</a>
+  <a class="pill" href="insights.html" style="left:861px;width:111px">Insights</a>
+  <a class="pill" href="report.html" style="left:990px;width:102px">Report</a>
+  <a class="pill active" href="learning.html" style="left:1109px;width:156px">Learning Hub</a>
+  <div class="sep" style="left:1284px"></div>
+  <div class="live-dot"></div><div class="live-txt">Live</div>
+  <div class="sep" style="left:1406px"></div>
+  <div class="pill" style="left:1420px;width:100px" id="navRwy">RWY 27</div>
+  <div class="sep" style="left:1533px"></div>
+  <div class="clock" id="clock">14:22 IST</div>
+
+  <!-- CARD 1: ANOMALY DETECTION ENGINE -->
+  <div class="card" id="c1">
+    <div class="ttl" style="left:32px;top:22px;font-size:28px">Anomaly Detection Models & Rules</div>
+    <div style="position:absolute;left:32px;top:74px;right:32px;bottom:20px;overflow-y:auto;padding-right:8px">
+      <div class="rule-box">
+        <div class="rule-title"><span>1. Unstable Approach</span><span class="rule-badge b-high">High / Weight 1</span></div>
+        <div class="rule-desc">Triggered when aircraft is on final approach with high sink rate or excessive groundspeed.</div>
+        <div class="rule-code">distance &lt; 12 nm &amp;&amp; 200 ft &lt; AGL &lt; 2500 ft &amp;&amp; (vrate &lt; -1200 fpm || gs &gt; 180 kt)</div>
+      </div>
+      <div class="rule-box">
+        <div class="rule-title"><span>2. Holding Pattern</span><span class="rule-badge b-med">Medium / Weight 1</span></div>
+        <div class="rule-desc">Identifies sustained racetrack turns within standard arrival holding stacks.</div>
+        <div class="rule-code">|track_rate| &gt;= 1.2°/s &amp;&amp; 3000 ft &lt; alt &lt; 16000 ft &amp;&amp; gs &lt; 260 kt &amp;&amp; dist &lt; 45 nm</div>
+      </div>
+      <div class="rule-box">
+        <div class="rule-title"><span>3. Rapid Altitude Drop</span><span class="rule-badge b-high">High / Weight 2</span></div>
+        <div class="rule-desc">Flags abnormally steep descent profiles in terminal airspace requiring immediate ATC review.</div>
+        <div class="rule-code">vrate &lt;= -3000 fpm &amp;&amp; alt_baro &lt; 12000 ft MSL</div>
+      </div>
+      <div class="rule-box">
+        <div class="rule-title"><span>4. Emergency Squawk Codes</span><span class="rule-badge b-high">High / Weight 3</span></div>
+        <div class="rule-desc">Immediate alerts on ICAO transponder emergency codes (7500 Unlawful, 7600 Radio, 7700 General).</div>
+        <div class="rule-code">squawk in ['7500', '7600', '7700']</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: VOHS AERODROME ARCHITECTURE -->
+  <div class="card" id="c2">
+    <div class="ttl" style="left:32px;top:22px;font-size:28px">VOHS Hyderabad Aerodrome Reference</div>
+    <div style="position:absolute;left:32px;top:74px;right:32px;bottom:20px">
+      <div class="spec-row"><span class="spec-k">Airport ICAO / IATA</span><span class="spec-v">VOHS / HYD</span></div>
+      <div class="spec-row"><span class="spec-k">Aerodrome Name</span><span class="spec-v">Rajiv Gandhi International Airport</span></div>
+      <div class="spec-row"><span class="spec-k">Geographic Coordinates</span><span class="spec-v">17.2403° N, 78.4294° E</span></div>
+      <div class="spec-row"><span class="spec-k">Field Elevation</span><span class="spec-v">2,024 ft MSL (617 m)</span></div>
+      <div class="spec-row"><span class="spec-k">Active Runways</span><span class="spec-v">09 / 27 (Headings 090° / 270°)</span></div>
+      <div class="spec-row"><span class="spec-k">Primary Approach Waypoints</span><span class="spec-v">TEBUR, OPROK, GOLUM</span></div>
+      <div class="spec-row"><span class="spec-k">ILS Standard Glideslope</span><span class="spec-v">3.00° / Cat I &amp; II</span></div>
+      <div class="spec-row"><span class="spec-k">Airspace Surveillance Radius</span><span class="spec-v">60 Nautical Miles (111 km)</span></div>
+    </div>
+  </div>
+
+  <!-- CARD 3: DISRUPTION PULSE & METRICS GUIDE -->
+  <div class="card" id="c3">
+    <div class="ttl" style="left:32px;top:22px;font-size:26px">Metrics Formulation Guide</div>
+    <div style="position:absolute;left:32px;top:70px;right:32px;bottom:20px;font-size:15px;line-height:1.6;color:var(--soft)">
+      <p style="margin-bottom:12px"><strong style="color:#fff">Disruption Pulse Index (0–100):</strong><br>
+      Quantifies aggregate terminal airspace disruption by weighting anomalies against total airborne traffic volume:<br>
+      <code style="font-family:var(--mono);color:#46a6ff">Disruption Index = min(100, (100 * ∑ w_i) / max(8, Traffic * 0.35))</code></p>
+      
+      <p style="margin-bottom:12px"><strong style="color:#fff">Runway Efficiency Rating:</strong><br>
+      Calculated as the percentage of arrivals within 12 nm below 3,000 ft AGL aligned within ±25° of the runway centerline that execute nominal descent without go-arounds or destabilization.</p>
+
+      <p><strong style="color:#fff">Continuous Model Feedback Loop:</strong><br>
+      Every controller acknowledgment records confirmation (True Positive) or false-alarm tag, updating real-time accuracy: <code style="font-family:var(--mono);color:#46a6ff">Accuracy = TP / (TP + FP) * 100%</code>.</p>
+    </div>
+  </div>
+
+  <!-- CARD 4: INTERACTIVE RULE SANDBOX -->
+  <div class="card" id="c4">
+    <div class="ttl" style="left:32px;top:22px;font-size:26px">Interactive Anomaly Sandbox</div>
+    <div style="position:absolute;left:32px;top:66px;right:32px;bottom:20px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:4px">Altitude MSL (ft)</label>
+          <input class="sandbox-input" id="sbAlt" type="number" value="3400">
+        </div>
+        <div>
+          <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:4px">Vertical Rate (fpm)</label>
+          <input class="sandbox-input" id="sbVr" type="number" value="-4800">
+        </div>
+        <div>
+          <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:4px">Ground Speed (kt)</label>
+          <input class="sandbox-input" id="sbGs" type="number" value="175">
+        </div>
+        <div>
+          <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:4px">Squawk Code</label>
+          <input class="sandbox-input" id="sbSq" type="text" value="3120">
+        </div>
+      </div>
+      <div style="margin-top:6px;padding:14px;background:#06101e;border:1px solid #1f6fff;border-radius:12px">
+        <div style="font-size:13px;color:var(--muted)">Model Evaluation Result:</div>
+        <div id="sbResult" style="font-size:19px;font-weight:700;color:#ff6b6b;margin-top:4px">Rapid Altitude Drop (High Severity)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const stage = document.getElementById('stage');
+function fit() {
+  const s = Math.min(innerWidth / 1672, innerHeight / 941);
+  stage.style.transform = `translate(${(innerWidth - 1672 * s) / 2}px, ${(innerHeight - 941 * s) / 2}px) scale(${s})`;
+}
+addEventListener('resize', fit);
+fit();
+
+function tick() {
+  const d = new Date();
+  const t = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false }).format(d);
+  document.getElementById('clock').textContent = t + ' IST';
+}
+tick();
+setInterval(tick, 1000);
+
+// Fetch active runway
+async function updateRwy() {
+  try {
+    const res = await fetch('/api/weather');
+    if (res.ok) {
+      const w = await res.json();
+      if (w.activeRunway) document.getElementById('navRwy').textContent = 'RWY ' + w.activeRunway;
+    }
+  } catch (e) {}
+}
+updateRwy();
+
+// Interactive Rule Sandbox
+function evalSandbox() {
+  const alt = parseFloat(document.getElementById('sbAlt').value) || 0;
+  const vr = parseFloat(document.getElementById('sbVr').value) || 0;
+  const gs = parseFloat(document.getElementById('sbGs').value) || 0;
+  const sq = (document.getElementById('sbSq').value || '').trim();
+  const el = document.getElementById('sbResult');
+
+  if (['7700', '7600', '7500'].includes(sq)) {
+    el.textContent = `Squawk Emergency (${sq}) - High Severity`;
+    el.style.color = '#ff6b6b';
+  } else if (vr <= -3000 && alt < 12000) {
+    el.textContent = `Rapid Altitude Drop (${vr} fpm) - High Severity`;
+    el.style.color = '#ff6b6b';
+  } else if (alt - 2024 < 2500 && alt - 2024 > 200 && (vr < -1200 || gs > 180)) {
+    el.textContent = `Unstable Approach (${vr} fpm, ${gs} kt) - High Severity`;
+    el.style.color = '#ff6b6b';
+  } else {
+    el.textContent = `Nominal Flight Profile - No Anomaly Detected`;
+    el.style.color = '#1fe05d';
+  }
+}
+['sbAlt', 'sbVr', 'sbGs', 'sbSq'].forEach(id => {
+  document.getElementById(id).addEventListener('input', evalSandbox);
+});
+evalSandbox();
+</script>
+</body>
+</html>

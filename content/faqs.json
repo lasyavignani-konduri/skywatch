@@ -1,0 +1,58 @@
+[
+  {
+    "id": "faq-1",
+    "category": "Radar & Tracking",
+    "question": "What is the difference between primary radar and ADS-B tracking?",
+    "shortAnswer": "Primary radar detects raw reflected radio waves, while ADS-B receives data broadcast directly by the aircraft's avionics.",
+    "detailedAnswer": "Primary Surveillance Radar (PSR) emits high-energy electromagnetic pulses and listens for passive physical reflections off the metal airframe. It requires no onboard cooperation, but only provides range and bearing (no altitude or callsign).\n\nADS-B (Automatic Dependent Surveillance-Broadcast), by contrast, relies on the aircraft's internal GPS and Mode S transponder to actively broadcast precise latitude, longitude, altitude, groundspeed, vertical rate, and emergency squawks twice per second on 1090 MHz. SkyWatch integrates ADS-B feeds for sub-second situational accuracy.",
+    "relatedTerm": "Mode S / ADS-B"
+  },
+  {
+    "id": "faq-2",
+    "category": "Anomalies & Alerts",
+    "question": "Why does an aircraft declare Squawk 7700 instead of just talking to ATC?",
+    "shortAnswer": "Squawk 7700 immediately alerts all radar screens across multiple air traffic sectors simultaneously, even if the radio frequency is congested.",
+    "detailedAnswer": "While verbal radio calls ('Mayday, Mayday, Mayday') require clear voice frequencies and an active controller monitoring that exact channel, setting the transponder to 7700 instantaneously flashes on every military and civilian radar console within hundreds of miles.\n\nIt triggers automated audio sirens, overrides normal filter settings, and tags the flight with emergency status across automated air traffic systems. In high-workload situations like rapid decompression or dual engine failure, flipping the transponder switch takes less than one second.",
+    "relatedTerm": "Squawk 7700"
+  },
+  {
+    "id": "faq-3",
+    "category": "Anomalies & Alerts",
+    "question": "Is a go-around considered an emergency or a pilot error?",
+    "shortAnswer": "Neither. A go-around is a standard, highly trained safety maneuver executed whenever landing parameters are not 100% stabilized.",
+    "detailedAnswer": "A common misconception among passengers is that a go-around represents a near-miss or dangerous error. In modern airline safety culture, executing a go-around is praised as a sound professional safety decision.\n\nGo-arounds are initiated for routine causes such as a preceding aircraft taking extra seconds to vacate the runway, sudden wind gusts, flock of birds crossing the threshold, or the aircraft being slightly high on glide path. Commercial pilots train for go-arounds in flight simulators every six months.",
+    "relatedTerm": "Go-Around"
+  },
+  {
+    "id": "faq-4",
+    "category": "Weather & METAR",
+    "question": "What does QNH mean and why is it critical for safe landing?",
+    "shortAnswer": "QNH is the sea-level barometric pressure setting that ensures altimeters read true elevation above mean sea level.",
+    "detailedAnswer": "Atmospheric pressure changes constantly with weather systems. Because aircraft altimeters measure barometric pressure to determine height, an uncalibrated altimeter could misread actual altitude by hundreds of feet.\n\nBy dialing the local QNH pressure reported in the METAR into the altimeter subscale, the cockpit gauge will accurately indicate the aerodrome elevation (2,024 ft at VOHS) upon landing. Failure to set local QNH can result in flying lower than indicated, creating severe terrain strike hazards.",
+    "relatedTerm": "QNH"
+  },
+  {
+    "id": "faq-5",
+    "category": "Weather & METAR",
+    "question": "How is the active runway chosen between RWY 09 and RWY 27 at Hyderabad?",
+    "shortAnswer": "The runway that provides the highest headwind component is chosen to ensure shorter landing and takeoff rolls.",
+    "detailedAnswer": "Aircraft must take off and land facing into the wind. Hyderabad's single main runway is oriented East-West along magnetic headings 090 deg (Runway 09) and 270 deg (Runway 27).\n\nIf the wind is blowing from the east (e.g. 080 deg at 14 knots), Runway 09 provides a 13.8 knot headwind, making it the active runway. If winds shift to blow from the west (e.g. 260 deg at 12 knots), Runway 27 becomes active. Tailwinds exceeding 5-10 knots are strictly restricted by DGCA regulations.",
+    "relatedTerm": "METAR"
+  },
+  {
+    "id": "faq-6",
+    "category": "Metrics & Performance",
+    "question": "What is the Disruption Pulse and how is it calculated?",
+    "shortAnswer": "A real-time 0-100 score quantifying airspace stability by weighting active anomalies against total airborne traffic.",
+    "detailedAnswer": "Disruption Pulse is an operational index developed for SkyWatch. Rather than looking only at individual flight alerts in isolation, it assesses the overall health of the entire terminal maneuvering area.\n\nEmergencies (Squawk 7700) receive a weight of 3, severe trajectory anomalies (rapid altitude drop) receive a weight of 2, and delay maneuvers (holding, go-around) receive a weight of 1. The weighted sum is normalized against the total number of airborne aircraft within 60 NM to yield a clean 0 to 100 indicator.",
+    "relatedTerm": "Disruption Pulse"
+  },
+  {
+    "id": "faq-7",
+    "category": "General",
+    "question": "What is an airport ICAO code versus an IATA code?",
+    "shortAnswer": "ICAO codes (4 letters, e.g. VOHS) are used for air traffic navigation, while IATA codes (3 letters, e.g. HYD) are used for passenger ticketing.",
+    "detailedAnswer": "The International Civil Aviation Organization (ICAO) assigns 4-letter regional codes to every aerodrome in the world. The first letter identifies the global region (V = South Asia), the second country (O = India), and the last two identify the airport (HS = Hyderabad Shamshabad).\n\nThe International Air Transport Association (IATA) assigns 3-letter codes used on airline boarding passes and baggage tags (e.g. HYD for Hyderabad, BOM for Mumbai, DEL for Delhi). Air traffic controllers, flight plans, and SkyWatch always use 4-letter ICAO identifiers.",
+    "relatedTerm": "AIC"
+  }
+]

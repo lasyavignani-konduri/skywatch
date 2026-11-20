@@ -1,0 +1,171 @@
+[
+  {
+    "id": "anomalies",
+    "title": "Airspace Anomalies & Trajectory Deviations",
+    "icon": "anomalies",
+    "summary": "Automatic algorithmic detection of emergency squawks, extreme sink rates, holding loops, and unexpected maneuvers.",
+    "overview": "Air traffic control relies on predictable, synchronized flight trajectories along established airway corridors. Any sudden deviation from standard profiles can introduce severe collision risks and system-wide delays. SkyWatch uses multi-parameter sensor fusion to classify anomalies into discrete categories.",
+    "coreConcepts": [
+      "Unscheduled high vertical rate descents exceeding stabilization criteria.",
+      "Emergency transponder code recognition (7700 General, 7600 Radio Loss, 7500 Hijack).",
+      "Automatic holding loop identification through trajectory curvature analysis.",
+      "Missed approach and go-around climb detection relative to runway threshold.",
+      "Radar telemetry dropout and dead-reckoning trajectory projection."
+    ],
+    "featuredGlossaryTerms": [
+      "rapid-altitude-drop",
+      "squawk-7700",
+      "holding-pattern",
+      "go-around",
+      "low-approach",
+      "signal-lost"
+    ],
+    "featuredTutorials": [
+      "tut-unstable-approach",
+      "tut-squawk-7700",
+      "tut-holding-patterns"
+    ],
+    "keyRules": [
+      "Any vertical descent rate exceeding 1,000 fpm below 1,000 ft AGL triggers mandatory go-around review.",
+      "Squawk 7700 mandates immediate 2,000 ft vertical sanitization of adjacent flight levels.",
+      "Holding loops trigger automatic delay estimation counters in the flow management queue."
+    ]
+  },
+  {
+    "id": "alerts",
+    "title": "Alert Severities & Notification Workflows",
+    "icon": "alerts",
+    "summary": "Color-coded priority queue, acoustic warning cues, and supervisory acknowledgment procedures.",
+    "overview": "Effective alert design balances rapid human situational awareness against alarm fatigue. SkyWatch categorizes incoming operational events into High (immediate danger), Medium (tactical delay or unstabilized condition), and Low (advisory notice) tiers, each paired with dedicated visual styling and acknowledgment workflows.",
+    "coreConcepts": [
+      "High Severity: squawks 7700/7600/7500, rapid descent in final approach cone, TCAS resolution advisories.",
+      "Medium Severity: go-arounds, extended holding patterns, telemetry signal loss.",
+      "Low Severity: minor glideslope deviations, advisory speed gate exceedances.",
+      "Two-tier acknowledgment: individual flight card dismissal and global 'Acknowledge All' queue clearing."
+    ],
+    "featuredGlossaryTerms": [
+      "squawk-7700",
+      "rapid-altitude-drop",
+      "tcas",
+      "go-around"
+    ],
+    "featuredTutorials": [
+      "tut-squawk-7700",
+      "tut-unstable-approach"
+    ],
+    "keyRules": [
+      "High-severity alerts must be visually acknowledged within 30 seconds of trigger.",
+      "Acknowledged alerts remain visible in dim state until flight safely vacates sector."
+    ]
+  },
+  {
+    "id": "weather-terms",
+    "title": "Weather Telemetry & Aerodrome Conditions",
+    "icon": "weather",
+    "summary": "Real-time METAR parsing, cloud ceiling analysis, barometric QNH calibration, and runway headwind calculations.",
+    "overview": "Atmospheric conditions are the single largest variable governing airport runway capacity and safety margins. SkyWatch continuously parses live METAR telemetry strings from VOHS sensors and calculates runway headwind and crosswind vectors in real time.",
+    "coreConcepts": [
+      "METAR & TAF string structure and 30-minute update cycles.",
+      "QNH vs QFE: Mean Sea Level vs Ground Level pressure settings.",
+      "Runway Visual Range (RVR) and Low Visibility Procedure (LVP) triggers.",
+      "Cloud ceiling criteria (BKN/OVC >= 5/8 coverage) and IFR transition boundaries.",
+      "Vector decomposition: resolving wind heading and speed into runway headwind and crosswind."
+    ],
+    "featuredGlossaryTerms": [
+      "metar",
+      "taf",
+      "qnh",
+      "qfe",
+      "rvr",
+      "ceiling",
+      "flight-category"
+    ],
+    "featuredTutorials": [
+      "tut-decoding-metar"
+    ],
+    "keyRules": [
+      "Headwind must be maximized; tailwind components exceeding 5 knots require runway duty swap.",
+      "Ceilings under 1,000 ft AGL or visibility under 3 sm require strict Instrument Flight Rules (IFR)."
+    ]
+  },
+  {
+    "id": "runway-airspace",
+    "title": "Runway & Airspace Architecture",
+    "icon": "runway",
+    "summary": "Instrument Landing Systems, SIDs & STARs, terminal control zones, and terrain clearance envelopes.",
+    "overview": "Airspace is structured three-dimensional geometry designed to separate high-speed aircraft without verbal intervention. From precision 3.0-degree ILS glideslopes to terminal RNAV-1 arrival corridors, understanding spatial design is foundational for airspace operators.",
+    "coreConcepts": [
+      "Runway 09/27 magnetic alignment (090 deg / 270 deg) and displaced thresholds.",
+      "Instrument Landing System (ILS): Localizer lateral beam and Glideslope vertical beam.",
+      "Standard Instrument Departures (SIDs) and Standard Terminal Arrival Routes (STARs).",
+      "Terminal Maneuvering Area (TMA) vertical boundaries (4,000 ft transition altitude).",
+      "Notice to Airmen (NOTAM) bulletins and temporary flight restrictions."
+    ],
+    "featuredGlossaryTerms": [
+      "glide-slope",
+      "sid-star",
+      "decision-altitude",
+      "notam",
+      "aic"
+    ],
+    "featuredTutorials": [
+      "tut-unstable-approach",
+      "tut-holding-patterns"
+    ],
+    "keyRules": [
+      "Aircraft must intercept glideslope from below to prevent false lobe capture.",
+      "Speed is restricted to 250 knots maximum below 10,000 ft (FL100) inside terminal airspace."
+    ]
+  },
+  {
+    "id": "metrics",
+    "title": "Airspace Health Metrics & Indicators",
+    "icon": "metrics",
+    "summary": "Disruption Pulse, Corridor Health, delay accumulation, and predictive traffic volatility modeling.",
+    "overview": "Modern operations centers rely on aggregate system-level metrics rather than reactive single-target viewing. The Disruption Pulse and Corridor Health indicators provide high-level situational awareness to airport duty managers and ATC watch supervisors.",
+    "coreConcepts": [
+      "Disruption Pulse: composite 0-100 operational friction score.",
+      "Corridor Health: lateral and speed adherence percentage along arrival corridors.",
+      "Weighted anomaly impact (Emergency Squawk x3, Altitude Drop x2, Holding x1).",
+      "Rolling 24-hour historical windowing with peak anomaly trend detection."
+    ],
+    "featuredGlossaryTerms": [
+      "disruption-pulse",
+      "corridor-health",
+      "holding-pattern"
+    ],
+    "featuredTutorials": [
+      "tut-corridor-health"
+    ],
+    "keyRules": [
+      "A Disruption Pulse score exceeding 50 requires tactical traffic metering at entry fixes.",
+      "Corridor Health below 75% triggers proactive vector spacing adjustments."
+    ]
+  },
+  {
+    "id": "system",
+    "title": "SkyWatch Architecture & Systems",
+    "icon": "system",
+    "summary": "ADS-B ingestion pipelines, real-time SQLite caching, 5-second polling cycles, and radar display rendering.",
+    "overview": "SkyWatch bridges raw low-level aviation telemetry with interactive high-performance visualization. Running on a lightweight Node.js Express data service, SQLite persistence layer, and vector canvas radar engine, the system delivers real-time situational awareness with zero lag.",
+    "coreConcepts": [
+      "ADS-B 1090 MHz Mode S packet ingestion via ADS-B Exchange / adsb.lol / OpenSky feeds.",
+      "5-second polling and dead-reckoning trajectory smoothing algorithms.",
+      "SQLite relational persistence preserving 24-hour historical flight tracks.",
+      "Standardized REST API endpoints (/api/flights, /api/weather, /api/anomalies).",
+      "Modular Learning Hub content architecture loaded via responsive JSON stores."
+    ],
+    "featuredGlossaryTerms": [
+      "ads-b",
+      "signal-lost",
+      "disruption-pulse"
+    ],
+    "featuredTutorials": [
+      "tut-corridor-health"
+    ],
+    "keyRules": [
+      "All client state updates are non-blocking with graceful offline fallback.",
+      "Telemetry coordinates are projected onto local VOHS radar space within 60 NM."
+    ]
+  }
+]

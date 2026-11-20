@@ -1,0 +1,82 @@
+[
+  {
+    "id": "bp-stabilized-approach",
+    "title": "Enforcement of Approach Stabilization Gates",
+    "category": "Approach Stabilization",
+    "priority": "Mandatory",
+    "summary": "Strict adherence to 1,000 ft IMC and 500 ft VMC stabilization criteria to prevent runway excursion and hard landings.",
+    "checklist": [
+      "Verify aircraft is on published lateral localizer beam (deviation < 1 dot).",
+      "Verify vertical sink rate does not exceed 1,000 ft/min below 1,000 ft AGL.",
+      "Confirm landing gear down and locked, landing flaps fully deployed.",
+      "Confirm airspeed stabilized within -5 to +10 knots of calculated Vref.",
+      "Issue immediate go-around directive if parameters are not stabilized at or below decision gate."
+    ],
+    "rationale": "Over 68% of commercial landing accidents stem from unstabilized approach profiles. Immediate go-around execution eliminates runway excursion risks.",
+    "incidentCase": "Flight AIC2417 encountered windshear at 1,400 ft resulting in a 1,900 fpm descent rate; controller prompt detection allowed safe climb to 4,000 ft."
+  },
+  {
+    "id": "bp-emergency-squawk",
+    "title": "Airspace Sterile Buffer for Emergency Squawk 7700",
+    "category": "Emergency Response",
+    "priority": "Mandatory",
+    "summary": "Immediate altitude sanitization, radio frequency protection, and priority emergency routing protocols.",
+    "checklist": [
+      "Acknowledge 7700 transmission within 5 seconds on active frequency.",
+      "Establish 2,000 ft vertical and 5 NM lateral sterile cylinder around target.",
+      "Reroute conflicting traffic to auxiliary waypoints or entry holding.",
+      "Confirm crew intentions (immediate divert, fuel dump, or visual approach).",
+      "Stage Airport Rescue & Fire Fighting (ARFF) at designated rapid-exit taxiway."
+    ],
+    "rationale": "ICAO Annex 11 mandates unconditional priority for aircraft declaring emergency distress to maximize survivability envelopes.",
+    "incidentCase": "VTI812 experienced cabin pressure loss at FL280; rapid descent to 10,000 ft was accommodated with zero traffic conflicts due to early corridor clearing."
+  },
+  {
+    "id": "bp-convective-weather",
+    "title": "Convective Weather & Windshear Operations",
+    "category": "Weather Operations",
+    "priority": "High Priority",
+    "summary": "Handling severe monsoonal storm cells, microbursts, and rapid runway wind shifts at Hyderabad.",
+    "checklist": [
+      "Monitor Doppler radar echo intensity and microburst alerts within 15 NM of VOHS.",
+      "Update active METAR and SPECI reports immediately upon wind shifts >= 10 knots.",
+      "Switch runway duty heading when tailwind component exceeds 5 knots.",
+      "Coordinate with adjacent sectors to enact minimum 20 NM spacing during holding.",
+      "Broadcast pilot-reported windshear (PIREP) to all aircraft on frequency without delay."
+    ],
+    "rationale": "Sudden microburst downbursts can induce airframe sink rates exceeding 3,500 ft/min. Proactive runway switching prevents tailwind overrun incidents.",
+    "incidentCase": "During pre-monsoon squall line over Shamshabad, three successive flights safely entered TEBUR holding while runway 27 was transitioned to runway 09."
+  },
+  {
+    "id": "bp-holding-separation",
+    "title": "Holding Stack Management & Separation Protocols",
+    "category": "Separation Standards",
+    "priority": "High Priority",
+    "summary": "Maintaining safe 1,000-foot vertical intervals in busy terminal holding stacks at TEBUR and OPROK.",
+    "checklist": [
+      "Assign holding levels in standard 1,000 ft vertical increments (e.g. FL70, FL80, FL90).",
+      "Require verbal altitude vacancy report before descending next aircraft in stack.",
+      "Cross-check Mode C transponder telemetry before confirming step-down clearance.",
+      "Track estimated holding delay and issue revised Expect Approach Times (EAT) every 10 min.",
+      "Provide divert clearance immediately when flight indicates minimum divert fuel (BINGO fuel)."
+    ],
+    "rationale": "Vertical ladder management in holding stacks eliminates wake turbulence encounters and ensures rapid sequential feeds into the final approach course.",
+    "incidentCase": "Six inbound flights stacked at TEBUR were sequentially stepped down and landed with average turnaround interval of only 2.5 minutes."
+  },
+  {
+    "id": "bp-telemetry-loss",
+    "title": "Loss of Surveillance Telemetry & Target Coasting",
+    "category": "Separation Standards",
+    "priority": "Standard Advisory",
+    "summary": "Operating rules when ADS-B or Mode S packets drop out in terminal maneuvering airspace.",
+    "checklist": [
+      "Verify if dropout is single-packet glitch or sustained (> 15 seconds) loss.",
+      "Enable SkyWatch dead-reckoning trajectory projection on controller display.",
+      "Instruct flight crew to recycle transponder code and check altitude reporting switch.",
+      "Corroborate with primary radar returns and voice position reports over mandatory fixes.",
+      "Increase procedural separation buffer to 10 NM until positive surveillance is restored."
+    ],
+    "rationale": "Dead-reckoning projections maintain situational awareness while procedural separation buffers guarantee safety during radio frequency or equipment anomalies.",
+    "incidentCase": "AXB539 experienced transponder power glitch north of Hyderabad; dead-reckoning projection kept spacing accurate until pilot recycled Mode S."
+  }
+]

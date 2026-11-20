@@ -1,0 +1,162 @@
+[
+  {
+    "id": "tut-unstable-approach",
+    "title": "Recognizing & Managing Unstabilized Approaches",
+    "category": "anomalies",
+    "level": "Intermediate",
+    "duration": "5 min",
+    "summary": "Learn the strict criteria for a stabilized approach, how to detect high sink rates on radar, and when to enforce a go-around.",
+    "badge": "Safety Priority",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "The Stabilization Gate at 1,000 ft AGL",
+        "body": "In civil aviation, safety rules mandate that every aircraft must be stabilized by 1,000 ft above ground in instrument meteorological conditions (IMC) or 500 ft in visual meteorological conditions (VMC). At Hyderabad (aerodrome elevation 2,024 ft MSL), this stabilization gate sits at exactly 3,024 ft MSL.",
+        "callout": "Stabilized Criteria: Aircraft on exact lateral centerline, on 3 deg glideslope, configured in landing flaps/gear, speed within +10/-5 kt of Vref, and descent rate <= 1,000 ft/min.",
+        "visual": "altitude_gate"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Detecting Abnormal High Sink Rates on SkyWatch",
+        "body": "When an inbound flight descends faster than 1,000 ft/min below the gate altitude (e.g. 1,800 ft/min at 2,600 ft MSL), SkyWatch illuminates a High Severity anomaly card. In the telemetry pane, verify the vertical rate flag and altitude differential.",
+        "callout": "Warning: High sink rates close to the ground exponentially increase the risk of hard landings, runway undershoot, or controlled flight into terrain (CFIT).",
+        "visual": "radar_telemetry"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Enforcing the Missed Approach (Go-Around)",
+        "body": "If stabilization criteria are not met upon reaching the decision gate, the flight crew or tower controller must initiate an immediate go-around. Instruct the aircraft to climb to 4,000 ft on runway heading, and verify positive rate of climb on the radar display.",
+        "callout": "ATC Instruction: Pilot must maintain runway heading, apply takeoff/go-around (TOGA) thrust, and verify positive rate before retracting gear.",
+        "visual": "go_around_climb"
+      }
+    ]
+  },
+  {
+    "id": "tut-squawk-7700",
+    "title": "Handling General Emergency Squawk 7700",
+    "category": "anomalies",
+    "level": "Advanced",
+    "duration": "6 min",
+    "summary": "Master the emergency response procedure when an airborne target transmits transponder code 7700.",
+    "badge": "Critical Protocol",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Acoustic Alert & Radar Highlighting",
+        "body": "When an aircraft selects transponder code 7700, the target symbol flashes on the radar screen with a high-priority red/blue highlight and an emergency chime sounds. The flight data block automatically prioritizes altitude, groundspeed, and squawk.",
+        "callout": "Squawk 7700 represents unconditional pilot declaration of in-flight emergency (loss of engine, depressurization, medical, or flight control issue).",
+        "visual": "alert_squawk_flash"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Sanitizing the Airspace Corridor",
+        "body": "Immediately establish lateral and vertical sterile buffers around the emergency target. Clear adjacent altitudes (minimum 2,000 ft vertical clearance above and below) and instruct surrounding flights to alter course or enter holding.",
+        "callout": "Emergency Priority: All other traffic in the sector must give way. Controller vectors other traffic away from the projected emergency glide cone.",
+        "visual": "airspace_clearance"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Determining Pilot Intentions & Staging ARFF",
+        "body": "Contact the flight crew calmly with the standard inquiry: confirm nature of emergency, souls on board, and fuel remaining. Relay data to Airport Rescue and Fire Fighting (ARFF Category 9) for runway staging.",
+        "callout": "Key Controller Rule: Never badger the crew with non-essential questions during high-workload cockpit procedures.",
+        "visual": "ground_staging"
+      }
+    ]
+  },
+  {
+    "id": "tut-decoding-metar",
+    "title": "Decoding METAR & Runway Headwinds at VOHS",
+    "category": "weather",
+    "level": "Beginner",
+    "duration": "4 min",
+    "summary": "Understand raw METAR observation strings, compute headwind and crosswind components, and pick the optimal runway.",
+    "badge": "Meteorology",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Dissecting the METAR Telemetry String",
+        "body": "A METAR string looks like: VOHS 190430Z 09012KT 4000 HZ NSC 28/19 Q1013 NOSIG. Station is VOHS (Hyderabad). Time is 19th day at 04:30 UTC. Wind is 090 deg at 12 knots. Visibility 4,000 meters in haze. No significant clouds. Temp 28 C / Dewpoint 19 C. Altimeter QNH 1013 hPa.",
+        "callout": "Wind direction is always reported in degrees True north. The first three digits are direction; the next two are speed in knots.",
+        "visual": "metar_breakdown"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Calculating Headwind & Selecting the Runway",
+        "body": "Aircraft land and take off into the wind to minimize ground roll. Hyderabad runways are 09 (heading 090 deg) and 27 (heading 270 deg). If the wind is 090 deg at 12 kt, RWY 09 has a 12 kt direct headwind (ideal), while RWY 27 would have a 12 kt tailwind (unsafe).",
+        "callout": "Formula: Headwind = Wind Speed x cos(Wind Direction - Runway Heading). SkyWatch auto-computes this and displays the active RWY chip in the top bar.",
+        "visual": "runway_vectors"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Classifying Aerodrome Flight Category",
+        "body": "Combine cloud ceiling and horizontal visibility to assess the operational category: VFR (>3,000 ft & >5 sm), MVFR (1,000-3,000 ft or 3-5 sm), IFR (500-999 ft or 1-3 sm), LIFR (<500 ft or <1 sm).",
+        "callout": "When visibility dips into IFR, pilots must rely on the ILS Cat I/II instrumentation on RWY 09/27.",
+        "visual": "flight_category_matrix"
+      }
+    ]
+  },
+  {
+    "id": "tut-holding-patterns",
+    "title": "Monitoring Holding Stacks & Airspace Congestion",
+    "category": "airspace",
+    "level": "Intermediate",
+    "duration": "5 min",
+    "summary": "Detect holding maneuvers automatically, understand vertical holding stacks, and manage airport arrival flow.",
+    "badge": "Traffic Management",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Anatomy of an Airspace Holding Pattern",
+        "body": "A standard hold consists of a fix (e.g. TEBUR), an inbound leg flying toward the fix, a 180 deg right turn, an outbound leg flying parallel, and a second 180 deg turn back to the fix. Below 14,000 ft, straight legs take 1 minute.",
+        "callout": "Pattern Detection: SkyWatch analyzes trajectory curvature and detects continuous 360-degree heading loops over consecutive minutes.",
+        "visual": "holding_racetrack"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Vertical Stacking & Sequencing",
+        "body": "When multiple flights must hold, controllers stack aircraft vertically in 1,000-foot increments. The bottom aircraft is cleared first to commence approach, and all aircraft above step down by 1,000 feet in a coordinated ladder.",
+        "callout": "Ladder Rule: Never descend an aircraft in holding until the level below has been confirmed vacant by both pilot readback and Mode C radar verification.",
+        "visual": "vertical_stack_ladder"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Evaluating Holding Fuel Reserves & Diverts",
+        "body": "Every flight carries mandatory holding reserve fuel (typically 30 minutes). When holding delay estimates exceed the operator fuel limit, the flight crew issues a diversion to their alternate aerodrome.",
+        "callout": "Controller Spacing: Issue Expected Approach Times (EAT) every 10 minutes to help captains evaluate divert margins.",
+        "visual": "fuel_divert_clock"
+      }
+    ]
+  },
+  {
+    "id": "tut-corridor-health",
+    "title": "Interpreting Corridor Health & Route Deviations",
+    "category": "metrics",
+    "level": "Intermediate",
+    "duration": "4 min",
+    "summary": "Learn how SkyWatch measures airspace corridor flow efficiency, trajectory adherence, and anomaly density.",
+    "badge": "Analytics",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "The Baseline RNAV-1 Corridor",
+        "body": "Modern terminal airspace relies on Area Navigation (RNAV) corridors with 1 nautical mile accuracy. Under nominal conditions, 95% of aircraft adhere precisely to the published magenta line.",
+        "callout": "Healthy Corridor Metric: Lateral route deviation < 0.5 NM and speed deviation within +/- 15 kt.",
+        "visual": "corridor_nominal"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Identifying Weather & Vector Deviations",
+        "body": "When thunderstorm cells block an arrival corridor, aircraft request deviations up to 20 NM off track. In SkyWatch, corridor health scores drop as cumulative lateral variance increases.",
+        "callout": "Operational Impact: Large off-track deviations compress lateral separation buffers between arriving and departing traffic.",
+        "visual": "weather_avoidance"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Re-sequencing and Restoring Flow Rate",
+        "body": "As weather clears, controllers issue direct-to routing to intermediate waypoints to rebuild the arrival queue and restore corridor health toward 100%.",
+        "callout": "Metric Rule: A corridor score above 85% signifies fluid, delay-free terminal operations.",
+        "visual": "resequencing_flow"
+      }
+    ]
+  }
+]
